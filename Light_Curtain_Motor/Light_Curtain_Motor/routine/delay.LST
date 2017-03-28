@@ -1,0 +1,34 @@
+C51 COMPILER V9.52.0.0   DELAY                                                             08/17/2016 12:09:39 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE DELAY
+OBJECT MODULE PLACED IN delay.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\c51.exe delay.c DB OE BR INCDIR(C:\SiLabs\MCU\Inc)
+
+line level    source
+
+   1          #include"delay.h"
+*** WARNING C318 IN LINE 1 OF delay.c: can't open file 'delay.h'
+   2          #include"intrins.h"
+   3          
+   4          void Delay_500ns(u16 delay)
+*** ERROR C141 IN LINE 4 OF delay.c: syntax error near 'delay', expected ')'
+   5          {
+   6   1             while(delay--)    //49Mhz,1Tmodule
+*** ERROR C202 IN LINE 6 OF delay.c: 'delay': undefined identifier
+   7   1              {
+   8   2               _nop_(); _nop_(); _nop_(); _nop_(); _nop_(); _nop_(); 
+   9   2               _nop_(); _nop_();
+  10   2                  
+  11   2              }
+  12   1      }
+  13          
+  14          void Delay_ms(u16 delay)
+*** ERROR C141 IN LINE 14 OF delay.c: syntax error near 'delay', expected ')'
+  15          {
+  16   1          while(delay--)
+*** ERROR C202 IN LINE 16 OF delay.c: 'delay': undefined identifier
+  17   1            Delay_500ns(2000);
+  18   1      }
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  4 ERROR(S)

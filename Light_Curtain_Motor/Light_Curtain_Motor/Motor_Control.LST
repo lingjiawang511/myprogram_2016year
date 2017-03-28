@@ -1,0 +1,151 @@
+C51 COMPILER V9.52.0.0   MOTOR_CONTROL                                                     08/23/2016 16:58:58 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MOTOR_CONTROL
+OBJECT MODULE PLACED IN Motor_Control.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Motor_Control.c OMF2 BROWSE INCDIR(.\include) DEBUG TABS(2)
+
+line level    source
+
+   1          #include "Headtype.h"
+   2          #include"intrins.h"
+   3          //=============================================================================
+   4          //函数名称:Delay_500ns
+   5          //功能概要:软件延时微秒函数
+   6          //参数名称:delay：延时毫秒数
+   7          //函数返回:无
+   8          //注意    :无
+   9          //=============================================================================
+  10          void Delay_500ns(u16 delay)
+  11          {
+  12   1             while(delay--)    //49Mhz,1Tmodule
+  13   1              {
+  14   2               _nop_(); _nop_(); _nop_(); _nop_(); _nop_(); _nop_(); 
+  15   2               _nop_(); _nop_();
+  16   2                  
+  17   2              }
+  18   1      }
+  19          //=============================================================================
+  20          //函数名称:Delay_ms
+  21          //功能概要:软件延时毫秒函数
+  22          //参数名称:delay：延时毫秒数
+  23          //函数返回:无
+  24          //注意    :无
+  25          //=============================================================================
+  26          void Delay_ms(u16 delay)
+  27          {
+  28   1          while(delay--)
+  29   1            Delay_500ns(2000);
+  30   1      }
+  31          //=============================================================================
+  32          //函数名称:Motor_Speed_Control
+  33          //功能概要:电机速度控制函数
+  34          //参数名称:speed：电机输入速度
+  35          //函数返回:无
+  36          //注意    :无
+  37          //=============================================================================
+  38          void Motor_Speed_Control(u8 speed)
+  39          {
+  40   1        if(speed == 0){
+  41   2          Motor_Speed(0,0,0); 
+  42   2        }else if(speed == 1){
+  43   2          Motor_Speed(0,0,1);
+  44   2        }else if(speed == 2){
+  45   2          Motor_Speed(0,1,0);
+  46   2        }else if(speed == 3){
+  47   2          Motor_Speed(0,1,1);
+  48   2        }else if(speed == 4){
+  49   2          Motor_Speed(1,0,0);
+  50   2        }else if(speed == 5){
+  51   2          Motor_Speed(1,0,1);
+  52   2        }else if(speed == 6){
+  53   2          Motor_Speed(1,1,0);
+  54   2        }else if(speed == 7){
+  55   2          Motor_Speed(1,1,1);
+C51 COMPILER V9.52.0.0   MOTOR_CONTROL                                                     08/23/2016 16:58:58 PAGE 2   
+
+  56   2        }
+  57   1      }
+  58          
+  59          //=============================================================================
+  60          //函数名称:Start_Motor1
+  61          //功能概要:电机软启动函数
+  62          //参数名称:step：电机速度也是电机运行状态步数
+  63          //函数返回:电机执行到哪一步的速度
+  64          //注意    :需要在定时器中断函数调用
+  65          //=============================================================================
+  66          u8 Start_Motor1(u8 step)
+  67          {
+  68   1        static u16 start_time = 0;
+  69   1        switch(step){
+  70   2        case 0x00:Motor_Speed_Control(step);step++; break;
+  71   2        case 0x01:Motor_Speed_Control(step);start_time++;
+  72   2                  if(start_time >= START_TIMEOUT/4){step++;start_time = 0;} break;
+  73   2        case 0x02:Motor_Speed_Control(step);start_time++;
+  74   2                  if(start_time >= START_TIMEOUT/4){step++;start_time = 0;} break;            
+  75   2        case 0x03:Motor_Speed_Control(step);start_time++;
+  76   2                  if(start_time >= START_TIMEOUT/4){step++;start_time = 0;} break;
+  77   2        case 0x04:Motor_Speed_Control(step);start_time++;
+  78   2                  if(start_time >= START_TIMEOUT/4){step++;start_time = 0;} break;            
+  79   2        case 0x05:Motor_Speed_Control(step);start_time++;
+  80   2                  if(start_time >= START_TIMEOUT){step++;start_time = 0;} break;          
+  81   2        case 0x06:Motor_Speed_Control(step);start_time++;
+  82   2                  if(start_time >= START_TIMEOUT/4){step++;start_time = 0;} break;            
+  83   2        case 0x07:Motor_Speed_Control(step-1);start_time++;
+  84   2                  if(start_time >= START_TIMEOUT/4)
+  85   2                    {step++;start_time = 0;Start_Ok = 1;} break;            
+  86   2        default:start_time = 0; break;
+  87   2        }
+  88   1        return step;
+  89   1      }
+  90          //=============================================================================
+  91          //函数名称:Stop_Motor1
+  92          //功能概要:电机软停止函数
+  93          //参数名称:step：电机速度也是电机运行状态步数
+  94          //函数返回:电机执行到哪一步的速度
+  95          //注意    :需要在定时器中断函数调用
+  96          //=============================================================================
+  97          u8 Stop_Motor1(u8 step)
+  98          {
+  99   1        static u16 stop_time = 0;
+ 100   1        switch(step){
+ 101   2        case 0x01:Motor_Speed_Control(step-1);step--;stop_time = 0;
+ 102   2                  LED0 = 1;Control_Power = POWER_OFF;break;
+ 103   2        case 0x02:Motor_Speed_Control(step-1);stop_time++;
+ 104   2                  if(stop_time >= STOP_TIMEOUT/4){step--;stop_time = 0;} break; 
+ 105   2        case 0x03:Motor_Speed_Control(step-1);stop_time++;
+ 106   2                  if(stop_time >= STOP_TIMEOUT/4){step--;stop_time = 0;} break; 
+ 107   2        case 0x04:Motor_Speed_Control(step-1);stop_time++;
+ 108   2                  if(stop_time >= STOP_TIMEOUT/2){step--;stop_time = 0;} break; 
+ 109   2        case 0x05:Motor_Speed_Control(step-1);stop_time++;
+ 110   2                  if(stop_time >= STOP_TIMEOUT/2){step--;stop_time = 0;} break; 
+ 111   2        case 0x06:Motor_Speed_Control(step-1);stop_time++;
+ 112   2                  if(stop_time >= STOP_TIMEOUT/2){step--;stop_time = 0;} break; 
+ 113   2        case 0x07:Motor_Speed_Control(step-1);stop_time++;
+ 114   2                  if(stop_time >= STOP_TIMEOUT/2){step--;stop_time = 0;} break; 
+ 115   2        case 0x08:Motor_Speed_Control(step-2);stop_time++;
+ 116   2                  if(stop_time >= STOP_TIMEOUT/2){step--;stop_time = 0;} break; 
+ 117   2        default:Motor_Speed_Control(0);stop_time = 0;Control_Power = POWER_OFF; break;
+C51 COMPILER V9.52.0.0   MOTOR_CONTROL                                                     08/23/2016 16:58:58 PAGE 3   
+
+ 118   2        }
+ 119   1          return step;
+ 120   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    627    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

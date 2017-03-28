@@ -1,0 +1,134 @@
+C51 COMPILER V9.52.0.0   MAIN                                                              08/23/2016 16:58:58 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c OMF2 BROWSE INCDIR(.\include) DEBUG TABS(2)
+
+line level    source
+
+   1          #include "Headtype.h"
+   2          
+   3          u8 Speed_Step;
+   4          u8 Start_Signal;
+   5          u8 Stop_Signal;
+   6          u8 Start_Ok;
+   7          u8 Stop_Ok;
+   8          u8 Stop_Delay;
+   9          //=============================================================================
+  10          //函数名称:SYSCLK_Init
+  11          //功能概要:系统初始化
+  12          //参数名称:无
+  13          //函数返回:无
+  14          //注意    :无
+  15          //=============================================================================
+  16          void SYSCLK_Init (void)
+  17          {
+  18   1          unsigned char i;
+  19   1          PCA0MD &= ~0x40; // WDTE = 0 (clear watchdog timer
+  20   1          OSCICN = 0x80;                         // enable intosc
+  21   1          CLKSEL = 0x00;                         // select intosc as sysclk source
+  22   1      // INTOSC configure
+  23   1          OSCICN = 0x83;
+  24   1      // PLL configure
+  25   1          CLKMUL = 0x00;                         // Reset Clock Multiplier
+  26   1          CLKMUL &= ~0x03;                       // select INTOSC / 2 as PLL source
+  27   1          CLKMUL |= 0x80;                        // Enable 4x Multipler (MULEN = 1)
+  28   1          for (i = 0; i < 200; i++);             // Delay for at least 5us
+  29   1          CLKMUL |= 0xC0;                        // Initialize Multiplier
+  30   1         while (!(CLKMUL & 0x20));              // Poll for Multiply Ready
+  31   1      // SYSCLK configure
+  32   1          VDM0CN = 0x80;                         // enable VDD monitor
+  33   1          RSTSRC = 0x06;                         // enable missing clock detector
+  34   1          // and VDD monitor reset sources
+  35   1          CLKSEL = 0x02;                         // select PLL as clock source
+  36   1          XBR1|=0X40;                            //enable SKIP
+  37   1      }
+  38          //=============================================================================
+  39          //函数名称:IOInit
+  40          //功能概要:IO口初始化
+  41          //参数名称:无
+  42          //函数返回:无
+  43          //注意    :无
+  44          //=============================================================================
+  45          void IOInit(void)
+  46          {
+  47   1          P0MDIN |=0XFF;    //IO口模式
+  48   1          P0MDOUT |=0xFF;  //推挽输出
+  49   1          P0SKIP &=0x00;   //不跳过交叉编译
+  50   1          P1MDIN |=0XFF;    //IO口模式
+  51   1          P1MDOUT &=0x00;  //按键输入
+  52   1          P1SKIP &=0x00;   //不跳过交叉编译
+  53   1          P2MDIN |=0XFF;    //IO口模式
+  54   1          P2MDOUT |=0xFF;  //推挽输出
+  55   1          P2SKIP &=0x00;   //不跳过交叉编译 
+C51 COMPILER V9.52.0.0   MAIN                                                              08/23/2016 16:58:58 PAGE 2   
+
+  56   1      }
+  57          void main(void)
+  58          {
+  59   1        SYSCLK_Init ();
+  60   1        IOInit();
+  61   1        Timer0Init();
+  62   1        Motor_Speed_Control(0);
+  63   1      //  Control_Power = POWER_ON;
+  64   1        Control_Power1 = POWER_ON;
+  65   1        Stop_Signal  = 0;
+  66   1        Start_Signal = 0;
+  67   1        Sensor = 1;
+  68   1        Delay_ms(1000);
+  69   1        while(1)
+  70   1        {
+  71   2          if(Sensor == 0){
+  72   3            Delay_ms(10); 
+  73   3            if(Sensor == 0){
+  74   4              if(Start_Signal == 0){
+  75   5                Start_Signal = 1; 
+  76   5                Stop_Signal  = 0;
+  77   5                Control_Power = POWER_ON; 
+  78   5                Start_Ok = 0;
+  79   5                Stop_Ok = 0;
+  80   5                Stop_Delay = 0;
+  81   5                LED0 = 0;
+  82   5                if(Speed_Step>0){
+  83   6                  Speed_Step--; 
+  84   6                }
+  85   5              }
+  86   4            }
+  87   3          }else{
+  88   3            if(Start_Ok == 1){
+  89   4              Stop_Delay = 1;
+  90   4              Start_Ok = 0;
+  91   4              Start_Signal = 0;
+  92   4            }
+  93   3            if(Stop_Ok == 1){
+  94   4              Stop_Signal = 1;
+  95   4              Start_Signal = 0;
+  96   4              Stop_Ok = 0;
+  97   4            }
+  98   3          }
+  99   2          
+ 100   2        }
+ 101   1      }
+ 102          
+ 103          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    175    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+C51 COMPILER V9.52.0.0   MAIN                                                              08/23/2016 16:58:58 PAGE 3   
+
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

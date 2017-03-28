@@ -1,0 +1,625 @@
+C51 COMPILER V9.52.0.0   HT1621B                                                           08/17/2016 12:09:39 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE HT1621B
+OBJECT MODULE PLACED IN HT1621B.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\c51.exe HT1621B.c DB OE BR INCDIR(C:\SiLabs\MCU\Inc)
+
+line level    source
+
+   1          #include"HT1621B.H"
+*** WARNING C318 IN LINE 1 OF HT1621B.c: can't open file 'HT1621B.H'
+   2          #define DelayForLcd  2
+   3          
+   4          //下面是驱动程序定义的一个显示缓冲区，共16个字节，128位
+   5          u16 xdata lcd_buffer[8]={10,10,10,10,0,0,0,0};
+*** ERROR C129 IN LINE 5 OF HT1621B.c: missing ';' before 'xdata'
+   6          u8 Foold_Lcd_TimeCount=0;
+   7          
+   8          void lcd_IOInit(void)
+   9          {
+  10              P0MDIN|=0X0F;    //IO输入
+  11              //P0MDOUT&=0xF0;  
+  12              P0MDOUT|=0x0F;  //推挽输出
+  13              P0SKIP&=0xF0;
+  14              //RD_HIGH;
+  15          }
+  16          
+  17          //这个函数可以向HT1621B写入一个命令；用户可能需要在语句间增加必要的延时
+  18          void send_lcd_command(u8 command)
+  19          {
+  20              u8 i;
+  21             CS_LOW;
+  22             
+  23             WR_LOW;        //PRESENT 100 COMMAND CODE
+  24             DATA_HIGH;
+  25             Delay_500ns(DelayForLcd);
+  26             WR_HIGH;
+  27             Delay_500ns(DelayForLcd);
+  28             WR_LOW;
+  29             DATA_LOW;
+  30             Delay_500ns(DelayForLcd);
+  31             WR_HIGH;
+  32             Delay_500ns(DelayForLcd);  
+  33             WR_LOW;
+  34             Delay_500ns(DelayForLcd);
+  35             WR_HIGH;   
+  36             Delay_500ns(DelayForLcd);
+  37             for (i =0;i<=7;i++)
+  38              {
+  39                 WR_LOW;
+  40                 if ((command & 0x80) !=0) DATA_HIGH;
+  41                  else DATA_LOW;
+  42                 Delay_500ns(DelayForLcd);
+  43                 WR_HIGH;
+  44                 command = command << 1;
+  45                 Delay_500ns(DelayForLcd);
+  46              }
+  47             
+  48             WR_LOW;
+  49             Delay_500ns(DelayForLcd);
+  50             WR_HIGH;     
+  51             CS_HIGH;
+  52          }
+  53          
+C51 COMPILER V9.52.0.0   HT1621B                                                           08/17/2016 12:09:39 PAGE 2   
+
+  54          //这个函数可以向HT1621B写入一个数据；用户可能需要在语句间增加必要的延时
+  55          void send_lcd_data(u8 address,u8 Data)
+  56          {
+  57              u8 i;
+  58             CS_LOW;
+  59          
+  60             WR_LOW;        //PRESENT 101 DATA CODE
+  61             DATA_HIGH;
+  62             Delay_500ns(DelayForLcd);
+  63             WR_HIGH;
+  64             Delay_500ns(DelayForLcd);
+  65             WR_LOW;
+  66             DATA_LOW;
+  67             Delay_500ns(DelayForLcd);
+  68             WR_HIGH; 
+  69             Delay_500ns(DelayForLcd);
+  70             WR_LOW;
+  71             DATA_HIGH;
+  72             Delay_500ns(DelayForLcd);
+  73             WR_HIGH; 
+  74             Delay_500ns(DelayForLcd);
+  75             address = address << 2;
+  76             for ( i =0;i<=5;i++)
+  77              {
+  78                 WR_LOW;
+  79                 if ((address & 0x80) !=0) DATA_HIGH;
+  80                  else DATA_LOW;
+  81                 Delay_500ns(DelayForLcd);
+  82                 WR_HIGH;
+  83                 address = address << 1;
+  84                 Delay_500ns(DelayForLcd);
+  85              }
+  86             
+  87              for (i =0;i<=3;i++)
+  88              {
+  89                 WR_LOW;
+  90                 if ((Data & 0x01) !=0) DATA_HIGH;
+  91                  else DATA_LOW;
+  92                 Delay_500ns(DelayForLcd);
+  93                 WR_HIGH;
+  94                 Data = Data >> 1;
+  95                 Delay_500ns(DelayForLcd);
+  96              } 
+  97             
+  98             CS_HIGH;
+  99          }
+ 100          //这个函数可以将显示缓冲区刷新到HT1621B；用户可能需要在语句间增加必要的延时
+ 101          void flood_lcd_data(void)
+ 102          {
+ 103          u16 temp_data;
+ 104          u8 i,j;
+ 105          CS_LOW;
+ 106          
+ 107             WR_LOW;        //PRESENT 101 DATA CODE
+ 108             DATA_HIGH;
+ 109             Delay_500ns(DelayForLcd);
+ 110             WR_HIGH;
+ 111             Delay_500ns(DelayForLcd);
+ 112             WR_LOW;
+ 113             DATA_LOW;
+ 114             Delay_500ns(DelayForLcd);
+ 115             WR_HIGH; 
+C51 COMPILER V9.52.0.0   HT1621B                                                           08/17/2016 12:09:39 PAGE 3   
+
+ 116             Delay_500ns(DelayForLcd);
+ 117             WR_LOW;
+ 118             DATA_HIGH;
+ 119             Delay_500ns(DelayForLcd);
+ 120             WR_HIGH; 
+ 121             Delay_500ns(DelayForLcd);
+ 122          for (i =0;i<=5;i++)
+ 123              {
+ 124                 WR_LOW;
+ 125                 DATA_LOW;
+ 126                 Delay_500ns(DelayForLcd);
+ 127                 WR_HIGH;
+ 128                 Delay_500ns(DelayForLcd);
+ 129              }
+ 130             
+ 131          for (i =0;i<=7;i++)
+ 132              {
+ 133                temp_data = lcd_buffer[i];
+ 134                for (j=0;j<=15;j++)
+ 135                {
+ 136                 WR_LOW;
+ 137                 if ((temp_data & 0x01) !=0) DATA_HIGH;
+ 138                  else DATA_LOW;
+ 139                 Delay_500ns(DelayForLcd);
+ 140                 WR_HIGH;
+ 141                 temp_data = temp_data >> 1;
+ 142                 Delay_500ns(DelayForLcd);
+ 143                }
+ 144              } 
+ 145             
+ 146             CS_HIGH;
+ 147          }
+ 148          
+ 149          //初始化HT1621B
+ 150          void lcd_init(void)
+ 151          {
+ 152             send_lcd_command(0x28); //1/2bias，4comm
+ 153             send_lcd_command(0x03); //打开显示
+ 154             send_lcd_command(0x01); //启动内部振荡器
+ 155          }
+ 156          
+ 157          //向液晶写一个符号
+ 158          //name：可直接写0~127的整数，也可以写程序开始定义的标号，如：_lcd_BUSY
+ 159          //display：符号
+ 160          void lcd_char(u8 name,u8 display)
+ 161          {
+ 162          u8 i,j;
+ 163          i= name/16;
+ 164          j= name%16;
+ 165          if (display == 1) lcd_buffer[i] |= 1<<j;
+ 166          else lcd_buffer[i] &= ~(1<<j);
+ 167          flood_lcd_data(); 
+ 168          
+ 169          }
+ 170          
+ 171          //清除全部液晶的显示，同时清空显示缓冲区
+ 172          void lcd_clr()
+ 173          {
+ 174              u16 i;
+ 175          for (i=0; i<=7;i++) lcd_buffer[i]=0;
+ 176          flood_lcd_data();   
+ 177              
+C51 COMPILER V9.52.0.0   HT1621B                                                           08/17/2016 12:09:39 PAGE 4   
+
+ 178          }
+ 179          
+ 180          //向液晶的数位处写一个0~9的数 
+ 181          //数位为大数码的左至右为4~9，小数码的右至左为0~3；
+ 182          //number：想显示的数 0~9
+ 183          //position：显示的数位
+ 184          //display：显示开关，0 关闭该数位显示（此时number值无效），1 显示该数位数字
+ 185          void lcd_number(u8 number,u8 position,u8 display)
+ 186          {
+ 187          switch (position)
+ 188          {
+ 189          case 0:
+ 190              {
+ 191              if (display == 0) lcd_buffer[0] &=0xff10; //0x10ff;
+ 192              else 
+ 193              {
+ 194                 lcd_buffer[0] &= 0xff10;//0x10ff;
+ 195                switch (number)
+ 196              {
+ 197              case 0:lcd_buffer[0] |= 0x00EB;
+ 198                break;
+ 199              case 1:lcd_buffer[0] |= 0x0060;
+ 200                break;
+ 201              case 2:lcd_buffer[0] |= 0x00C7;
+ 202                break;
+ 203              case 3:lcd_buffer[0] |= 0x00E5;
+ 204                break;
+ 205              case 4:lcd_buffer[0] |= 0x006C;
+ 206                break;
+ 207              case 5:lcd_buffer[0] |= 0x00AD;
+ 208                break;
+ 209              case 6:lcd_buffer[0] |= 0x00AF;
+ 210                break;
+ 211              case 7:lcd_buffer[0] |= 0x00E0;
+ 212                break;
+ 213              case 8:lcd_buffer[0] |= 0x00EF;
+ 214                break; 
+ 215              case 9:lcd_buffer[0] |= 0x00ED;
+ 216                break;
+ 217              case 15:lcd_buffer[0] &= 0xff00;   //全灭
+ 218                break;      
+ 219              }}
+ 220              break;
+ 221              }
+ 222          case 1:
+ 223              {
+ 224              if (display == 0) lcd_buffer[0] &= 0x10ff;
+ 225              else 
+ 226              {
+ 227                 lcd_buffer[0] &= 0x10ff;
+ 228                switch (number)
+ 229              {
+ 230              case 0:lcd_buffer[0] |= 0xEB00;
+ 231                break;
+ 232              case 1:lcd_buffer[0] |= 0x6000;
+ 233                break;
+ 234              case 2:lcd_buffer[0] |= 0xC700;
+ 235                break;
+ 236              case 3:lcd_buffer[0] |= 0xE500;
+ 237                break;
+ 238              case 4:lcd_buffer[0] |= 0x6C00;
+ 239                break;
+C51 COMPILER V9.52.0.0   HT1621B                                                           08/17/2016 12:09:39 PAGE 5   
+
+ 240              case 5:lcd_buffer[0] |= 0xAD00;
+ 241                break;
+ 242              case 6:lcd_buffer[0] |= 0xAF00;
+ 243                break;
+ 244              case 7:lcd_buffer[0] |= 0xE000;
+ 245                break;
+ 246              case 8:lcd_buffer[0] |= 0xEF00;
+ 247                break; 
+ 248              case 9:lcd_buffer[0] |= 0xED00;
+ 249                break;
+ 250              case 15:lcd_buffer[0] &= 0x00ff;   //全灭
+ 251                break;      
+ 252              }}
+ 253              break;
+ 254              }
+ 255          case 2:
+ 256               lcd_buffer[1] &=0xff10;
+ 257               //lcd_buffer[2] &= 0xfff1;
+ 258          
+ 259               if (display == 0) break;
+ 260              
+ 261              else switch (number)
+ 262              {
+ 263              case 0:lcd_buffer[1] |= 0x00EB;
+ 264                break;
+ 265              case 1:lcd_buffer[1] |= 0x0060;
+ 266                break;
+ 267              case 2:lcd_buffer[1] |= 0x00C7;
+ 268                break;
+ 269              case 3:lcd_buffer[1] |= 0x00E5;
+ 270                break;
+ 271              case 4:lcd_buffer[1] |= 0x006C;
+ 272                break;
+ 273              case 5:lcd_buffer[1] |= 0x00AD;
+ 274                break;
+ 275              case 6:lcd_buffer[1] |= 0x00AF;
+ 276                break;
+ 277              case 7:lcd_buffer[1] |= 0x00E0;
+ 278                break;
+ 279              case 8:lcd_buffer[1] |= 0x00EF;
+ 280                break; 
+ 281              case 9:lcd_buffer[1] |= 0x00ED;
+ 282                break;
+ 283              case 15:lcd_buffer[1] &= 0xff00;   //全灭
+ 284                break;     
+ 285              }
+ 286              break;
+ 287          case 3:
+ 288              lcd_buffer[1] &= 0x10ff;
+ 289              if (display == 0) break;
+ 290              else switch (number)
+ 291              {
+ 292              case 0:lcd_buffer[1] |= 0xEB00;
+ 293                break;
+ 294              case 1:lcd_buffer[1] |= 0x6000;
+ 295                break;
+ 296              case 2:lcd_buffer[1] |= 0xC700;
+ 297                break;
+ 298              case 3:lcd_buffer[1] |= 0xE500;
+ 299                break;
+ 300              case 4:lcd_buffer[1] |= 0x6C00;
+ 301                break;
+C51 COMPILER V9.52.0.0   HT1621B                                                           08/17/2016 12:09:39 PAGE 6   
+
+ 302              case 5:lcd_buffer[1] |= 0xAD00;
+ 303                break;
+ 304              case 6:lcd_buffer[1] |= 0xAF00;
+ 305                break;
+ 306              case 7:lcd_buffer[1] |= 0xE000;
+ 307                break;
+ 308              case 8:lcd_buffer[1] |= 0xEF00;
+ 309                break; 
+ 310              case 9:lcd_buffer[1] |= 0xED00;
+ 311                break;
+ 312              case 15:lcd_buffer[1] &= 0x00ff;   //全灭
+ 313                break;     
+ 314              }
+ 315              break;
+ 316          case 4:
+ 317              lcd_buffer[2] &= 0x0fff;
+ 318              lcd_buffer[3] &= 0xfff8;
+ 319              if (display == 0) break;
+ 320              else switch (number)
+ 321              {
+ 322              case 0:lcd_buffer[2] |= 0xD000;
+ 323                     lcd_buffer[3] |= 0x0007;
+ 324                break;
+ 325              case 1:lcd_buffer[2] |= 0x0000;
+ 326                     lcd_buffer[3] |= 0x0006;
+ 327                break;
+ 328              case 2:lcd_buffer[2] |= 0xE000;
+ 329                     lcd_buffer[3] |= 0x0003;
+ 330                break;
+ 331              case 3:lcd_buffer[2] |= 0xA000;
+ 332                     lcd_buffer[3] |= 0x0007;
+ 333                break;
+ 334              case 4:lcd_buffer[2] |= 0x3000;
+ 335                     lcd_buffer[3] |= 0x0006;
+ 336                break;
+ 337              case 5:lcd_buffer[2] |= 0xB000;
+ 338                     lcd_buffer[3] |= 0x0005;
+ 339                break;
+ 340              case 6:lcd_buffer[2] |= 0xF000;
+ 341                     lcd_buffer[3] |= 0x0005;
+ 342                break;
+ 343              case 7:lcd_buffer[2] |= 0x0000;
+ 344                     lcd_buffer[3] |= 0x0007;
+ 345                break;
+ 346              case 8:lcd_buffer[2] |= 0xF000;
+ 347                     lcd_buffer[3] |= 0x0007;
+ 348                break; 
+ 349              case 9:lcd_buffer[2] |= 0xB000;
+ 350                     lcd_buffer[3] |= 0x0007;
+ 351                break; 
+ 352              case 15:lcd_buffer[2] &= 0x0fff;   //全灭
+ 353                      lcd_buffer[3] &= 0xfff0;   //全灭
+ 354                break;      
+ 355              }
+ 356              break;
+ 357          case 5:
+ 358              lcd_buffer[3] &= 0xF80F;
+ 359              if (display == 0) break;
+ 360              else switch (number)
+ 361              {
+ 362              case 0:lcd_buffer[3] |= 0x07D0;
+ 363                break;
+C51 COMPILER V9.52.0.0   HT1621B                                                           08/17/2016 12:09:39 PAGE 7   
+
+ 364              case 1:lcd_buffer[3] |= 0x0600;
+ 365                break;
+ 366              case 2:lcd_buffer[3] |= 0x03E0;
+ 367                break;
+ 368              case 3:lcd_buffer[3] |= 0x07A0;
+ 369                break;
+ 370              case 4:lcd_buffer[3] |= 0x0630;
+ 371                break;
+ 372              case 5:lcd_buffer[3] |= 0x05B0;
+ 373                break;
+ 374              case 6:lcd_buffer[3] |= 0x05F0;
+ 375                break;
+ 376              case 7:lcd_buffer[3] |= 0x0700;
+ 377                break;
+ 378              case 8:lcd_buffer[3] |= 0x07F0;
+ 379                break; 
+ 380              case 9:lcd_buffer[3] |= 0x07B0;
+ 381                break; 
+ 382              case 15:lcd_buffer[3] &= 0xF00F;
+ 383                break;      
+ 384              }
+ 385              break;
+ 386          case 6:
+ 387               lcd_buffer[3] &=0x0fff;
+ 388               lcd_buffer[4] &= 0xfff8;
+ 389              if (display == 0) break;
+ 390              else switch (number)
+ 391              {
+ 392              case 0:lcd_buffer[3] |= 0xD000;
+ 393                     lcd_buffer[4] |= 0x0007;
+ 394                break;
+ 395              case 1:lcd_buffer[3] |= 0x0000;
+ 396                     lcd_buffer[4] |= 0x0006;
+ 397                break;
+ 398              case 2:lcd_buffer[3] |= 0xE000;
+ 399                     lcd_buffer[4] |= 0x0003;
+ 400                break;
+ 401              case 3:lcd_buffer[3] |= 0xA000;
+ 402                     lcd_buffer[4] |= 0x0007;
+ 403                break;
+ 404              case 4:lcd_buffer[3] |= 0x3000;
+ 405                     lcd_buffer[4] |= 0x0006;
+ 406                break;
+ 407              case 5:lcd_buffer[3] |= 0xB000;
+ 408                     lcd_buffer[4] |= 0x0005;
+ 409                break;
+ 410              case 6:lcd_buffer[3] |= 0xF000;
+ 411                     lcd_buffer[4] |= 0x0005;
+ 412                break;
+ 413              case 7:lcd_buffer[3] |= 0x0000;
+ 414                     lcd_buffer[4] |= 0x0007;
+ 415                break;
+ 416              case 8:lcd_buffer[3] |= 0xF000;
+ 417                     lcd_buffer[4] |= 0x0007;
+ 418                break; 
+ 419              case 9:lcd_buffer[3] |= 0xB000;
+ 420                     lcd_buffer[4] |= 0x0007;
+ 421                break; 
+ 422              case 15:lcd_buffer[3] &= 0x0fff;   //全灭
+ 423                      lcd_buffer[4] &= 0xfff0;   //全灭
+ 424                break;       
+ 425              }
+C51 COMPILER V9.52.0.0   HT1621B                                                           08/17/2016 12:09:39 PAGE 8   
+
+ 426              break;
+ 427          case 7:
+ 428              lcd_buffer[4] &=0x0fff;
+ 429              lcd_buffer[5] &=0xfff8;
+ 430              if (display == 0) break;
+ 431              else switch (number)
+ 432              {
+ 433              case 0:lcd_buffer[4] |= 0xD000;
+ 434                     lcd_buffer[5] |= 0x0007;
+ 435                break;
+ 436              case 1:lcd_buffer[4] |= 0x0000;
+ 437                     lcd_buffer[5] |= 0x0006;
+ 438                break;
+ 439              case 2:lcd_buffer[4] |= 0xE000;
+ 440                     lcd_buffer[5] |= 0x0003;
+ 441                break;
+ 442              case 3:lcd_buffer[4] |= 0xA000;
+ 443                     lcd_buffer[5] |= 0x0007;
+ 444                break;
+ 445              case 4:lcd_buffer[4] |= 0x3000;
+ 446                     lcd_buffer[5] |= 0x0006;
+ 447                break;
+ 448              case 5:lcd_buffer[4] |= 0xB000;
+ 449                     lcd_buffer[5] |= 0x0005;
+ 450                break;
+ 451              case 6:lcd_buffer[4] |= 0xF000;
+ 452                     lcd_buffer[5] |= 0x0005;
+ 453                break;
+ 454              case 7:lcd_buffer[4] |= 0x0000;
+ 455                     lcd_buffer[5] |= 0x0007;
+ 456                break;
+ 457              case 8:lcd_buffer[4] |= 0xF000;
+ 458                     lcd_buffer[5] |= 0x0007;
+ 459                break; 
+ 460              case 9:lcd_buffer[4] |= 0xB000;
+ 461                     lcd_buffer[5] |= 0x0007;
+ 462                break; 
+ 463              case 15:lcd_buffer[4] &= 0x0fff;   //全灭
+ 464                      lcd_buffer[5] &= 0xfff0;   //全灭
+ 465                break;       
+ 466              }
+ 467              break;
+ 468          case 8:
+ 469               lcd_buffer[5] &= 0xF80F;
+ 470              if (display == 0) break;
+ 471              else switch (number)
+ 472              {
+ 473              case 0:lcd_buffer[5] |= 0x07D0;
+ 474                break;
+ 475              case 1:lcd_buffer[5] |= 0x0600;
+ 476                break;
+ 477              case 2:lcd_buffer[5] |= 0x03E0;
+ 478                break;
+ 479              case 3:lcd_buffer[5] |= 0x07A0;
+ 480                break;
+ 481              case 4:lcd_buffer[5] |= 0x0630;
+ 482                break;
+ 483              case 5:lcd_buffer[5] |= 0x05B0;
+ 484                break;
+ 485              case 6:lcd_buffer[5] |= 0x05F0;
+ 486                break;
+ 487              case 7:lcd_buffer[5] |= 0x0700;
+C51 COMPILER V9.52.0.0   HT1621B                                                           08/17/2016 12:09:39 PAGE 9   
+
+ 488                break;
+ 489              case 8:lcd_buffer[5] |= 0x07F0;
+ 490                break; 
+ 491              case 9:lcd_buffer[5] |= 0x07B0;
+ 492                break;  
+ 493              case 15:lcd_buffer[5] &= 0xF00F;
+ 494                break;      
+ 495              }
+ 496              break;
+ 497          case 9:
+ 498              lcd_buffer[5] &=0x0fff;
+ 499              lcd_buffer[6] &=0xfff8;
+ 500              if (display == 0) break;
+ 501              else switch (number)
+ 502              {
+ 503              case 0:lcd_buffer[5] |= 0xD000;
+ 504                     lcd_buffer[6] |= 0x0007;
+ 505                break;
+ 506              case 1:lcd_buffer[5] |= 0x0000;
+ 507                     lcd_buffer[6] |= 0x0006;
+ 508                break;
+ 509              case 2:lcd_buffer[5] |= 0xE000;
+ 510                     lcd_buffer[6] |= 0x0003;
+ 511                break;
+ 512              case 3:lcd_buffer[5] |= 0xA000;
+ 513                     lcd_buffer[6] |= 0x0007;
+ 514                break;
+ 515              case 4:lcd_buffer[5] |= 0x3000;
+ 516                     lcd_buffer[6] |= 0x0006;
+ 517                break;
+ 518              case 5:lcd_buffer[5] |= 0xB000;
+ 519                     lcd_buffer[6] |= 0x0005;
+ 520                break;
+ 521              case 6:lcd_buffer[5] |= 0xF000;
+ 522                     lcd_buffer[6] |= 0x0005;
+ 523                break;
+ 524              case 7:lcd_buffer[5] |= 0x0000;
+ 525                     lcd_buffer[6] |= 0x0007;
+ 526                break;
+ 527              case 8:lcd_buffer[5] |= 0xF000;
+ 528                     lcd_buffer[6] |= 0x0007;
+ 529                break; 
+ 530              case 9:lcd_buffer[5] |= 0xB000;
+ 531                     lcd_buffer[6] |= 0x0007;
+ 532                break;  
+ 533              case 15:lcd_buffer[5] &= 0x0fff;   //全灭
+ 534                      lcd_buffer[6] &= 0xfff0;   //全灭
+ 535                break;      
+ 536              }
+ 537              break;
+ 538          }    
+ 539          flood_lcd_data(); 
+ 540          }
+ 541          
+ 542          void lcd_test(void)
+ 543          {
+ 544              lcd_IOInit();
+ 545              lcd_init();
+ 546              flood_lcd_data();
+ 547              lcd_clr();
+ 548              send_lcd_data(0x1e,0x11);
+ 549              Delay_ms(500);
+C51 COMPILER V9.52.0.0   HT1621B                                                           08/17/2016 12:09:39 PAGE 10  
+
+ 550              lcd_number(0,0,1);
+ 551              lcd_number(1,1,1);
+ 552              lcd_number(2,2,1);
+ 553              lcd_number(3,3,1);
+ 554              lcd_number(4,4,1);
+ 555              lcd_number(5,5,1);
+ 556              lcd_number(6,6,1);
+ 557              lcd_number(7,7,1);
+ 558              lcd_number(8,8,1);
+ 559              lcd_number(9,9,1);
+ 560              lcd_char(_lcd_DP1,1);
+ 561              lcd_char(_lcd_DP2,1);
+ 562              lcd_char(_lcd_DP3,1);
+ 563              lcd_char(_lcd_COL1,1);
+ 564              lcd_char(_lcd_COL2,1);
+ 565              lcd_char(_lcd_COL3,1);
+ 566              lcd_char(_lcd_W1,1);
+ 567              lcd_char(_lcd_W5,1);
+ 568              lcd_char(_lcd_W4,1);
+ 569              lcd_char(_lcd_W3,1);
+ 570              lcd_char(_lcd_W2,1);
+ 571              lcd_char(_lcd_L1,1);
+ 572              lcd_char(_lcd_L2,1);
+ 573              lcd_char(_lcd_L3,1);
+ 574              lcd_char(_lcd_L4,1);
+ 575              lcd_char(_lcd_DP5,1);
+ 576              lcd_char(_lcd_DP6,1);
+ 577              lcd_char(_lcd_DP7,1);
+ 578              lcd_char(_lcd_g,1);
+ 579              lcd_char(_lcd_kg,1);
+ 580              lcd_char(_lcd_Nm,1);
+ 581              lcd_char(_lcd_mV,1);
+ 582              lcd_char(_lcd_mm,1);
+ 583              lcd_char(_lcd_ue,1);
+ 584              lcd_char(_lcd_kpa,1);
+ 585              lcd_char(_lcd_Mpa,1);
+ 586              lcd_char(_lcd_DP8,1);
+ 587              lcd_char(_lcd_DP9,1);
+ 588              lcd_char(_lcd_0C,1);
+ 589              lcd_number(0,0,0);
+ 590              lcd_number(1,1,0);
+ 591          
+ 592              Delay_ms(500);
+ 593          }
+ 594          
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  1 ERROR(S)

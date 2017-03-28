@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<ProjectWorkspace xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_mpw.xsd">
+
+  <SchemaVersion>1.0</SchemaVersion>
+
+  <Header>### uVision Project, (C) Keil Software</Header>
+
+  <WorkspaceName>WorkSpace</WorkspaceName>
+
+  <project>
+    <PathAndName>..\belt_control\MDK_ARM\belt_control.uvproj</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>..\CodeScanner\MDK_ARM\CodeScanner.uvproj</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>..\Light_Curtain_Motor\Light_Curtain_Motor\Light_Curtain_Motor.uvproj</PathAndName>
+    <NodeIsActive>1</NodeIsActive>
+    <NodeIsExpanded>1</NodeIsExpanded>
+  </project>
+
+  <project>
+    <PathAndName>..\oled_control\MDK_ARM\oled_control.uvproj</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>..\RFID_control\MDK_ARM\RDID_control.uvproj</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>..\Roll_Paper_Motor\MDK_ARM\Roll_Pater_DCMotor.uvproj</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>..\Send_Medicine_Motor\MDK_ARM\Send_Medicine_Motor.uvproj</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>..\StepMotor\MDK_ARM\StepMotor.uvproj</PathAndName>
+  </project>
+
+</ProjectWorkspace>

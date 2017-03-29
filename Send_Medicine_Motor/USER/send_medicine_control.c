@@ -242,6 +242,9 @@ void Send_Medicine_Config(void)
 static void CH1_Send_Medicine(void)
 {
 	static u8 temp;
+	#if (VERSIONS==0)
+	static u8 no_medicine_flag = 0;
+	#endif
 	switch(Channel.ch1.state){
 	case RESERVE:	Channel.ch1.motor_pulse = 0;
 								Channel.ch1.send_actual = 0;
@@ -282,8 +285,12 @@ static void CH1_Send_Medicine(void)
 									delay_ms(2);
 									if(temp == 3){
 										temp = 0;		
+										#if VERSIONS
 										Channel.ch1.timeoutstart = 1;
 										Channel.ch1.timeout = 0;
+										#else
+											Channel.ch1.timeout = SEND_MEDICINE_TIMEOUT/4;
+										#endif
 									}
 								}else{
 									temp = 0;	
@@ -292,16 +299,26 @@ static void CH1_Send_Medicine(void)
 // 									Channel.ch1.state = WORKEND;
 									Channel.ch1.timeoutstart = 0;
 									Channel.ch1.timeout = 0;
+								#if VERSIONS
 								  if(Channel.ch1.motor_state == 0){
 								//	DEVICE1_MOTOR_STOP;						//停止等电机转回原点停
 										Channel.ch1.state = WORKEND;
 									}
+								#else
+										DEVICE1_MOTOR_STOP;						//停止等电机转回原点停
+										Channel.ch1.motor_state = 0;
+										Channel.ch1.state = WORKEND;
+									  if(Channel.ch1.send_num != Channel.ch1.motor_pulse){
+											no_medicine_flag = 1;
+										}
+								#endif
 								}
 								break;
 
 	case WORKEND:	if(Channel.ch1.motor_state == 0){ //电机停止后再计算状态
 									if(Channel.ch1.send_num >0){
 										if(Channel.ch1.motor_pulse > 0){//电机转动了，
+											#if VERSIONS
 												if(Channel.ch1.send_actual == Channel.ch1.send_num){//实际发药等于需求发药
 													MCU_Host_Send.control.ch1_state = 2;							//发送状态给PC
 													MCU_Host_Send.control.ch1_num = Channel.ch1.send_actual;
@@ -309,6 +326,15 @@ static void CH1_Send_Medicine(void)
 													MCU_Host_Send.control.ch1_state = 2;
 													MCU_Host_Send.control.ch1_num = Channel.ch1.send_actual;
 												}
+											#else
+												if(no_medicine_flag ==0){
+													MCU_Host_Send.control.ch1_state = 2;							//发送状态给PC
+													MCU_Host_Send.control.ch1_num = Channel.ch1.motor_pulse;
+												}else{//发药机发药过程中无药的情况下上传错误信息给上位机
+													MCU_Host_Send.control.ch1_state = 2;							//发送状态给PC
+													MCU_Host_Send.control.ch1_num = 0xFF;
+												}
+											#endif
 												Channel.ch1.motor_state = 0;
 												DEVICE1_MOTOR_STOP;	//状态机结束，不管实际发药数和电机脉冲是否等于需求发药数，都必须停止电机，避免传感器坏时一直转
 										}else{//电机没有转动，机械故障
@@ -352,6 +378,9 @@ static void CH1_Send_Medicine(void)
 static void CH2_Send_Medicine(void)
 {
 	static u8 temp;
+	#if (VERSIONS==0)
+	static u8 no_medicine_flag = 0;
+	#endif
 	switch(Channel.ch2.state){
 	case RESERVE:	Channel.ch2.motor_pulse = 0;
 								Channel.ch2.send_actual = 0;
@@ -392,8 +421,12 @@ static void CH2_Send_Medicine(void)
 									delay_ms(1);
 									if(temp == 3){
 										temp = 0;		
-										Channel.ch2.timeoutstart = 1;	
+										#if VERSIONS
+										Channel.ch2.timeoutstart = 1;
 										Channel.ch2.timeout = 0;
+										#else
+											Channel.ch2.timeout = SEND_MEDICINE_TIMEOUT/4;
+										#endif
 									}
 								}else{
 									temp = 0;	
@@ -402,16 +435,26 @@ static void CH2_Send_Medicine(void)
 // 									Channel.ch2.state = WORKEND;
 									Channel.ch2.timeoutstart = 0;
 									Channel.ch2.timeout = 0;
+								#if VERSIONS
 								  if(Channel.ch2.motor_state == 0){
 								//	DEVICE2_MOTOR_STOP;						//停止等电机转回原点停
 										Channel.ch2.state = WORKEND;
 									}
+								#else
+										DEVICE2_MOTOR_STOP;						//停止等电机转回原点停
+										Channel.ch2.motor_state = 0;
+										Channel.ch2.state = WORKEND;
+									  if(Channel.ch2.send_num != Channel.ch2.motor_pulse){
+											no_medicine_flag = 1;
+										}
+								#endif
 								}
 								break;
 
 	case WORKEND:	if(Channel.ch2.motor_state == 0){ //电机停止后再计算状态
 									if(Channel.ch2.send_num >0){
 										if(Channel.ch2.motor_pulse > 0){//电机转动了，
+											#if VERSIONS
 												if(Channel.ch2.send_actual == Channel.ch2.send_num){//实际发药等于需求发药
 													MCU_Host_Send.control.ch2_state = 2;							//发送状态给PC
 													MCU_Host_Send.control.ch2_num = Channel.ch2.send_actual;
@@ -419,6 +462,15 @@ static void CH2_Send_Medicine(void)
 													MCU_Host_Send.control.ch2_state = 2;
 													MCU_Host_Send.control.ch2_num = Channel.ch2.send_actual;
 												}
+											#else
+												if(no_medicine_flag ==0){
+													MCU_Host_Send.control.ch2_state = 2;							//发送状态给PC
+													MCU_Host_Send.control.ch2_num = Channel.ch2.motor_pulse;
+												}else{//发药机发药过程中无药的情况下上传错误信息给上位机
+													MCU_Host_Send.control.ch2_state = 2;							//发送状态给PC
+													MCU_Host_Send.control.ch2_num = 0xFF;
+												}
+											#endif
 												Channel.ch2.motor_state = 0;
 												DEVICE2_MOTOR_STOP;	//状态机结束，不管实际发药数和电机脉冲是否等于需求发药数，都必须停止电机，避免传感器坏时一直转
 										}else{//电机没有转动，机械故障
@@ -461,6 +513,9 @@ static void CH2_Send_Medicine(void)
 static void CH3_Send_Medicine(void)
 {
 	static u8 temp;
+	#if (VERSIONS==0)
+	static u8 no_medicine_flag = 0;
+	#endif
 	switch(Channel.ch3.state){
 	case RESERVE:	Channel.ch3.motor_pulse = 0;
 								Channel.ch3.send_actual = 0;
@@ -501,8 +556,12 @@ static void CH3_Send_Medicine(void)
 									delay_ms(1);
 									if(temp == 3){
 										temp = 0;		
-										Channel.ch3.timeoutstart = 1;	
-										Channel.ch3.timeout = 0;
+										#if VERSIONS
+										Channe3.ch1.timeoutstart = 1;
+										Channe3.ch1.timeout = 0;
+										#else
+											Channel.ch3.timeout = SEND_MEDICINE_TIMEOUT/4;
+										#endif
 									}
 								}else{
 									temp = 0;	
@@ -511,16 +570,26 @@ static void CH3_Send_Medicine(void)
 // 									Channel.ch3.state = WORKEND;
 									Channel.ch3.timeoutstart = 0;
 									Channel.ch3.timeout = 0;
-									if(Channel.ch3.motor_state == 0){
+								#if VERSIONS
+								  if(Channel.ch3.motor_state == 0){
 								//	DEVICE3_MOTOR_STOP;						//停止等电机转回原点停
 										Channel.ch3.state = WORKEND;
 									}
+								#else
+										DEVICE3_MOTOR_STOP;						//停止等电机转回原点停
+										Channel.ch3.motor_state = 0;
+										Channel.ch3.state = WORKEND;
+									  if(Channel.ch3.send_num != Channel.ch3.motor_pulse){
+											no_medicine_flag = 1;
+										}
+								#endif
 								}
 								break;
 
 	case WORKEND:	if(Channel.ch3.motor_state == 0){ //电机停止后再计算状态	
 									if(Channel.ch3.send_num >0){
 										if(Channel.ch3.motor_pulse > 0){//电机转动了，
+											#if VERSIONS
 												if(Channel.ch3.send_actual == Channel.ch3.send_num){//实际发药等于需求发药
 													MCU_Host_Send.control.ch3_state = 2;							//发送状态给PC
 													MCU_Host_Send.control.ch3_num = Channel.ch3.send_actual;
@@ -528,6 +597,15 @@ static void CH3_Send_Medicine(void)
 													MCU_Host_Send.control.ch3_state = 2;
 													MCU_Host_Send.control.ch3_num = Channel.ch3.send_actual;
 												}
+											#else
+												if(no_medicine_flag ==0){
+													MCU_Host_Send.control.ch3_state = 2;							//发送状态给PC
+													MCU_Host_Send.control.ch3_num = Channel.ch3.motor_pulse;
+												}else{//发药机发药过程中无药的情况下上传错误信息给上位机
+													MCU_Host_Send.control.ch3_state = 2;							//发送状态给PC
+													MCU_Host_Send.control.ch3_num = 0xFF;
+												}
+											#endif
 												Channel.ch3.motor_state = 0;
 												DEVICE3_MOTOR_STOP;	//状态机结束，不管实际发药数和电机脉冲是否等于需求发药数，都必须停止电机，避免传感器坏时一直转
 										}else{//电机没有转动，机械故障
@@ -570,6 +648,9 @@ static void CH3_Send_Medicine(void)
 static void CH4_Send_Medicine(void)
 {
 	static u8 temp;
+	#if (VERSIONS==0)
+	static u8 no_medicine_flag = 0;
+	#endif
 	switch(Channel.ch4.state){
 	case RESERVE:	Channel.ch4.motor_pulse = 0;
 								Channel.ch4.send_actual = 0;
@@ -610,8 +691,12 @@ static void CH4_Send_Medicine(void)
 									delay_ms(1);
 									if(temp == 3){
 										temp = 0;		
-										Channel.ch4.timeoutstart = 1;	
+										#if VERSIONS
+										Channel.ch4.timeoutstart = 1;
 										Channel.ch4.timeout = 0;
+										#else
+											Channel.ch4.timeout = SEND_MEDICINE_TIMEOUT/4;
+										#endif
 									}
 								}else{
 									temp = 0;	
@@ -620,16 +705,26 @@ static void CH4_Send_Medicine(void)
 // 									Channel.ch4.state = WORKEND;
 									Channel.ch4.timeoutstart = 0;
 									Channel.ch4.timeout = 0;
+								#if VERSIONS
 								  if(Channel.ch4.motor_state == 0){
 								//	DEVICE4_MOTOR_STOP;						//停止等电机转回原点停
 										Channel.ch4.state = WORKEND;
 									}
+								#else
+										DEVICE4_MOTOR_STOP;						//停止等电机转回原点停
+										Channel.ch4.motor_state = 0;
+										Channel.ch4.state = WORKEND;
+									  if(Channel.ch4.send_num != Channel.ch4.motor_pulse){
+											no_medicine_flag = 1;
+										}
+								#endif
 								}
 								break;
 
 	case WORKEND:	if(Channel.ch4.motor_state == 0){ //电机停止后再计算状态	
 									if(Channel.ch4.send_num >0){
 										if(Channel.ch4.motor_pulse > 0){//电机转动了，
+											#if VERSIONS
 												if(Channel.ch4.send_actual == Channel.ch4.send_num){//实际发药等于需求发药
 													MCU_Host_Send.control.ch4_state = 2;							//发送状态给PC
 													MCU_Host_Send.control.ch4_num = Channel.ch4.send_actual;
@@ -637,6 +732,15 @@ static void CH4_Send_Medicine(void)
 													MCU_Host_Send.control.ch4_state = 2;
 													MCU_Host_Send.control.ch4_num = Channel.ch4.send_actual;
 												}
+											#else
+												if(no_medicine_flag ==0){
+													MCU_Host_Send.control.ch4_state = 2;							//发送状态给PC
+													MCU_Host_Send.control.ch4_num = Channel.ch4.motor_pulse;
+												}else{//发药机发药过程中无药的情况下上传错误信息给上位机
+													MCU_Host_Send.control.ch4_state = 2;							//发送状态给PC
+													MCU_Host_Send.control.ch4_num = 0xFF;
+												}
+											#endif
 												Channel.ch4.motor_state = 0;
 												DEVICE4_MOTOR_STOP;	//状态机结束，不管实际发药数和电机脉冲是否等于需求发药数，都必须停止电机，避免传感器坏时一直转
 										}else{//电机没有转动，机械故障

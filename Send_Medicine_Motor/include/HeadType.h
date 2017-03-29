@@ -50,6 +50,7 @@ typedef uint32	ulong;		/**< 32-bit value */
 #define IRQ_TIMEOUT							4			//中断软件延时时间
 #define IRQ_TIMEOUT1						10			//中断软件延时时间
 #define	MOTOR_START_DELAYTIME		40		//每个电机启动延时间隔
+#define VERSIONS  1
 
 /*************define type end*******************/
 

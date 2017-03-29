@@ -295,14 +295,26 @@ static void 	Motor4_pulse_IRQTimer(void)
 //=============================================================================
 static void 	Device1_Send_Actual_IRQTimer(void)
 {
+// 	 static u8 count_temp = 0;
 		if((Channel.ch1.state == WORKING)&&(Channel.ch1.send_actual_irqstate == 1)){//延时方法使用定时器延时，中断进来看状态，8MS后判断状态是否是真
 					Channel.ch1.send_actual_irqtime++;
-					if(IRQ_TIMEOUT <= Channel.ch1.send_actual_irqtime){
+// 			    if(count_temp==0){
+					if(IRQ_TIMEOUT1 <= Channel.ch1.send_actual_irqtime){
 						if(READ_DEVICE1_SENSOR3 == RESET){
 							Channel.ch1.send_actual++;
-						}
-						Channel.ch1.send_actual_irqstate = 0;
-						Channel.ch1.send_actual_irqtime = 0;
+// 							  count_temp = 1;
+							}
+// 					}else if(count_temp == 1){
+// 						if(IRQ_TIMEOUT1 <= Channel.ch1.send_actual_irqtime){
+// 							if(READ_DEVICE1_SENSOR3 == RESET){
+// 							  Channel.ch1.send_actual++;
+// 								count_temp = 0;
+// 								Channel.ch1.send_actual_irqstate = 0;
+// 								Channel.ch1.send_actual_irqtime = 0;
+// 							}
+// 						}
+								Channel.ch1.send_actual_irqstate = 0;
+								Channel.ch1.send_actual_irqtime = 0;
 					}
 		}
 }
@@ -317,7 +329,7 @@ static void 	Device2_Send_Actual_IRQTimer(void)
 {
 		if((Channel.ch2.state == WORKING)&&(Channel.ch2.send_actual_irqstate == 1)){//延时方法使用定时器延时，中断进来看状态，8MS后判断状态是否是真
 					Channel.ch2.send_actual_irqtime++;
-					if(IRQ_TIMEOUT <= Channel.ch2.send_actual_irqtime){
+					if(IRQ_TIMEOUT1 <= Channel.ch2.send_actual_irqtime){
 						if(READ_DEVICE2_SENSOR3 == RESET){
 							Channel.ch2.send_actual++;
 						}
@@ -337,7 +349,7 @@ static void 	Device3_Send_Actual_IRQTimer(void)
 {
 		if((Channel.ch3.state == WORKING)&&(Channel.ch3.send_actual_irqstate == 1)){//延时方法使用定时器延时，中断进来看状态，8MS后判断状态是否是真
 					Channel.ch3.send_actual_irqtime++;
-					if(IRQ_TIMEOUT <= Channel.ch3.send_actual_irqtime){
+					if(IRQ_TIMEOUT1 <= Channel.ch3.send_actual_irqtime){
 						if(READ_DEVICE3_SENSOR3 == RESET){
 							Channel.ch3.send_actual++;
 						}
@@ -357,7 +369,7 @@ static void 	Device4_Send_Actual_IRQTimer(void)
 {
 		if((Channel.ch4.state == WORKING)&&(Channel.ch4.send_actual_irqstate == 1)){//延时方法使用定时器延时，中断进来看状态，8MS后判断状态是否是真
 					Channel.ch4.send_actual_irqtime++;
-					if(IRQ_TIMEOUT <= Channel.ch4.send_actual_irqtime){
+					if(IRQ_TIMEOUT1 <= Channel.ch4.send_actual_irqtime){
 						if(READ_DEVICE4_SENSOR3 == RESET){
 							Channel.ch4.send_actual++;
 						}

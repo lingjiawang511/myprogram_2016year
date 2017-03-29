@@ -526,7 +526,7 @@ static void CH3_Send_Medicine(void)
 													MCU_Host_Send.control.ch3_num = Channel.ch3.send_actual;
 												}else{
 													MCU_Host_Send.control.ch3_state = 2;
-													MCU_Host_Send.control.ch3_num = Channel.ch1.send_actual;
+													MCU_Host_Send.control.ch3_num = Channel.ch3.send_actual;
 												}
 												Channel.ch3.motor_state = 0;
 												DEVICE3_MOTOR_STOP;	//状态机结束，不管实际发药数和电机脉冲是否等于需求发药数，都必须停止电机，避免传感器坏时一直转

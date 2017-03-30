@@ -252,7 +252,8 @@ static void CH1_Send_Medicine(void)
 									delay_ms(2);
 									if((READ_DEVICE1_KEY == READLOW)&&(READ_DEVICE1_SENSOR2 == READHIGH)){
 										DEVICE1_MOTOR_RUN;
-										Channel.ch1.motor_state = 1;										
+										Channel.ch1.motor_state = 1;	
+										Channel.ch1.err_flag = 0;										
 									}
 								}
 								break;
@@ -276,25 +277,32 @@ static void CH1_Send_Medicine(void)
 								}
 						  	}
 								break ;	
-	case WORKING: if((Channel.ch1.send_num<= Channel.ch1.send_actual)&&(Channel.ch1.timeoutstart ==0)){
+	case WORKING: 
+							#if VERSIONS
+								if((Channel.ch1.send_num<= Channel.ch1.send_actual)&&(Channel.ch1.timeoutstart ==0)){
 									Channel.ch1.timeoutstart = 1;
 									Channel.ch1.timeout = 0;
 								}
-								if((READ_DEVICE1_SENSOR2 == READHIGH)&&(Channel.ch1.timeoutstart ==0)){//工作过程中没有药了
-									temp++;
-									delay_ms(2);
-									if(temp == 3){
-										temp = 0;		
-										#if VERSIONS
-										Channel.ch1.timeoutstart = 1;
-										Channel.ch1.timeout = 0;
-										#else
+							#endif
+							  if((READ_DEVICE1_SENSOR2 == READHIGH)&&(Channel.ch1.timeoutstart ==0)){//工作过程中没有药了
+									delay_ms(5);
+									if((READ_DEVICE1_SENSOR2 == READHIGH)&&(Channel.ch1.timeoutstart ==0)){//工作过程中没有药了
+										temp++;
+										delay_ms(5);
+										if(temp == 3){
+											temp = 0;		
+								#if VERSIONS
+											Channel.ch1.timeoutstart = 1;
+											Channel.ch1.timeout = 0;
+								#else
+											Channel.ch1.timeoutstart = 1;
 											Channel.ch1.timeout = SEND_MEDICINE_TIMEOUT/4;
-										#endif
+								#endif
+										}
+									 }else{
+										temp = 0;	
 									}
-								}else{
-									temp = 0;	
-								}
+							  }
 							if((Channel.ch1.send_num <= Channel.ch1.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch1.timeout)){ //电机转过了那么多圈，就应该发那么多药
 // 									Channel.ch1.state = WORKEND;
 									Channel.ch1.timeoutstart = 0;
@@ -333,6 +341,7 @@ static void CH1_Send_Medicine(void)
 												}else{//发药机发药过程中无药的情况下上传错误信息给上位机
 													MCU_Host_Send.control.ch1_state = 2;							//发送状态给PC
 													MCU_Host_Send.control.ch1_num = 0xFF;
+													Channel.ch1.err_flag = 1;
 												}
 											#endif
 												Channel.ch1.motor_state = 0;
@@ -344,6 +353,7 @@ static void CH1_Send_Medicine(void)
 													}else{//上位机故障
 														MCU_Host_Send.control.ch1_num =0xFF;
 													}
+													Channel.ch1.err_flag = 1;
 													Channel.ch1.motor_state = 0;
 													DEVICE1_MOTOR_STOP;	//状态机结束，不管实际发药数和电机脉冲是否等于需求发药数，都必须停止电机，避免传感器坏时一直转
 										}
@@ -351,6 +361,7 @@ static void CH1_Send_Medicine(void)
 											MCU_Host_Send.control.ch1_state = 2;							//发送状态给PC
 											MCU_Host_Send.control.ch1_num =  0;
 									}
+										no_medicine_flag = 0;
 										Channel.ch1.state = END;
 							}
 								break ;	
@@ -360,7 +371,7 @@ static void CH1_Send_Medicine(void)
 											DEVICE1_MOTOR_RUN;	
 											Channel.ch1.motor_state = 1;
 										}
-								}
+							}
 								break;	//所有过程结束，等待其他通道完成工作
 	default :
 								break;	
@@ -388,7 +399,8 @@ static void CH2_Send_Medicine(void)
 									delay_ms(2);
 									if((READ_DEVICE2_KEY == READLOW)&&(READ_DEVICE2_SENSOR2 == READHIGH)){
 										DEVICE2_MOTOR_RUN;
-										Channel.ch2.motor_state = 1;										
+										Channel.ch2.motor_state = 1;
+                    Channel.ch2.err_flag = 0;										
 									}
 								}
 								break;
@@ -412,25 +424,32 @@ static void CH2_Send_Medicine(void)
 								}
 							}
 								break ;	
-	case WORKING: if((Channel.ch2.send_num<= Channel.ch2.send_actual)&&(Channel.ch2.timeoutstart ==0)){
+	case WORKING: 
+							#if VERSIONS
+							if((Channel.ch2.send_num<= Channel.ch2.send_actual)&&(Channel.ch2.timeoutstart ==0)){
 									Channel.ch2.timeoutstart = 1;
 									Channel.ch2.timeout = 0;
 								}
-								if((READ_DEVICE2_SENSOR2 == READHIGH)&&(Channel.ch2.timeoutstart ==0)){//工作过程中没有药了
-									temp++;
-									delay_ms(1);
-									if(temp == 3){
-										temp = 0;		
-										#if VERSIONS
-										Channel.ch2.timeoutstart = 1;
-										Channel.ch2.timeout = 0;
-										#else
+							#endif
+							 if((READ_DEVICE2_SENSOR2 == READHIGH)&&(Channel.ch2.timeoutstart ==0)){//工作过程中没有药了
+									delay_ms(5);
+									if((READ_DEVICE2_SENSOR2 == READHIGH)&&(Channel.ch2.timeoutstart ==0)){//工作过程中没有药了
+										temp++;
+										delay_ms(5);
+										if(temp == 3){
+											temp = 0;		
+								#if VERSIONS
+											Channel.ch2.timeoutstart = 1;
+											Channel.ch2.timeout = 0;
+								#else
+											Channel.ch2.timeoutstart = 1;
 											Channel.ch2.timeout = SEND_MEDICINE_TIMEOUT/4;
-										#endif
+								#endif
+										}
+									 }else{
+										temp = 0;	
 									}
-								}else{
-									temp = 0;	
-								}
+							  }
 							if((Channel.ch2.send_num <= Channel.ch2.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch2.timeout)){ //电机转过了那么多圈，就应该发那么多药
 // 									Channel.ch2.state = WORKEND;
 									Channel.ch2.timeoutstart = 0;
@@ -469,6 +488,7 @@ static void CH2_Send_Medicine(void)
 												}else{//发药机发药过程中无药的情况下上传错误信息给上位机
 													MCU_Host_Send.control.ch2_state = 2;							//发送状态给PC
 													MCU_Host_Send.control.ch2_num = 0xFF;
+													Channel.ch2.err_flag = 1;
 												}
 											#endif
 												Channel.ch2.motor_state = 0;
@@ -480,6 +500,7 @@ static void CH2_Send_Medicine(void)
 													}else{//上位机故障
 														MCU_Host_Send.control.ch2_num =0xFF;
 													}
+													Channel.ch2.err_flag = 1;
 													Channel.ch2.motor_state = 0;
 													DEVICE2_MOTOR_STOP;	//状态机结束，不管实际发药数和电机脉冲是否等于需求发药数，都必须停止电机，避免传感器坏时一直转
 										}
@@ -487,6 +508,7 @@ static void CH2_Send_Medicine(void)
 											MCU_Host_Send.control.ch2_state = 2;							//发送状态给PC
 											MCU_Host_Send.control.ch2_num =  0;
 									}
+										no_medicine_flag = 0;
 										Channel.ch2.state = END;
 								}
 								break ;	
@@ -523,7 +545,8 @@ static void CH3_Send_Medicine(void)
 									delay_ms(2);
 									if((READ_DEVICE3_KEY == READLOW)&&(READ_DEVICE3_SENSOR2 == READHIGH)){
 										DEVICE3_MOTOR_RUN;
-										Channel.ch3.motor_state = 1;										
+										Channel.ch3.motor_state = 1;
+										Channel.ch3.err_flag = 0;										
 									}
 								}
 								break;
@@ -547,25 +570,32 @@ static void CH3_Send_Medicine(void)
 								}
 							}
 								break ;	
-	case WORKING: if((Channel.ch3.send_num<= Channel.ch3.send_actual)&&(Channel.ch3.timeoutstart ==0)){
+	case WORKING: 
+							#if VERSIONS
+							 if((Channel.ch3.send_num<= Channel.ch3.send_actual)&&(Channel.ch3.timeoutstart ==0)){
 									Channel.ch3.timeoutstart = 1;
 									Channel.ch3.timeout = 0;
 								}
-								if((READ_DEVICE3_SENSOR2 == READHIGH)&&(Channel.ch3.timeoutstart ==0)){//工作过程中没有药了
-									temp++;
-									delay_ms(1);
-									if(temp == 3){
-										temp = 0;		
-										#if VERSIONS
-										Channe3.ch1.timeoutstart = 1;
-										Channe3.ch1.timeout = 0;
-										#else
+							#endif
+							  if((READ_DEVICE3_SENSOR2 == READHIGH)&&(Channel.ch3.timeoutstart ==0)){//工作过程中没有药了
+									delay_ms(5);
+									if((READ_DEVICE3_SENSOR2 == READHIGH)&&(Channel.ch3.timeoutstart ==0)){//工作过程中没有药了
+										temp++;
+										delay_ms(5);
+										if(temp == 3){
+											temp = 0;		
+								#if VERSIONS
+											Channel.ch3.timeoutstart = 1;
+											Channel.ch3.timeout = 0;
+								#else
+											Channel.ch3.timeoutstart = 1;
 											Channel.ch3.timeout = SEND_MEDICINE_TIMEOUT/4;
-										#endif
+								#endif
+										}
+									 }else{
+										temp = 0;	
 									}
-								}else{
-									temp = 0;	
-								}
+							  }
 							if((Channel.ch3.send_num <= Channel.ch3.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch3.timeout)){ //电机转过了那么多圈，就应该发那么多药
 // 									Channel.ch3.state = WORKEND;
 									Channel.ch3.timeoutstart = 0;
@@ -604,6 +634,7 @@ static void CH3_Send_Medicine(void)
 												}else{//发药机发药过程中无药的情况下上传错误信息给上位机
 													MCU_Host_Send.control.ch3_state = 2;							//发送状态给PC
 													MCU_Host_Send.control.ch3_num = 0xFF;
+													Channel.ch3.err_flag = 1;
 												}
 											#endif
 												Channel.ch3.motor_state = 0;
@@ -615,6 +646,7 @@ static void CH3_Send_Medicine(void)
 													}else{//上位机故障
 														MCU_Host_Send.control.ch3_num =0xFF;
 													}
+													Channel.ch3.err_flag = 1;
 													Channel.ch3.motor_state = 0;
 													DEVICE3_MOTOR_STOP;	//状态机结束，不管实际发药数和电机脉冲是否等于需求发药数，都必须停止电机，避免传感器坏时一直转
 										}
@@ -622,6 +654,7 @@ static void CH3_Send_Medicine(void)
 											MCU_Host_Send.control.ch3_state = 2;							//发送状态给PC
 											MCU_Host_Send.control.ch3_num =  0;
 									}
+									  no_medicine_flag = 0;
 										Channel.ch3.state = END;
 								}
 								break ;	
@@ -658,7 +691,8 @@ static void CH4_Send_Medicine(void)
 									delay_ms(2);
 									if((READ_DEVICE4_KEY == READLOW)&&(READ_DEVICE4_SENSOR2 == READHIGH)){
 										DEVICE4_MOTOR_RUN;
-										Channel.ch4.motor_state = 1;										
+										Channel.ch4.motor_state = 1;
+										Channel.ch4.err_flag = 0;
 									}
 								}
 								break;
@@ -682,25 +716,32 @@ static void CH4_Send_Medicine(void)
 								}
 							}
 								break ;	
-	case WORKING: if((Channel.ch4.send_num<= Channel.ch4.send_actual)&&(Channel.ch4.timeoutstart ==0)){
+	case WORKING: 
+							#if VERSIONS
+								if((Channel.ch4.send_num<= Channel.ch4.send_actual)&&(Channel.ch4.timeoutstart ==0)){
 									Channel.ch4.timeoutstart = 1;
 									Channel.ch4.timeout = 0;
 								}
-								if((READ_DEVICE4_SENSOR2 == READHIGH)&&(Channel.ch4.timeoutstart ==0)){//工作过程中没有药了
-									temp++;
-									delay_ms(1);
-									if(temp == 3){
-										temp = 0;		
-										#if VERSIONS
-										Channel.ch4.timeoutstart = 1;
-										Channel.ch4.timeout = 0;
-										#else
+							#endif
+							  if((READ_DEVICE4_SENSOR2 == READHIGH)&&(Channel.ch4.timeoutstart ==0)){//工作过程中没有药了
+									delay_ms(5);
+									if((READ_DEVICE4_SENSOR2 == READHIGH)&&(Channel.ch4.timeoutstart ==0)){//工作过程中没有药了
+										temp++;
+										delay_ms(5);
+										if(temp == 3){
+											temp = 0;		
+								#if VERSIONS
+											Channel.ch4.timeoutstart = 1;
+											Channel.ch4.timeout = 0;
+								#else
+											Channel.ch4.timeoutstart = 1;
 											Channel.ch4.timeout = SEND_MEDICINE_TIMEOUT/4;
-										#endif
+								#endif
+										}
+									 }else{
+										temp = 0;	
 									}
-								}else{
-									temp = 0;	
-								}
+							  }
 							if((Channel.ch4.send_num <= Channel.ch4.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch4.timeout)){ //电机转过了那么多圈，就应该发那么多药
 // 									Channel.ch4.state = WORKEND;
 									Channel.ch4.timeoutstart = 0;
@@ -739,6 +780,7 @@ static void CH4_Send_Medicine(void)
 												}else{//发药机发药过程中无药的情况下上传错误信息给上位机
 													MCU_Host_Send.control.ch4_state = 2;							//发送状态给PC
 													MCU_Host_Send.control.ch4_num = 0xFF;
+													Channel.ch4.err_flag = 1;
 												}
 											#endif
 												Channel.ch4.motor_state = 0;
@@ -750,6 +792,7 @@ static void CH4_Send_Medicine(void)
 													}else{//上位机故障
 														MCU_Host_Send.control.ch4_num =0xFF;
 													}
+													Channel.ch4.err_flag = 1;
 													Channel.ch4.motor_state = 0;
 													DEVICE4_MOTOR_STOP;	//状态机结束，不管实际发药数和电机脉冲是否等于需求发药数，都必须停止电机，避免传感器坏时一直转
 										}
@@ -757,6 +800,7 @@ static void CH4_Send_Medicine(void)
 											MCU_Host_Send.control.ch4_state = 2;							//发送状态给PC
 											MCU_Host_Send.control.ch4_num =  0;
 									}
+									  no_medicine_flag = 0;
 										Channel.ch4.state = END;
 								}
 								break ;
@@ -823,7 +867,8 @@ void CH_Send_Medicine(void)
 					delay_ms(1);
 					if((READ_DEVICE1_KEY == READLOW)&&(READ_DEVICE1_SENSOR2 == READHIGH)){
 						DEVICE1_MOTOR_RUN;
-						Channel.ch1.motor_state = 1;						
+						Channel.ch1.motor_state = 1;	
+						Channel.ch1.err_flag = 0;							
 					}
 			}
 
@@ -831,21 +876,24 @@ void CH_Send_Medicine(void)
 					delay_ms(1);
 					if((READ_DEVICE2_KEY == READLOW)&&(READ_DEVICE2_SENSOR2 == READHIGH)){
 						DEVICE2_MOTOR_RUN;
-						Channel.ch2.motor_state = 1;						
+						Channel.ch2.motor_state = 1;
+						Channel.ch2.err_flag = 0;							
 					}
 			}
 			if((READ_DEVICE3_KEY == READLOW)&&(READ_DEVICE3_SENSOR2 == READHIGH)){		//从机模式任何时候都可以复位
 					delay_ms(1);
 					if((READ_DEVICE3_KEY == READLOW)&&(READ_DEVICE3_SENSOR2 == READHIGH)){
 						DEVICE3_MOTOR_RUN;
-						Channel.ch3.motor_state = 1;						
+						Channel.ch3.motor_state = 1;	
+						Channel.ch3.err_flag = 0;	
 					}
 			}
 			if((READ_DEVICE4_KEY == READLOW)&&(READ_DEVICE4_SENSOR2 == READHIGH)){		//从机模式任何时候都可以复位
 					delay_ms(1);
 					if((READ_DEVICE4_KEY == READLOW)&&(READ_DEVICE4_SENSOR2 == READHIGH)){
 						DEVICE4_MOTOR_RUN;
-						Channel.ch4.motor_state = 1;						
+						Channel.ch4.motor_state = 1;
+            Channel.ch4.err_flag = 0;							
 					}
 			}			
   }  
@@ -859,26 +907,82 @@ void CH_Send_Medicine(void)
 //=============================================================================
 void CH_Light_Control(void )
 {
-	if(Channel.ch1.motor_state == 1 ){
-			DEVICE1_LIGHT_ON;
+	static u8 ch1_blink_temp=0;
+	static u8 ch2_blink_temp=0;
+	static u8 ch3_blink_temp=0;
+	static u8 ch4_blink_temp=0;
+	if(Channel.ch1.err_flag == 0){
+		if(Channel.ch1.motor_state == 1 ){
+				DEVICE1_LIGHT_ON;
+		}else{
+				DEVICE1_LIGHT_OFF;
+		}
 	}else{
-			DEVICE1_LIGHT_OFF;
+			 if(Channel.ch1.err_flash_time == 0){
+				 if(ch1_blink_temp == 0){
+						DEVICE1_LIGHT_ON;
+					  ch1_blink_temp = 1;
+					}else{
+            DEVICE1_LIGHT_OFF;
+						ch1_blink_temp = 0;
+					}
+					Channel.ch1.err_flash_time = 100;
+			}
 	}
-	if(Channel.ch2.motor_state == 1 ){
-			DEVICE2_LIGHT_ON;
+	if(Channel.ch2.err_flag == 0){
+		if(Channel.ch2.motor_state == 1 ){
+				DEVICE2_LIGHT_ON;
+		}else{
+				DEVICE2_LIGHT_OFF;
+		}
 	}else{
-			DEVICE2_LIGHT_OFF;
+			 if(Channel.ch2.err_flash_time == 0){
+				 if(ch2_blink_temp == 0){
+						DEVICE2_LIGHT_ON;
+					  ch2_blink_temp = 1;
+					}else{
+            DEVICE2_LIGHT_OFF;
+						ch2_blink_temp = 0;
+					}
+					Channel.ch2.err_flash_time = 100;
+			}
 	}
-	if(Channel.ch3.motor_state == 1 ){
-			DEVICE3_LIGHT_ON;
+	if(Channel.ch3.err_flag == 0){
+		if(Channel.ch3.motor_state == 1 ){
+				DEVICE3_LIGHT_ON;
+		}else{
+				DEVICE3_LIGHT_OFF;
+		}
 	}else{
-			DEVICE3_LIGHT_OFF;
+			 if(Channel.ch3.err_flash_time == 0){
+				 if(ch3_blink_temp == 0){
+						DEVICE3_LIGHT_ON;
+					  ch3_blink_temp = 1;
+					}else{
+            DEVICE3_LIGHT_OFF;
+						ch3_blink_temp = 0;
+					}
+					Channel.ch3.err_flash_time = 100;
+			}
 	}
-	if(Channel.ch4.motor_state == 1 ){
-			DEVICE4_LIGHT_ON;
+	if(Channel.ch4.err_flag == 0){
+		if(Channel.ch4.motor_state == 1 ){
+				DEVICE4_LIGHT_ON;
+		}else{
+				DEVICE4_LIGHT_OFF;
+		}
 	}else{
-			DEVICE4_LIGHT_OFF;
-	}	
+			 if(Channel.ch4.err_flash_time == 0){
+				 if(ch4_blink_temp == 0){
+						DEVICE4_LIGHT_ON;
+					  ch4_blink_temp = 1;
+					}else{
+            DEVICE4_LIGHT_OFF;
+						ch4_blink_temp = 0;
+					}
+					Channel.ch4.err_flash_time = 100;
+			}
+	}
 }
 //=============================================================================
 //函数名称:Send_Medicine_Time_ISR
@@ -955,8 +1059,18 @@ void Send_Medicine_Time_ISR(void )
 			Channel.ch4.timeout++;
 		}
 	}
+	if(Channel.ch1.err_flash_time > 0){
+			Channel.ch1.err_flash_time--;
+	}
+	if(Channel.ch2.err_flash_time > 0){
+			Channel.ch2.err_flash_time--;
+	}
+	if(Channel.ch3.err_flash_time > 0){
+			Channel.ch3.err_flash_time--;
+	}
+	if(Channel.ch4.err_flash_time > 0){
+			Channel.ch4.err_flash_time--;
+	}
 }
-
-
 
 

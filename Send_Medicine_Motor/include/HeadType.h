@@ -50,7 +50,7 @@ typedef uint32	ulong;		/**< 32-bit value */
 #define IRQ_TIMEOUT							4			//中断软件延时时间
 #define IRQ_TIMEOUT1						10			//中断软件延时时间
 #define	MOTOR_START_DELAYTIME		40		//每个电机启动延时间隔
-#define VERSIONS  1
+#define VERSIONS  0
 
 /*************define type end*******************/
 
@@ -170,6 +170,8 @@ typedef struct{
 	u8 send_actual_irqtime;		//实时计数中断软件滤波时间
 	u8 motor_start_state;			//电机启动延时状态
 	u16 motor_start_time;			//电机延时启动时间
+	u8 err_flag;
+	u16 err_flash_time;
 }CH_Work_Type;
 
 typedef struct{

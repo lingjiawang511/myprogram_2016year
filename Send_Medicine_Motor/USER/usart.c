@@ -421,16 +421,20 @@ static u8  SLAVE_Rec_Comm(void)
 							Channel.ch4.state = READY;
 							break;
 		}
-		switch(PC_Host_Rec.control.belt_state){
+		switch(PC_Host_Rec.control.ch5_state){
 		case 0x00:	 
+							Channel.ch5.send_num = 0;
+							Channel.ch5.state = READY;
 							break;
-		case 0x01:belt.send_time = PC_Host_Rec.control.belt_time;	
-							belt.actual_time = belt.send_time *400; //*2s
-							belt.state = READY ;
-							PC_Host_Rec.control.belt_state = 0;
+		case 0x01:Channel.ch5.send_num = PC_Host_Rec.control.ch4_num;	
+							Channel.ch5.send_actual = 0;
+							Channel.ch5.state = READY ;
+							PC_Host_Rec.control.ch4_state = 0;
 							break;
-		default : break;
-		}		
+		default :	Channel.ch5.send_num = 0;
+							Channel.ch5.state = READY;
+							break;
+		}	
 			res = 0;	
 	}else{
 		 res = 1;

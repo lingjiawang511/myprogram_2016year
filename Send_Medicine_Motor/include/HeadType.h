@@ -121,8 +121,8 @@ typedef struct{
 	u8  ch3_num;
 	u8  ch4_state;
 	u8  ch4_num;
-	u8  belt_state;
-	u8  belt_time;
+	u8  ch5_state;
+	u8  ch5_num;
 	u16 crc16_ccitt; 
 	u8  frame_end1;
 	u8  frame_end2;
@@ -184,6 +184,7 @@ typedef struct{
 	CH_Work_Type ch2;
 	CH_Work_Type ch3;
 	CH_Work_Type ch4;
+	CH_Work_Type ch5;
 }CH_Work;
 /*************struct type end*******************/
 

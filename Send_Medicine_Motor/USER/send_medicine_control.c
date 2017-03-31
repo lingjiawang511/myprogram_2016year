@@ -187,6 +187,7 @@ static void CH_Param_Init(void)
 	Channel.ch2.state = RESERVE;
 	Channel.ch3.state = RESERVE;
 	Channel.ch4.state = RESERVE;
+	Channel.ch5.state = RESERVE;
 }
 //=============================================================================
 //函数名称:Param_Init
@@ -817,6 +818,151 @@ static void CH4_Send_Medicine(void)
 	}	
 }
 //=============================================================================
+//函数名称:CH5_Send_Medicine
+//功能概要:通道5状态机处理发药
+//参数名称:无
+//函数返回:无
+//注意    :无
+//=============================================================================
+static void CH5_Send_Medicine(void)
+{
+	static u8 temp;
+	#if (VERSIONS==0)
+	static u8 no_medicine_flag = 0;
+	#endif
+	switch(Channel.ch5.state){
+	case RESERVE:	Channel.ch5.motor_pulse = 0;
+								Channel.ch5.send_actual = 0;
+								if((READ_DEVICE5_KEY == READLOW)&&(READ_DEVICE5_SENSOR2 == READHIGH)){		//发药完成或者空闲并且发药机无药时可以复位
+									delay_ms(2);
+									if((READ_DEVICE5_KEY == READLOW)&&(READ_DEVICE5_SENSOR2 == READHIGH)){
+										DEVICE5_MOTOR_RUN;
+										Channel.ch5.motor_state = 1;
+										Channel.ch5.err_flag = 0;
+									}
+								}
+								break;
+	case READY:	if((Channel.ch2.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&(Channel.ch1.motor_start_state != 1)){
+									if((Channel.ch5.send_num >0)&&(Channel.ch5.motor_state == 0 )){									
+										if(READ_DEVICE5_SENSOR2 == READLOW){//发药机上有药，启动电机
+											delay_ms(1);
+											if(READ_DEVICE5_SENSOR2 == READLOW){
+													Channel.ch5.motor_pulse = 0;
+													Channel.ch5.send_actual = 0;
+													Channel.ch5.state = WORKING;
+													DEVICE5_MOTOR_RUN;
+													Channel.ch5.motor_state = 1;
+													Channel.ch5.motor_start_state = 1;
+											}else{Channel.ch5.state = WORKEND;}
+										}else{	//发药机上没有药，结束
+											Channel.ch5.state = WORKEND;
+										}									
+								}else{
+									Channel.ch5.state = WORKEND; 
+								}
+							}
+								break ;	
+	case WORKING: 
+							#if VERSIONS
+								if((Channel.ch5.send_num<= Channel.ch5.send_actual)&&(Channel.ch5.timeoutstart ==0)){
+									Channel.ch5.timeoutstart = 1;
+									Channel.ch5.timeout = 0;
+								}
+							#endif
+							  if((READ_DEVICE5_SENSOR2 == READHIGH)&&(Channel.ch5.timeoutstart ==0)){//工作过程中没有药了
+									 delay_ms(2);
+									if((READ_DEVICE5_SENSOR2 == READHIGH)&&(Channel.ch5.timeoutstart ==0)){//工作过程中没有药了
+										temp++;
+										delay_ms(2);
+										if(temp == 20){
+											temp = 0;		
+								#if VERSIONS
+											Channel.ch5.timeoutstart = 1;
+											Channel.ch5.timeout = 0;
+								#else
+											Channel.ch5.timeoutstart = 1;
+											Channel.ch5.timeout = SEND_MEDICINE_TIMEOUT/4;
+								#endif
+										}
+									 }else{
+										temp = 0;	
+									}
+							  }
+							if((Channel.ch5.send_num <= Channel.ch5.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch5.timeout)){ //电机转过了那么多圈，就应该发那么多药
+// 									Channel.ch4.state = WORKEND;
+									Channel.ch5.timeoutstart = 0;
+									Channel.ch5.timeout = 0;
+								#if VERSIONS
+								  if(Channel.ch5.motor_state == 0){
+								//	DEVICE4_MOTOR_STOP;						//停止等电机转回原点停
+										Channel.ch5.state = WORKEND;
+									}
+								#else
+										DEVICE5_MOTOR_STOP;						//停止等电机转回原点停
+										Channel.ch5.motor_state = 0;
+										Channel.ch5.state = WORKEND;
+									  if(Channel.ch5.send_num != Channel.ch5.motor_pulse){
+											no_medicine_flag = 1;
+										}
+								#endif
+								}
+								break;
+
+	case WORKEND:	if(Channel.ch5.motor_state == 0){ //电机停止后再计算状态	
+									if(Channel.ch5.send_num >0){
+										if(Channel.ch5.motor_pulse > 0){//电机转动了，
+											#if VERSIONS
+												if(Channel.ch5.send_actual == Channel.ch5.send_num){//实际发药等于需求发药
+													MCU_Host_Send.control.ch5_state = 2;							//发送状态给PC
+													MCU_Host_Send.control.ch5_num = Channel.ch5.send_actual;
+												}else{
+													MCU_Host_Send.control.ch5_state = 2;
+													MCU_Host_Send.control.ch5_num = Channel.ch5.send_actual;
+												}
+											#else
+												if(no_medicine_flag ==0){
+													MCU_Host_Send.control.ch5_state = 2;							//发送状态给PC
+													MCU_Host_Send.control.ch5_num = Channel.ch5.motor_pulse;
+												}else{//发药机发药过程中无药的情况下上传错误信息给上位机
+													MCU_Host_Send.control.ch5_state = 2;							//发送状态给PC
+													MCU_Host_Send.control.ch5_num = 0xFF;
+													Channel.ch5.err_flag = 1;
+												}
+											#endif
+												Channel.ch5.motor_state = 0;
+												DEVICE5_MOTOR_STOP;	//状态机结束，不管实际发药数和电机脉冲是否等于需求发药数，都必须停止电机，避免传感器坏时一直转
+										}else{//电机没有转动，机械故障
+													MCU_Host_Send.control.ch5_state = 0XFF;
+													if(Channel.ch5.send_num >0){//下位机故障
+														MCU_Host_Send.control.ch5_num =  0;
+													}else{//上位机故障
+														MCU_Host_Send.control.ch5_num =0xFF;
+													}
+													Channel.ch5.err_flag = 1;
+													Channel.ch5.motor_state = 0;
+													DEVICE5_MOTOR_STOP;	//状态机结束，不管实际发药数和电机脉冲是否等于需求发药数，都必须停止电机，避免传感器坏时一直转
+										}
+									}else{
+											MCU_Host_Send.control.ch5_state = 2;							//发送状态给PC
+											MCU_Host_Send.control.ch5_num =  0;
+									}
+									  no_medicine_flag = 0;
+										Channel.ch5.state = END;
+								}
+								break ;
+	case END:	if((READ_DEVICE5_KEY == READLOW)&&(READ_DEVICE5_SENSOR2 == READHIGH)){		//发药完成或者空闲时可以复位
+										delay_ms(1);
+										if((READ_DEVICE5_KEY == READLOW)&&(READ_DEVICE5_SENSOR2 == READHIGH)){
+											DEVICE5_MOTOR_RUN;	
+											Channel.ch5.motor_state = 1;
+										}
+								}
+							break;
+	default :
+								break;	
+	}	
+}
+//=============================================================================
 //函数名称:CH_Send_Medicine
 //功能概要:所有通道发药控制
 //参数名称:无
@@ -831,6 +977,7 @@ void CH_Send_Medicine(void)
 		CH2_Send_Medicine();
 		CH3_Send_Medicine();
 		CH4_Send_Medicine();
+		CH5_Send_Medicine();
 		if((Channel.ch1.state == END)&&(Channel.ch2.state == END)&&(Channel.ch3.state == END)&&(Channel.ch4.state == END)){
 			while(Usart1_Control_Data.tx_count);//所有通道都没药这种特殊情况需等待串口发送完数据再回复PC
 			Usart1_Control_Data.tx_count = 0;
@@ -847,8 +994,8 @@ void CH_Send_Medicine(void)
 			Usart1_Control_Data.txbuf[Usart1_Control_Data.tx_count++] = MCU_Host_Send.control.ch3_num;
 			Usart1_Control_Data.txbuf[Usart1_Control_Data.tx_count++] = MCU_Host_Send.control.ch4_state;
 			Usart1_Control_Data.txbuf[Usart1_Control_Data.tx_count++] = MCU_Host_Send.control.ch4_num;	
-			Usart1_Control_Data.txbuf[Usart1_Control_Data.tx_count++] = MCU_Host_Send.control.belt_state;
-			Usart1_Control_Data.txbuf[Usart1_Control_Data.tx_count++] = MCU_Host_Send.control.belt_time;
+			Usart1_Control_Data.txbuf[Usart1_Control_Data.tx_count++] = MCU_Host_Send.control.ch5_state;
+			Usart1_Control_Data.txbuf[Usart1_Control_Data.tx_count++] = MCU_Host_Send.control.ch5_num;
 			crc=CRC_GetCCITT(Usart1_Control_Data.txbuf,Usart1_Control_Data.tx_count);
 			Usart1_Control_Data.txbuf[Usart1_Control_Data.tx_count++] = (crc>>8)&0xFF; 
 			Usart1_Control_Data.txbuf[Usart1_Control_Data.tx_count++] = crc&0xFF;
@@ -895,6 +1042,14 @@ void CH_Send_Medicine(void)
 						Channel.ch4.motor_state = 1;
             Channel.ch4.err_flag = 0;							
 					}
+			}		
+			if((READ_DEVICE5_KEY == READLOW)&&(READ_DEVICE5_SENSOR2 == READHIGH)){		//从机模式任何时候都可以复位
+					delay_ms(1);
+					if((READ_DEVICE5_KEY == READLOW)&&(READ_DEVICE5_SENSOR2 == READHIGH)){
+						DEVICE5_MOTOR_RUN;
+						Channel.ch5.motor_state = 1;
+            Channel.ch5.err_flag = 0;							
+					}
 			}			
   }  
 }
@@ -911,6 +1066,7 @@ void CH_Light_Control(void )
 	static u8 ch2_blink_temp=0;
 	static u8 ch3_blink_temp=0;
 	static u8 ch4_blink_temp=0;
+	static u8 ch5_blink_temp=0;
 	if(Channel.ch1.err_flag == 0){
 		if(Channel.ch1.motor_state == 1 ){
 				DEVICE1_LIGHT_ON;
@@ -983,6 +1139,24 @@ void CH_Light_Control(void )
 					Channel.ch4.err_flash_time = 100;
 			}
 	}
+	if(Channel.ch5.err_flag == 0){
+		if(Channel.ch5.motor_state == 1 ){
+				DEVICE5_LIGHT_ON;
+		}else{
+  			DEVICE5_LIGHT_OFF;
+		}
+	}else{
+			 if(Channel.ch5.err_flash_time == 0){
+				 if(ch5_blink_temp == 0){
+						DEVICE5_LIGHT_ON;
+					  ch5_blink_temp = 1;
+					}else{
+            DEVICE5_LIGHT_OFF;
+						ch5_blink_temp = 0;
+					}
+					Channel.ch5.err_flash_time = 100;
+			}
+	}
 }
 //=============================================================================
 //函数名称:Send_Medicine_Time_ISR
@@ -1039,6 +1213,13 @@ void Send_Medicine_Time_ISR(void )
 				Channel.ch4.motor_start_time = 0;
 			}
 	}
+	if(Channel.ch5.motor_start_state == 1){
+			Channel.ch5.motor_start_time++;
+			if(Channel.ch5.motor_start_time >= MOTOR_START_DELAYTIME){
+				Channel.ch5.motor_start_state = 0;
+				Channel.ch5.motor_start_time = 0;
+			}
+	}
 	if(Channel.ch1.state == WORKING){
 		if(Channel.ch1.timeoutstart == 1){
 			Channel.ch1.timeout++;
@@ -1059,17 +1240,26 @@ void Send_Medicine_Time_ISR(void )
 			Channel.ch4.timeout++;
 		}
 	}
+	if(Channel.ch5.state == WORKING){
+		if(Channel.ch5.timeoutstart == 1){
+			Channel.ch5.timeout++;
+		}
+	}
 	if(Channel.ch1.err_flash_time > 0){
 			Channel.ch1.err_flash_time--;
 	}
 	if(Channel.ch2.err_flash_time > 0){
 			Channel.ch2.err_flash_time--;
 	}
+	
 	if(Channel.ch3.err_flash_time > 0){
 			Channel.ch3.err_flash_time--;
 	}
 	if(Channel.ch4.err_flash_time > 0){
 			Channel.ch4.err_flash_time--;
+	}
+	if(Channel.ch5.err_flash_time > 0){
+			Channel.ch5.err_flash_time--;
 	}
 }
 

@@ -1,6 +1,6 @@
 #include"HeadType.h"	
 
-
+#define FILTER_TIME  150;  //滤波时间=N*2ms
 //=============================================================================
 //函数名称:EXTIX0_Init
 //功能概要:外部中断0初始化
@@ -190,12 +190,16 @@ static void  EXTIX15_10_Init(void )
 //=============================================================================
 static void 	Motor1_pulse_IRQTimer(void)
 {
+	 static u16 filter_time = 0;
 		if(MCU_State == HOST){
 				if((Channel.ch1.state == WORKING)&&(Channel.ch1.motor_irqstate == 1)){//延时方法使用定时器延时，中断进来看状态，8MS后判断状态是否是真
 					Channel.ch1.motor_irqtime++;
 					if(IRQ_TIMEOUT <= Channel.ch1.motor_irqtime){
 						if(READ_DEVICE1_SENSOR1 == RESET){
-							Channel.ch1.motor_pulse++;
+							if(filter_time == 0){
+								Channel.ch1.motor_pulse++;
+								filter_time = FILTER_TIME;
+							}
 						}
 						Channel.ch1.motor_irqstate = 0;
 						Channel.ch1.motor_irqtime = 0;
@@ -205,6 +209,11 @@ static void 	Motor1_pulse_IRQTimer(void)
 							Channel.ch1.motor_state	= 0;					
 						}
 				}
+				if(filter_time >0){
+					filter_time--;
+				}
+		}else{
+			filter_time = 0;
 		}
 }
 //=============================================================================
@@ -216,12 +225,16 @@ static void 	Motor1_pulse_IRQTimer(void)
 //=============================================================================
 static void 	Motor2_pulse_IRQTimer(void)
 {
+	static u16 filter_time = 0;
 		if(MCU_State == HOST){
 				if((Channel.ch2.state == WORKING)&&(Channel.ch2.motor_irqstate == 1)){//延时方法使用定时器延时，中断进来看状态，8MS后判断状态是否是真
 					Channel.ch2.motor_irqtime++;
 					if(IRQ_TIMEOUT <= Channel.ch2.motor_irqtime){
 						if(READ_DEVICE2_SENSOR1 == RESET){
-							Channel.ch2.motor_pulse++;
+							if(filter_time == 0){
+								Channel.ch2.motor_pulse++;
+								filter_time = FILTER_TIME;
+							}
 						}
 						Channel.ch2.motor_irqstate = 0;
 						Channel.ch2.motor_irqtime = 0;
@@ -231,6 +244,11 @@ static void 	Motor2_pulse_IRQTimer(void)
 							Channel.ch2.motor_state	= 0;					
 						}
 				}
+				if(filter_time >0){
+					filter_time--;
+				}
+		}else{
+			filter_time = 0;
 		}
 }
 //=============================================================================
@@ -242,12 +260,16 @@ static void 	Motor2_pulse_IRQTimer(void)
 //=============================================================================
 static void 	Motor3_pulse_IRQTimer(void)
 {
+	static u16 filter_time = 0;
 		if(MCU_State == HOST){
 				if((Channel.ch3.state == WORKING)&&(Channel.ch3.motor_irqstate == 1)){//延时方法使用定时器延时，中断进来看状态，8MS后判断状态是否是真
 					Channel.ch3.motor_irqtime++;
 					if(IRQ_TIMEOUT <= Channel.ch3.motor_irqtime){
 						if(READ_DEVICE3_SENSOR1 == RESET){
-							Channel.ch3.motor_pulse++;
+							if(filter_time == 0){
+								Channel.ch3.motor_pulse++;
+								filter_time = FILTER_TIME;
+							}
 						}
 						Channel.ch3.motor_irqstate = 0;
 						Channel.ch3.motor_irqtime = 0;
@@ -257,6 +279,11 @@ static void 	Motor3_pulse_IRQTimer(void)
 							Channel.ch3.motor_state	= 0;					
 						}
 				}
+				if(filter_time >0){
+					filter_time--;
+				}
+		}else{
+			filter_time = 0;
 		}
 }
 //=============================================================================
@@ -268,12 +295,16 @@ static void 	Motor3_pulse_IRQTimer(void)
 //=============================================================================
 static void 	Motor4_pulse_IRQTimer(void)
 {
+	static u16 filter_time = 0;
 		if(MCU_State == HOST){
 				if((Channel.ch4.state == WORKING)&&(Channel.ch4.motor_irqstate == 1)){//延时方法使用定时器延时，中断进来看状态，8MS后判断状态是否是真
 					Channel.ch4.motor_irqtime++;
 					if(IRQ_TIMEOUT <= Channel.ch4.motor_irqtime){
 						if(READ_DEVICE4_SENSOR1 == RESET){
-							Channel.ch4.motor_pulse++;
+							if(filter_time == 0){
+								Channel.ch4.motor_pulse++;
+								filter_time = FILTER_TIME;
+							}
 						}
 						Channel.ch4.motor_irqstate = 0;
 						Channel.ch4.motor_irqtime = 0;
@@ -283,6 +314,11 @@ static void 	Motor4_pulse_IRQTimer(void)
 							Channel.ch4.motor_state	= 0;					
 						}
 				}
+				if(filter_time >0){
+					filter_time--;
+				}
+		}else{
+			filter_time = 0;
 		}
 }
 

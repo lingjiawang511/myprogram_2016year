@@ -1,0 +1,12 @@
+Board Information Report
+Filename     : G:\program\2016year\myprogram_2016year\Send_Medicine_Motor\hardware\Send_Medicine_Motor\Send_Medicine_Motor.PcbDoc
+Date         : 2017/3/31
+Time         : 9:57:08
+Time Elapsed : 00:00:00
+
+Routing Information
+    Routing completion, 100.00%
+    Connections, 686
+    Connections routed, 686
+    Connections remaining, 0
+count : 4

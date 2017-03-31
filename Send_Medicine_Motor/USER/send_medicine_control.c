@@ -285,11 +285,11 @@ static void CH1_Send_Medicine(void)
 								}
 							#endif
 							  if((READ_DEVICE1_SENSOR2 == READHIGH)&&(Channel.ch1.timeoutstart ==0)){//工作过程中没有药了
-									delay_ms(5);
+									delay_ms(2);
 									if((READ_DEVICE1_SENSOR2 == READHIGH)&&(Channel.ch1.timeoutstart ==0)){//工作过程中没有药了
 										temp++;
-										delay_ms(5);
-										if(temp == 3){
+										delay_ms(2);
+										if(temp == 20){
 											temp = 0;		
 								#if VERSIONS
 											Channel.ch1.timeoutstart = 1;
@@ -432,11 +432,11 @@ static void CH2_Send_Medicine(void)
 								}
 							#endif
 							 if((READ_DEVICE2_SENSOR2 == READHIGH)&&(Channel.ch2.timeoutstart ==0)){//工作过程中没有药了
-									delay_ms(5);
+									delay_ms(2);
 									if((READ_DEVICE2_SENSOR2 == READHIGH)&&(Channel.ch2.timeoutstart ==0)){//工作过程中没有药了
 										temp++;
-										delay_ms(5);
-										if(temp == 3){
+										delay_ms(2);
+										if(temp == 20){
 											temp = 0;		
 								#if VERSIONS
 											Channel.ch2.timeoutstart = 1;
@@ -578,11 +578,11 @@ static void CH3_Send_Medicine(void)
 								}
 							#endif
 							  if((READ_DEVICE3_SENSOR2 == READHIGH)&&(Channel.ch3.timeoutstart ==0)){//工作过程中没有药了
-									delay_ms(5);
+									delay_ms(2);
 									if((READ_DEVICE3_SENSOR2 == READHIGH)&&(Channel.ch3.timeoutstart ==0)){//工作过程中没有药了
 										temp++;
-										delay_ms(5);
-										if(temp == 3){
+										delay_ms(2);
+										if(temp == 20){
 											temp = 0;		
 								#if VERSIONS
 											Channel.ch3.timeoutstart = 1;
@@ -724,11 +724,11 @@ static void CH4_Send_Medicine(void)
 								}
 							#endif
 							  if((READ_DEVICE4_SENSOR2 == READHIGH)&&(Channel.ch4.timeoutstart ==0)){//工作过程中没有药了
-									delay_ms(5);
+									 delay_ms(2);
 									if((READ_DEVICE4_SENSOR2 == READHIGH)&&(Channel.ch4.timeoutstart ==0)){//工作过程中没有药了
 										temp++;
-										delay_ms(5);
-										if(temp == 3){
+										delay_ms(2);
+										if(temp == 20){
 											temp = 0;		
 								#if VERSIONS
 											Channel.ch4.timeoutstart = 1;

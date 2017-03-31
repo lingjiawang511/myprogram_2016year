@@ -1,0 +1,15 @@
+Removed Pin From Net: NetName=GND Pin=U25-31
+Removed Pin From Net: NetName=GND Pin=U25-47
+Change Component Comment : Designator=U25 Old Comment=STM32F103RBT6 New Comment=STM32F103RCT6
+Added Component: Designator=C81(C0805tan)
+Added Component: Designator=C82(C0805tan)
+Added Pin To Net: NetName=GND Pin=C81-1
+Added Pin To Net: NetName=GND Pin=C82-2
+Added Pin To Net: NetName=NetC81_2 Pin=C81-2
+Added Pin To Net: NetName=NetC81_2 Pin=U25-47
+Added Net: Name=NetC81_2
+Added Pin To Net: NetName=NetC82_1 Pin=C82-1
+Added Pin To Net: NetName=NetC82_1 Pin=U25-31
+Added Net: Name=NetC82_1
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component C81 Cap
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component C82 Cap

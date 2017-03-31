@@ -969,7 +969,7 @@ void CH_Light_Control(void )
 		if(Channel.ch4.motor_state == 1 ){
 				DEVICE4_LIGHT_ON;
 		}else{
-				DEVICE4_LIGHT_OFF;
+  				DEVICE4_LIGHT_OFF;
 		}
 	}else{
 			 if(Channel.ch4.err_flash_time == 0){

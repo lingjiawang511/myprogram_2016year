@@ -1,0 +1,55 @@
+Added Component: Designator=C38(0805)
+Added Component: Designator=CH1(CH3.96-8PIN)
+Added Component: Designator=CH2(CH3.96-8PIN)
+Added Component: Designator=CH3(CH3.96-8PIN)
+Added Component: Designator=CH4(CH3.96-8PIN)
+Added Component: Designator=CH5(CH3.96-8PIN)
+Added Pin To Net: NetName=GND Pin=C38-1
+Added Pin To Net: NetName=KOUT5 Pin=C38-2
+Added Pin To Net: NetName=M1 Pin=CH1-1
+Added Pin To Net: NetName=LED1 Pin=CH1-2
+Added Pin To Net: NetName=KIN1 Pin=CH1-3
+Added Pin To Net: NetName=SIN11 Pin=CH1-4
+Added Pin To Net: NetName=SIN12 Pin=CH1-5
+Added Pin To Net: NetName=SIN13 Pin=CH1-6
+Added Pin To Net: NetName=+24V Pin=CH1-7
+Added Pin To Net: NetName=24V0 Pin=CH1-8
+Added Pin To Net: NetName=M2 Pin=CH2-1
+Added Pin To Net: NetName=LED2 Pin=CH2-2
+Added Pin To Net: NetName=KIN1 Pin=CH2-3
+Added Pin To Net: NetName=SIN21 Pin=CH2-4
+Added Pin To Net: NetName=SIN22 Pin=CH2-5
+Added Pin To Net: NetName=SIN23 Pin=CH2-6
+Added Pin To Net: NetName=+24V Pin=CH2-7
+Added Pin To Net: NetName=24V0 Pin=CH2-8
+Added Pin To Net: NetName=M5 Pin=CH3-1
+Added Pin To Net: NetName=LED5 Pin=CH3-2
+Added Pin To Net: NetName=KIN5 Pin=CH3-3
+Added Pin To Net: NetName=SIN51 Pin=CH3-4
+Added Pin To Net: NetName=SIN52 Pin=CH3-5
+Added Pin To Net: NetName=SIN53 Pin=CH3-6
+Added Pin To Net: NetName=+24V Pin=CH3-7
+Added Pin To Net: NetName=24V0 Pin=CH3-8
+Added Pin To Net: NetName=24V0 Pin=CH4-1
+Added Pin To Net: NetName=+24V Pin=CH4-2
+Added Pin To Net: NetName=SIN33 Pin=CH4-3
+Added Pin To Net: NetName=SIN32 Pin=CH4-4
+Added Pin To Net: NetName=SIN31 Pin=CH4-5
+Added Pin To Net: NetName=KIN3 Pin=CH4-6
+Added Pin To Net: NetName=LED3 Pin=CH4-7
+Added Pin To Net: NetName=M3 Pin=CH4-8
+Added Pin To Net: NetName=24V0 Pin=CH5-1
+Added Pin To Net: NetName=+24V Pin=CH5-2
+Added Pin To Net: NetName=SIN43 Pin=CH5-3
+Added Pin To Net: NetName=SIN42 Pin=CH5-4
+Added Pin To Net: NetName=SIN41 Pin=CH5-5
+Added Pin To Net: NetName=KIN4 Pin=CH5-6
+Added Pin To Net: NetName=LED4 Pin=CH5-7
+Added Pin To Net: NetName=M4 Pin=CH5-8
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component C38 Cap
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component CH1 HEADER1X8
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component CH2 HEADER1X8
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component CH3 HEADER1X8
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component CH4 HEADER1X8
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component CH5 HEADER1X8
+Added Room: Name=Send_Medicine_Motor

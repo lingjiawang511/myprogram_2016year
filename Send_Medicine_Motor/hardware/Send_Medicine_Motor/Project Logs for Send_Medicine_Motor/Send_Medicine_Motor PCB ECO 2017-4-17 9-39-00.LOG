@@ -1,0 +1,515 @@
+Removed Pin From Net: NetName=+5V Pin=C25-2
+Removed Pin From Net: NetName=SPEED1 Pin=C34-1
+Removed Pin From Net: NetName=24V0 Pin=C34-2
+Removed Pin From Net: NetName=SPEED3 Pin=C35-1
+Removed Pin From Net: NetName=24V0 Pin=C35-2
+Removed Pin From Net: NetName=SPEED2 Pin=C36-1
+Removed Pin From Net: NetName=24V0 Pin=C36-2
+Removed Pin From Net: NetName=DIR1 Pin=C37-1
+Removed Pin From Net: NetName=24V0 Pin=C37-2
+Removed Pin From Net: NetName=+24V Pin=C38-1
+Removed Pin From Net: NetName=24V0 Pin=C38-2
+Removed Pin From Net: NetName=PERR1 Pin=C55-2
+Removed Pin From Net: NetName=SIN13 Pin=C72-1
+Removed Pin From Net: NetName=24V0 Pin=C72-2
+Removed Pin From Net: NetName=LED1 Pin=CH1-1
+Removed Pin From Net: NetName=24V0 Pin=CH1-2
+Removed Pin From Net: NetName=LED3 Pin=CH2-1
+Removed Pin From Net: NetName=24V0 Pin=CH2-2
+Removed Pin From Net: NetName=M4 Pin=CH3-1
+Removed Pin From Net: NetName=24V0 Pin=CH3-2
+Removed Pin From Net: NetName=M1 Pin=CH4-1
+Removed Pin From Net: NetName=24V0 Pin=CH4-2
+Removed Pin From Net: NetName=M2 Pin=CH5-1
+Removed Pin From Net: NetName=24V0 Pin=CH5-2
+Removed Pin From Net: NetName=M3 Pin=CH6-1
+Removed Pin From Net: NetName=LED2 Pin=CH7-1
+Removed Pin From Net: NetName=24V0 Pin=CH7-2
+Removed Pin From Net: NetName=LED4 Pin=CH8-1
+Removed Pin From Net: NetName=24V0 Pin=CH8-2
+Removed Pin From Net: NetName=+24V Pin=CH9-1
+Removed Pin From Net: NetName=24V0 Pin=CH9-2
+Removed Pin From Net: NetName=SIN11 Pin=CH9-3
+Removed Pin From Net: NetName=+24V Pin=CH10-1
+Removed Pin From Net: NetName=24V0 Pin=CH10-2
+Removed Pin From Net: NetName=SIN21 Pin=CH10-3
+Removed Pin From Net: NetName=+24V Pin=CH11-1
+Removed Pin From Net: NetName=24V0 Pin=CH11-2
+Removed Pin From Net: NetName=SIN31 Pin=CH11-3
+Removed Pin From Net: NetName=+24V Pin=CH12-1
+Removed Pin From Net: NetName=24V0 Pin=CH12-2
+Removed Pin From Net: NetName=SIN41 Pin=CH12-3
+Removed Pin From Net: NetName=+24V Pin=CH13-1
+Removed Pin From Net: NetName=24V0 Pin=CH13-2
+Removed Pin From Net: NetName=SIN12 Pin=CH13-3
+Removed Pin From Net: NetName=+24V Pin=CH14-1
+Removed Pin From Net: NetName=24V0 Pin=CH14-2
+Removed Pin From Net: NetName=SIN22 Pin=CH14-3
+Removed Pin From Net: NetName=+24V Pin=CH15-1
+Removed Pin From Net: NetName=24V0 Pin=CH15-2
+Removed Pin From Net: NetName=SIN32 Pin=CH15-3
+Removed Pin From Net: NetName=+24V Pin=CH16-1
+Removed Pin From Net: NetName=24V0 Pin=CH16-2
+Removed Pin From Net: NetName=SIN42 Pin=CH16-3
+Removed Pin From Net: NetName=+24V Pin=CH17-1
+Removed Pin From Net: NetName=24V0 Pin=CH17-2
+Removed Pin From Net: NetName=SIN13 Pin=CH17-3
+Removed Pin From Net: NetName=+24V Pin=CH18-1
+Removed Pin From Net: NetName=24V0 Pin=CH18-2
+Removed Pin From Net: NetName=SIN23 Pin=CH18-3
+Removed Pin From Net: NetName=+24V Pin=CH19-1
+Removed Pin From Net: NetName=24V0 Pin=CH19-2
+Removed Pin From Net: NetName=SIN33 Pin=CH19-3
+Removed Pin From Net: NetName=+24V Pin=CH20-1
+Removed Pin From Net: NetName=24V0 Pin=CH20-2
+Removed Pin From Net: NetName=SIN43 Pin=CH20-3
+Removed Pin From Net: NetName=KIN1 Pin=CH21-1
+Removed Pin From Net: NetName=24V0 Pin=CH21-2
+Removed Pin From Net: NetName=KIN2 Pin=CH22-1
+Removed Pin From Net: NetName=24V0 Pin=CH22-2
+Removed Pin From Net: NetName=KIN3 Pin=CH23-1
+Removed Pin From Net: NetName=24V0 Pin=CH23-2
+Removed Pin From Net: NetName=KIN4 Pin=CH24-1
+Removed Pin From Net: NetName=24V0 Pin=CH24-2
+Removed Pin From Net: NetName=SPEED3 Pin=CH26-1
+Removed Pin From Net: NetName=SPEED2 Pin=CH26-2
+Removed Pin From Net: NetName=SPEED1 Pin=CH26-3
+Removed Pin From Net: NetName=DIR1 Pin=CH26-4
+Removed Pin From Net: NetName=ERR1 Pin=CH26-5
+Removed Pin From Net: NetName=24V0 Pin=CH26-6
+Removed Pin From Net: NetName=+24V Pin=CH27-1
+Removed Pin From Net: NetName=24V0 Pin=CH27-2
+Removed Pin From Net: NetName=NetR77_1 Pin=R77-1
+Removed Pin From Net: NetName=+24V Pin=R77-2
+Removed Pin From Net: NetName=NetR78_1 Pin=R78-1
+Removed Pin From Net: NetName=+24V Pin=R78-2
+Removed Pin From Net: NetName=ERR1 Pin=R79-1
+Removed Pin From Net: NetName=NetR79_2 Pin=R79-2
+Removed Pin From Net: NetName=GND Pin=R80-1
+Removed Pin From Net: NetName=ER1 Pin=R80-2
+Removed Pin From Net: NetName=PSPEED1 Pin=R81-1
+Removed Pin From Net: NetName=PSPEED3 Pin=R82-1
+Removed Pin From Net: NetName=NetR82_2 Pin=R82-2
+Removed Pin From Net: NetName=+5V Pin=R83-1
+Removed Pin From Net: NetName=NetR83_2 Pin=R83-2
+Removed Pin From Net: NetName=NetR83_2 Pin=R85-1
+Removed Pin From Net: NetName=+24V Pin=R86-2
+Removed Pin From Net: NetName=NetR87_1 Pin=R87-1
+Removed Pin From Net: NetName=+24V Pin=R87-2
+Removed Pin From Net: NetName=NetR88_2 Pin=R88-2
+Removed Pin From Net: NetName=PDIR1 Pin=R89-1
+Removed Pin From Net: NetName=+5V Pin=R112-1
+Removed Pin From Net: NetName=PERR1 Pin=R112-2
+Removed Pin From Net: NetName=NetR10_2 Pin=U1-3
+Removed Pin From Net: NetName=NetR11_2 Pin=U1-5
+Removed Pin From Net: NetName=NetQ3_1 Pin=U1-12
+Removed Pin From Net: NetName=NetQ6_1 Pin=U1-14
+Removed Pin From Net: NetName=NetR12_2 Pin=U2-1
+Removed Pin From Net: NetName=NetR9_2 Pin=U2-7
+Removed Pin From Net: NetName=NetQ5_1 Pin=U2-10
+Removed Pin From Net: NetName=NetQ1_1 Pin=U2-12
+Removed Pin From Net: NetName=NetQ8_1 Pin=U2-14
+Removed Pin From Net: NetName=NetQ4_1 Pin=U2-16
+Removed Pin From Net: NetName=NetR27_2 Pin=U3-3
+Removed Pin From Net: NetName=NetR4_2 Pin=U3-5
+Removed Pin From Net: NetName=NetR2_1 Pin=U3-12
+Removed Pin From Net: NetName=NetR21_1 Pin=U3-14
+Removed Pin From Net: NetName=+24V Pin=U16-1
+Removed Pin From Net: NetName=+24V Pin=U16-2
+Removed Pin From Net: NetName=+24V Pin=U16-3
+Removed Pin From Net: NetName=NetR77_1 Pin=U16-4
+Removed Pin From Net: NetName=SPEED1 Pin=U16-5
+Removed Pin From Net: NetName=SPEED1 Pin=U16-6
+Removed Pin From Net: NetName=SPEED1 Pin=U16-7
+Removed Pin From Net: NetName=SPEED1 Pin=U16-8
+Removed Pin From Net: NetName=+24V Pin=U17-1
+Removed Pin From Net: NetName=+24V Pin=U17-2
+Removed Pin From Net: NetName=+24V Pin=U17-3
+Removed Pin From Net: NetName=NetR78_1 Pin=U17-4
+Removed Pin From Net: NetName=SPEED3 Pin=U17-6
+Removed Pin From Net: NetName=SPEED3 Pin=U17-7
+Removed Pin From Net: NetName=SPEED3 Pin=U17-8
+Removed Pin From Net: NetName=PERR1 Pin=U18-1
+Removed Pin From Net: NetName=ER1 Pin=U18-2
+Removed Pin From Net: NetName=NetR83_2 Pin=U18-3
+Removed Pin From Net: NetName=NetR83_2 Pin=U18-5
+Removed Pin From Net: NetName=NetR81_2 Pin=U19-1
+Removed Pin From Net: NetName=GND Pin=U19-2
+Removed Pin From Net: NetName=NetR82_2 Pin=U19-3
+Removed Pin From Net: NetName=GND Pin=U19-4
+Removed Pin From Net: NetName=NetR88_2 Pin=U19-5
+Removed Pin From Net: NetName=GND Pin=U19-6
+Removed Pin From Net: NetName=NetR89_2 Pin=U19-7
+Removed Pin From Net: NetName=GND Pin=U19-8
+Removed Pin From Net: NetName=24V0 Pin=U19-9
+Removed Pin From Net: NetName=NetR87_1 Pin=U19-10
+Removed Pin From Net: NetName=24V0 Pin=U19-11
+Removed Pin From Net: NetName=NetR86_1 Pin=U19-12
+Removed Pin From Net: NetName=24V0 Pin=U19-13
+Removed Pin From Net: NetName=NetR78_1 Pin=U19-14
+Removed Pin From Net: NetName=24V0 Pin=U19-15
+Removed Pin From Net: NetName=NetR77_1 Pin=U19-16
+Removed Pin From Net: NetName=+24V Pin=U22-1
+Removed Pin From Net: NetName=+24V Pin=U22-2
+Removed Pin From Net: NetName=+24V Pin=U22-3
+Removed Pin From Net: NetName=NetR86_1 Pin=U22-4
+Removed Pin From Net: NetName=SPEED2 Pin=U22-5
+Removed Pin From Net: NetName=SPEED2 Pin=U22-6
+Removed Pin From Net: NetName=SPEED2 Pin=U22-7
+Removed Pin From Net: NetName=SPEED2 Pin=U22-8
+Removed Pin From Net: NetName=+24V Pin=U23-1
+Removed Pin From Net: NetName=+24V Pin=U23-2
+Removed Pin From Net: NetName=+24V Pin=U23-3
+Removed Pin From Net: NetName=NetR87_1 Pin=U23-4
+Removed Pin From Net: NetName=KOUT3 Pin=U25-40
+Removed Pin From Net: NetName=PERR1 Pin=U25-51
+Removed Pin From Net: NetName=PDIR1 Pin=U25-52
+Removed Pin From Net: NetName=PSPEED2 Pin=U25-53
+Removed Pin From Net: NetName=PSPEED3 Pin=U25-54
+Removed Pin From Net: NetName=PSPEED1 Pin=U25-57
+Removed Pin From Net: NetName=NetR79_2 Pin=U30-1
+Removed Pin From Net: NetName=24V0 Pin=U30-2
+Removed Pin From Net: NetName=ER1 Pin=U30-3
+Removed Pin From Net: NetName=+5V Pin=U30-4
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH7
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH8
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH9
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH10
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH11
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH12
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH13
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH14
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH15
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH16
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH17
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH18
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH19
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH20
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH21
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH22
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH23
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH24
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH26
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=CH27
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=U30
+Change Component DesignItemId : Designator=U17 Old DesignItemId=CEM4435A New DesignItemId=LM293
+Change Component DesignItemId : Designator=U16 Old DesignItemId=CEM4435A New DesignItemId=TLP521-4
+Change Component DesignItemId : Designator=U22 Old DesignItemId=CEM4435A New DesignItemId=TLP521-4
+Change Component DesignItemId : Designator=CH6 Old DesignItemId=HEADER1X2 New DesignItemId=HEADER1X3
+Change Component DesignItemId : Designator=CH1 Old DesignItemId=HEADER1X2 New DesignItemId=HEADER1X8
+Change Component DesignItemId : Designator=CH2 Old DesignItemId=HEADER1X2 New DesignItemId=HEADER1X8
+Change Component DesignItemId : Designator=CH3 Old DesignItemId=HEADER1X2 New DesignItemId=HEADER1X8
+Change Component DesignItemId : Designator=CH4 Old DesignItemId=HEADER1X2 New DesignItemId=HEADER1X8
+Change Component DesignItemId : Designator=CH5 Old DesignItemId=HEADER1X2 New DesignItemId=HEADER1X8
+Change Component DesignItemId : Designator=U19 Old DesignItemId=TLP521-4 New DesignItemId=CEM4435A
+Change Component Footprint: Designator=CH6 Old Footprint=CH3.96-2PIN New Footprint=CH3.96-3PIN
+Change Component Footprint: Designator=CH1 Old Footprint=CH3.96-2PIN New Footprint=HDR1X8
+Change Component Footprint: Designator=CH2 Old Footprint=CH3.96-2PIN New Footprint=HDR1X8
+Change Component Footprint: Designator=CH3 Old Footprint=CH3.96-2PIN New Footprint=HDR1X8
+Change Component Footprint: Designator=CH4 Old Footprint=CH3.96-2PIN New Footprint=HDR1X8
+Change Component Footprint: Designator=CH5 Old Footprint=CH3.96-2PIN New Footprint=HDR1X8
+Change Component Footprint: Designator=U19 Old Footprint=SO16 New Footprint=SOP8-OP27
+Change Component Footprint: Designator=U16 Old Footprint=SOP8-OP27 New Footprint=SO16
+Change Component Footprint: Designator=U22 Old Footprint=SOP8-OP27 New Footprint=SO16
+Change Component Comment : Designator=U17 Old Comment=CEM4435A New Comment=LM293
+Change Component Comment : Designator=U16 Old Comment=CEM4435A New Comment=TLP280-4
+Change Component Comment : Designator=U22 Old Comment=CEM4435A New Comment=TLP280-4
+Change Component Comment : Designator=CH6 Old Comment=HEADER1X2 New Comment=HEADER1X3
+Change Component Comment : Designator=CH1 Old Comment=HEADER1X2 New Comment=HEADER1X8
+Change Component Comment : Designator=CH2 Old Comment=HEADER1X2 New Comment=HEADER1X8
+Change Component Comment : Designator=CH3 Old Comment=HEADER1X2 New Comment=HEADER1X8
+Change Component Comment : Designator=CH4 Old Comment=HEADER1X2 New Comment=HEADER1X8
+Change Component Comment : Designator=CH5 Old Comment=HEADER1X2 New Comment=HEADER1X8
+Change Component Comment : Designator=U19 Old Comment=TLP280-4 New Comment=CEM4435A
+Added Component: Designator=C83(0805)
+Added Component: Designator=C84(0805)
+Added Component: Designator=C85(0805)
+Added Component: Designator=C86(0805)
+Added Component: Designator=C87(0805)
+Added Component: Designator=C88(0805)
+Added Component: Designator=C89(0805)
+Added Component: Designator=C90(0805)
+Added Component: Designator=C91(0805)
+Added Component: Designator=C92(0805)
+Added Component: Designator=C93(0805)
+Added Component: Designator=C94(0805)
+Added Component: Designator=D9(SMA)
+Added Component: Designator=D10(SMA)
+Added Component: Designator=Q9(TO-252)
+Added Component: Designator=Q10(TO-252)
+Added Component: Designator=R17(0805)
+Added Component: Designator=R18(0805)
+Added Component: Designator=R19(0805)
+Added Component: Designator=R20(0805)
+Added Component: Designator=R22(0805)
+Added Component: Designator=R23(0805)
+Added Component: Designator=R24(0805)
+Added Component: Designator=R25(0805)
+Added Component: Designator=R113(0805)
+Added Component: Designator=R114(0805)
+Added Pin To Net: NetName=NetR88_2 Pin=C25-2
+Added Pin To Net: NetName=GND Pin=C34-1
+Added Pin To Net: NetName=NetR77_1 Pin=C34-2
+Added Pin To Net: NetName=GND Pin=C35-1
+Added Pin To Net: NetName=ERR1 Pin=C35-2
+Added Pin To Net: NetName=GND Pin=C36-1
+Added Pin To Net: NetName=+5V Pin=C36-2
+Added Pin To Net: NetName=GND Pin=C37-1
+Added Pin To Net: NetName=NetR87_1 Pin=C37-2
+Added Pin To Net: NetName=GND Pin=C38-1
+Added Pin To Net: NetName=NetR83_2 Pin=C55-2
+Added Pin To Net: NetName=24V0 Pin=C72-1
+Added Pin To Net: NetName=SIN13 Pin=C72-2
+Added Pin To Net: NetName=GND Pin=C83-1
+Added Pin To Net: NetName=+5V Pin=C83-2
+Added Pin To Net: NetName=GND Pin=C84-1
+Added Pin To Net: NetName=24V0 Pin=C85-2
+Added Pin To Net: NetName=24V0 Pin=C86-2
+Added Pin To Net: NetName=DIR1 Pin=C87-1
+Added Pin To Net: NetName=24V0 Pin=C87-2
+Added Pin To Net: NetName=24V0 Pin=C88-1
+Added Pin To Net: NetName=SIN12 Pin=C88-2
+Added Pin To Net: NetName=24V0 Pin=C89-1
+Added Pin To Net: NetName=SIN22 Pin=C89-2
+Added Pin To Net: NetName=24V0 Pin=C90-1
+Added Pin To Net: NetName=SIN32 Pin=C90-2
+Added Pin To Net: NetName=24V0 Pin=C91-1
+Added Pin To Net: NetName=SIN42 Pin=C91-2
+Added Pin To Net: NetName=24V0 Pin=C92-1
+Added Pin To Net: NetName=NetR82_2 Pin=C92-2
+Added Pin To Net: NetName=24V0 Pin=C93-1
+Added Pin To Net: NetName=NetR79_2 Pin=C93-2
+Added Pin To Net: NetName=24V0 Pin=C94-1
+Added Pin To Net: NetName=NetR78_1 Pin=C94-2
+Added Pin To Net: NetName=M1 Pin=CH1-1
+Added Pin To Net: NetName=LED1 Pin=CH1-2
+Added Pin To Net: NetName=KIN1 Pin=CH1-3
+Added Pin To Net: NetName=SIN11 Pin=CH1-4
+Added Pin To Net: NetName=SIN12 Pin=CH1-5
+Added Pin To Net: NetName=SIN13 Pin=CH1-6
+Added Pin To Net: NetName=+24V Pin=CH1-7
+Added Pin To Net: NetName=24V0 Pin=CH1-8
+Added Pin To Net: NetName=M2 Pin=CH2-1
+Added Pin To Net: NetName=LED2 Pin=CH2-2
+Added Pin To Net: NetName=KIN1 Pin=CH2-3
+Added Pin To Net: NetName=SIN21 Pin=CH2-4
+Added Pin To Net: NetName=SIN22 Pin=CH2-5
+Added Pin To Net: NetName=SIN23 Pin=CH2-6
+Added Pin To Net: NetName=+24V Pin=CH2-7
+Added Pin To Net: NetName=24V0 Pin=CH2-8
+Added Pin To Net: NetName=NetR82_2 Pin=CH3-4
+Added Pin To Net: NetName=NetR79_2 Pin=CH3-5
+Added Pin To Net: NetName=NetR78_1 Pin=CH3-6
+Added Pin To Net: NetName=+24V Pin=CH3-7
+Added Pin To Net: NetName=24V0 Pin=CH3-8
+Added Pin To Net: NetName=24V0 Pin=CH4-1
+Added Pin To Net: NetName=+24V Pin=CH4-2
+Added Pin To Net: NetName=SIN33 Pin=CH4-3
+Added Pin To Net: NetName=SIN32 Pin=CH4-4
+Added Pin To Net: NetName=SIN31 Pin=CH4-5
+Added Pin To Net: NetName=KIN3 Pin=CH4-6
+Added Pin To Net: NetName=LED3 Pin=CH4-7
+Added Pin To Net: NetName=M3 Pin=CH4-8
+Added Pin To Net: NetName=24V0 Pin=CH5-1
+Added Pin To Net: NetName=+24V Pin=CH5-2
+Added Pin To Net: NetName=SIN43 Pin=CH5-3
+Added Pin To Net: NetName=SIN42 Pin=CH5-4
+Added Pin To Net: NetName=SIN41 Pin=CH5-5
+Added Pin To Net: NetName=KIN4 Pin=CH5-6
+Added Pin To Net: NetName=LED4 Pin=CH5-7
+Added Pin To Net: NetName=M4 Pin=CH5-8
+Added Pin To Net: NetName=DIR1 Pin=CH6-1
+Added Pin To Net: NetName=+24V_IN Pin=CH6-3
+Added Pin To Net: NetName=+24V Pin=D9-2
+Added Pin To Net: NetName=24V0 Pin=D10-1
+Added Pin To Net: NetName=PSPEED2 Pin=Q9-1
+Added Pin To Net: NetName=+24V Pin=Q9-3
+Added Pin To Net: NetName=PSPEED3 Pin=Q10-1
+Added Pin To Net: NetName=24V0 Pin=Q10-3
+Added Pin To Net: NetName=NetR82_2 Pin=R17-1
+Added Pin To Net: NetName=SPEED1 Pin=R17-2
+Added Pin To Net: NetName=+5V Pin=R18-1
+Added Pin To Net: NetName=NetR77_1 Pin=R18-2
+Added Pin To Net: NetName=+5V Pin=R19-1
+Added Pin To Net: NetName=ERR1 Pin=R19-2
+Added Pin To Net: NetName=NetR88_2 Pin=R20-1
+Added Pin To Net: NetName=GND Pin=R20-2
+Added Pin To Net: NetName=NetR79_2 Pin=R22-1
+Added Pin To Net: NetName=SPEED2 Pin=R22-2
+Added Pin To Net: NetName=+5V Pin=R23-1
+Added Pin To Net: NetName=SPEED3 Pin=R23-2
+Added Pin To Net: NetName=SPEED3 Pin=R24-1
+Added Pin To Net: NetName=GND Pin=R24-2
+Added Pin To Net: NetName=NetR87_1 Pin=R25-1
+Added Pin To Net: NetName=GND Pin=R25-2
+Added Pin To Net: NetName=NetR78_1 Pin=R77-1
+Added Pin To Net: NetName=+5V Pin=R78-1
+Added Pin To Net: NetName=ER1 Pin=R78-2
+Added Pin To Net: NetName=+5V Pin=R79-1
+Added Pin To Net: NetName=NetR83_2 Pin=R80-1
+Added Pin To Net: NetName=GND Pin=R80-2
+Added Pin To Net: NetName=+5V Pin=R81-1
+Added Pin To Net: NetName=NetR81_2 Pin=R82-1
+Added Pin To Net: NetName=GND Pin=R82-2
+Added Pin To Net: NetName=+24V Pin=R83-1
+Added Pin To Net: NetName=PSPEED1 Pin=R87-1
+Added Pin To Net: NetName=+24V Pin=R88-2
+Added Pin To Net: NetName=PERR1 Pin=R89-1
+Added Pin To Net: NetName=PSPEED3 Pin=R112-1
+Added Pin To Net: NetName=+24V Pin=R112-2
+Added Pin To Net: NetName=PDIR1 Pin=R114-1
+Added Pin To Net: NetName=NetR11_2 Pin=U1-3
+Added Pin To Net: NetName=NetR10_2 Pin=U1-5
+Added Pin To Net: NetName=NetQ6_1 Pin=U1-12
+Added Pin To Net: NetName=NetQ3_1 Pin=U1-14
+Added Pin To Net: NetName=NetR9_2 Pin=U2-1
+Added Pin To Net: NetName=NetR12_2 Pin=U2-7
+Added Pin To Net: NetName=NetQ8_1 Pin=U2-10
+Added Pin To Net: NetName=NetQ5_1 Pin=U2-12
+Added Pin To Net: NetName=NetQ4_1 Pin=U2-14
+Added Pin To Net: NetName=NetQ1_1 Pin=U2-16
+Added Pin To Net: NetName=NetR4_2 Pin=U3-3
+Added Pin To Net: NetName=NetR27_2 Pin=U3-5
+Added Pin To Net: NetName=NetR21_1 Pin=U3-12
+Added Pin To Net: NetName=NetR2_1 Pin=U3-14
+Added Pin To Net: NetName=SPEED1 Pin=U16-1
+Added Pin To Net: NetName=24V0 Pin=U16-2
+Added Pin To Net: NetName=SPEED2 Pin=U16-3
+Added Pin To Net: NetName=24V0 Pin=U16-4
+Added Pin To Net: NetName=24V0 Pin=U16-6
+Added Pin To Net: NetName=24V0 Pin=U16-8
+Added Pin To Net: NetName=+5V Pin=U16-10
+Added Pin To Net: NetName=NetR83_2 Pin=U16-11
+Added Pin To Net: NetName=+5V Pin=U16-12
+Added Pin To Net: NetName=NetR87_1 Pin=U16-13
+Added Pin To Net: NetName=+5V Pin=U16-14
+Added Pin To Net: NetName=NetR88_2 Pin=U16-15
+Added Pin To Net: NetName=+5V Pin=U16-16
+Added Pin To Net: NetName=NetR77_1 Pin=U17-1
+Added Pin To Net: NetName=NetR88_2 Pin=U17-2
+Added Pin To Net: NetName=SPEED3 Pin=U17-3
+Added Pin To Net: NetName=GND Pin=U17-4
+Added Pin To Net: NetName=NetR87_1 Pin=U17-6
+Added Pin To Net: NetName=ERR1 Pin=U17-7
+Added Pin To Net: NetName=+5V Pin=U17-8
+Added Pin To Net: NetName=ER1 Pin=U18-1
+Added Pin To Net: NetName=NetR83_2 Pin=U18-2
+Added Pin To Net: NetName=NetR81_2 Pin=U18-3
+Added Pin To Net: NetName=NetR81_2 Pin=U18-6
+Added Pin To Net: NetName=NetR86_1 Pin=U19-4
+Added Pin To Net: NetName=GND Pin=U22-2
+Added Pin To Net: NetName=NetR89_2 Pin=U22-3
+Added Pin To Net: NetName=GND Pin=U22-4
+Added Pin To Net: NetName=NetR89_2 Pin=U22-5
+Added Pin To Net: NetName=GND Pin=U22-6
+Added Pin To Net: NetName=GND Pin=U22-8
+Added Pin To Net: NetName=24V0 Pin=U22-9
+Added Pin To Net: NetName=24V0 Pin=U22-11
+Added Pin To Net: NetName=PSPEED3 Pin=U22-12
+Added Pin To Net: NetName=24V0 Pin=U22-13
+Added Pin To Net: NetName=PSPEED2 Pin=U22-14
+Added Pin To Net: NetName=24V0 Pin=U22-15
+Added Pin To Net: NetName=NetR86_1 Pin=U22-16
+Added Pin To Net: NetName=NetR77_1 Pin=U25-25
+Added Pin To Net: NetName=ER1 Pin=U25-40
+Added Pin To Net: NetName=KOUT3 Pin=U25-41
+Added Pin To Net: NetName=ERR1 Pin=U25-52
+Added Pin To Net: NetName=PERR1 Pin=U25-53
+Added Pin To Net: NetName=PSPEED1 Pin=U25-54
+Added Pin To Net: NetName=PDIR1 Pin=U25-57
+Change Net Name : Old Net Name=DIR1 New Net Name=RUN
+Change Net Name : Old Net Name=ER1 New Net Name=SOUT53
+Change Net Name : Old Net Name=ERR1 New Net Name=SOUT52
+Change Net Name : Old Net Name=NetR77_1 New Net Name=SOUT51
+Change Net Name : Old Net Name=NetR78_1 New Net Name=SIN53
+Change Net Name : Old Net Name=NetR79_2 New Net Name=SIN52
+Change Net Name : Old Net Name=NetR82_2 New Net Name=SIN51
+Change Net Name : Old Net Name=NetR83_2 New Net Name=S53
+Change Net Name : Old Net Name=NetR87_1 New Net Name=S52
+Change Net Name : Old Net Name=NetR88_2 New Net Name=S51
+Change Net Name : Old Net Name=PDIR1 New Net Name=PRUN
+Change Net Name : Old Net Name=PERR1 New Net Name=PM5
+Change Net Name : Old Net Name=PSPEED1 New Net Name=PL5
+Change Net Name : Old Net Name=PSPEED2 New Net Name=NetQ9_1
+Change Net Name : Old Net Name=PSPEED3 New Net Name=NetQ10_1
+Change Net Name : Old Net Name=SPEED1 New Net Name=NetR17_2
+Change Net Name : Old Net Name=SPEED2 New Net Name=NetR22_2
+Change Net Name : Old Net Name=SPEED3 New Net Name=NetR23_2
+Added Pin To Net: NetName=K5 Pin=C84-2
+Added Pin To Net: NetName=K5 Pin=R85-1
+Added Pin To Net: NetName=K5 Pin=U16-9
+Added Pin To Net: NetName=K5 Pin=U18-5
+Added Net: Name=K5
+Added Pin To Net: NetName=KIN5 Pin=CH3-3
+Added Pin To Net: NetName=KIN5 Pin=R83-2
+Added Pin To Net: NetName=KIN5 Pin=U16-7
+Added Net: Name=KIN5
+Added Pin To Net: NetName=KOUT5 Pin=C38-2
+Added Pin To Net: NetName=KOUT5 Pin=R79-2
+Added Pin To Net: NetName=KOUT5 Pin=U18-7
+Added Pin To Net: NetName=KOUT5 Pin=U25-51
+Added Net: Name=KOUT5
+Added Pin To Net: NetName=LED5 Pin=C85-1
+Added Pin To Net: NetName=LED5 Pin=CH3-2
+Added Pin To Net: NetName=LED5 Pin=U19-5
+Added Pin To Net: NetName=LED5 Pin=U19-6
+Added Pin To Net: NetName=LED5 Pin=U19-7
+Added Pin To Net: NetName=LED5 Pin=U19-8
+Added Net: Name=LED5
+Added Pin To Net: NetName=M5 Pin=C86-1
+Added Pin To Net: NetName=M5 Pin=CH3-1
+Added Pin To Net: NetName=M5 Pin=D9-1
+Added Pin To Net: NetName=M5 Pin=D10-2
+Added Pin To Net: NetName=M5 Pin=Q9-2
+Added Pin To Net: NetName=M5 Pin=Q10-2
+Added Net: Name=M5
+Added Pin To Net: NetName=NetR77_2 Pin=R77-2
+Added Pin To Net: NetName=NetR77_2 Pin=U16-5
+Added Net: Name=NetR77_2
+Added Pin To Net: NetName=NetR86_2 Pin=R86-2
+Added Pin To Net: NetName=NetR86_2 Pin=U19-1
+Added Pin To Net: NetName=NetR86_2 Pin=U19-2
+Added Pin To Net: NetName=NetR86_2 Pin=U19-3
+Added Net: Name=NetR86_2
+Added Pin To Net: NetName=NetR87_2 Pin=R87-2
+Added Pin To Net: NetName=NetR87_2 Pin=U22-1
+Added Net: Name=NetR87_2
+Added Pin To Net: NetName=NetR113_1 Pin=R113-1
+Added Pin To Net: NetName=NetR113_1 Pin=U22-10
+Added Pin To Net: NetName=NetR113_1 Pin=U23-4
+Added Net: Name=NetR113_1
+Added Pin To Net: NetName=NetR113_2 Pin=R113-2
+Added Pin To Net: NetName=NetR113_2 Pin=U23-1
+Added Pin To Net: NetName=NetR113_2 Pin=U23-2
+Added Pin To Net: NetName=NetR113_2 Pin=U23-3
+Added Net: Name=NetR113_2
+Added Pin To Net: NetName=NetR114_2 Pin=R114-2
+Added Pin To Net: NetName=NetR114_2 Pin=U22-7
+Added Net: Name=NetR114_2
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component C83 Cap
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component C84 Cap
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component C85 Cap
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component C86 Cap
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component C87 Cap
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component C88 Cap
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component C89 Cap
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component C90 Cap
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component C91 Cap
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component C92 Cap
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component C93 Cap
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component C94 Cap
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component D9 1N5822(SS34)
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component D10 1N5822(SS34)
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component Q9 FR5305 (PMOS-2)
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component Q10 FR4105 (NMOS-2)
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component R17 Res2
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component R18 Res2
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component R19 Res2
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component R20 Res2
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component R22 Res2
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component R23 Res2
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component R24 Res2
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component R25 Res2
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component R113 Res2
+Added Member To Class: ClassName=Send_Medicine_Motor Member=Component R114 Res2
+Added Room: Name=Send_Medicine_Motor

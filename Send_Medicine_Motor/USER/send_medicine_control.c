@@ -14,6 +14,7 @@ static void Send_Medicine1_Config(void)
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC,ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD,ENABLE);
 	//电机控制IO口
 	GPIO_InitStructure.GPIO_Pin = DEVICE1_MOTOR_IO;			 
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 
@@ -58,6 +59,7 @@ static void Send_Medicine2_Config(void )
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC,ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD,ENABLE);
 	//电机控制IO口
 	GPIO_InitStructure.GPIO_Pin = DEVICE2_MOTOR_IO;			 
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 
@@ -102,6 +104,7 @@ static void Send_Medicine3_Config(void)
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC,ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD,ENABLE);
 	//电机控制IO口
 	GPIO_InitStructure.GPIO_Pin = DEVICE3_MOTOR_IO;			 
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 
@@ -145,6 +148,7 @@ static void Send_Medicine4_Config(void)
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC,ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD,ENABLE);
 	//电机控制IO口
 	GPIO_InitStructure.GPIO_Pin = DEVICE4_MOTOR_IO;			 
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 
@@ -174,6 +178,54 @@ static void Send_Medicine4_Config(void)
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(DEVICE4_KEY_PORT, &GPIO_InitStructure);
 }
+#if CHANNEL_4 == 0
+//=============================================================================
+//函数名称:Send_Medicine4_Config
+//功能概要:发药口4相关引脚配置
+//参数名称:无
+//函数返回:无
+//注意    :无
+//=============================================================================
+static void Send_Medicine5_Config(void)
+{
+		//定义一个GPIO_InitTypeDef 类型的结构体，名字叫GPIO_InitStructure 
+	GPIO_InitTypeDef  GPIO_InitStructure;
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC,ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD,ENABLE);
+	//电机控制IO口
+	GPIO_InitStructure.GPIO_Pin = DEVICE5_MOTOR_IO;			 
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(DEVICE5_MOTOR_PORT, &GPIO_InitStructure);
+	//灯控制IO口
+	GPIO_InitStructure.GPIO_Pin = DEVICE5_LIGHT_IO;			 
+	GPIO_Init(DEVICE5_LIGHT_PORT, &GPIO_InitStructure);
+	//传感器1输入IO口
+// 	GPIO_InitStructure.GPIO_Pin = DEVICE4_SENSOR1_IO;			 
+// 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 		 
+// 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+// 	GPIO_Init(DEVICE4_SENSOR1_PORT, &GPIO_InitStructure);
+	//传感器2输入IO口
+	GPIO_InitStructure.GPIO_Pin = DEVICE5_SENSOR2_IO;			 
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 		 
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(DEVICE5_SENSOR2_PORT, &GPIO_InitStructure);
+	//传感器3输入IO口
+// 	GPIO_InitStructure.GPIO_Pin = DEVICE4_SENSOR3_IO;			 
+// 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 		 
+// 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+// 	GPIO_Init(DEVICE4_SENSOR3_PORT, &GPIO_InitStructure);
+	//按键输入IO口
+	GPIO_InitStructure.GPIO_Pin = DEVICE5_KEY_IO;			 
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 		 
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(DEVICE5_KEY_PORT, &GPIO_InitStructure);
+}
+
+
+#endif
 //=============================================================================
 //函数名称:CH_Param_Init
 //功能概要:每个通道相关参数的初始化
@@ -231,6 +283,9 @@ void Send_Medicine_Config(void)
 	Send_Medicine2_Config();
 	Send_Medicine3_Config();
 	Send_Medicine4_Config();
+#if CHANNEL_4 == 0
+	Send_Medicine5_Config();
+#endif
 	Param_Init();
 }
 //=============================================================================
@@ -258,7 +313,7 @@ static void CH1_Send_Medicine(void)
 									}
 								}
 								break;
-	case READY:	 if((Channel.ch2.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&(Channel.ch4.motor_start_state != 1)){
+	case READY:	 if((Channel.ch2.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&(Channel.ch4.motor_start_state != 1)&&(Channel.ch5.motor_start_state != 1)){
 									if((Channel.ch1.send_num >0)&&(Channel.ch1.motor_state == 0 )){									
 										if(READ_DEVICE1_SENSOR2 == READLOW){//发药机上有药，启动电机
 											delay_ms(1);
@@ -267,6 +322,9 @@ static void CH1_Send_Medicine(void)
 													Channel.ch1.send_actual = 0;
 													Channel.ch1.state = WORKING;
 													DEVICE1_MOTOR_RUN;
+												  BELT_SPEED1 = 1;
+													BELT_SPEED2 = 1;
+													BELT_SPEED3 = 1;
 													Channel.ch1.motor_state = 1;
 													Channel.ch1.motor_start_state = 1;//启动瞬间只允许一个电机启动，启动后通道可以同时工作
 											}else{Channel.ch1.state = WORKEND;}
@@ -405,7 +463,7 @@ static void CH2_Send_Medicine(void)
 									}
 								}
 								break;
-	case READY:	if((Channel.ch1.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&(Channel.ch4.motor_start_state != 1)){
+	case READY:	if((Channel.ch1.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&(Channel.ch4.motor_start_state != 1)&&(Channel.ch5.motor_start_state != 1)){
 									if((Channel.ch2.send_num >0)&&(Channel.ch2.motor_state == 0 )){									
 										if(READ_DEVICE2_SENSOR2 == READLOW){//发药机上有药，启动电机
 											delay_ms(1);
@@ -414,6 +472,9 @@ static void CH2_Send_Medicine(void)
 													Channel.ch2.send_actual = 0;
 													Channel.ch2.state = WORKING;
 													DEVICE2_MOTOR_RUN;
+													BELT_SPEED1 = 1;
+													BELT_SPEED2 = 1;
+													BELT_SPEED3 = 1;
 													Channel.ch2.motor_state = 1;
 													Channel.ch2.motor_start_state = 1;												
 											}else{Channel.ch2.state = WORKEND;}
@@ -551,7 +612,7 @@ static void CH3_Send_Medicine(void)
 									}
 								}
 								break;
-	case READY:	if((Channel.ch2.motor_start_state != 1)&&(Channel.ch1.motor_start_state != 1)&&(Channel.ch4.motor_start_state != 1)){
+	case READY:	if((Channel.ch2.motor_start_state != 1)&&(Channel.ch1.motor_start_state != 1)&&(Channel.ch4.motor_start_state != 1)&&(Channel.ch5.motor_start_state != 1)){
 									if((Channel.ch3.send_num >0)&&(Channel.ch3.motor_state == 0 )){									
 										if(READ_DEVICE3_SENSOR2 == READLOW){//发药机上有药，启动电机
 											delay_ms(1);
@@ -560,6 +621,9 @@ static void CH3_Send_Medicine(void)
 													Channel.ch3.send_actual = 0;
 													Channel.ch3.state = WORKING;
 													DEVICE3_MOTOR_RUN;
+													BELT_SPEED1 = 1;
+													BELT_SPEED2 = 1;
+													BELT_SPEED3 = 1;
 													Channel.ch3.motor_state = 1;
 													Channel.ch3.motor_start_state = 1;
 											}else{Channel.ch3.state = WORKEND;}
@@ -697,7 +761,7 @@ static void CH4_Send_Medicine(void)
 									}
 								}
 								break;
-	case READY:	if((Channel.ch2.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&(Channel.ch1.motor_start_state != 1)){
+	case READY:	if((Channel.ch2.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&(Channel.ch1.motor_start_state != 1)&&(Channel.ch5.motor_start_state != 1)){
 									if((Channel.ch4.send_num >0)&&(Channel.ch4.motor_state == 0 )){									
 										if(READ_DEVICE4_SENSOR2 == READLOW){//发药机上有药，启动电机
 											delay_ms(1);
@@ -706,6 +770,9 @@ static void CH4_Send_Medicine(void)
 													Channel.ch4.send_actual = 0;
 													Channel.ch4.state = WORKING;
 													DEVICE4_MOTOR_RUN;
+													BELT_SPEED1 = 1;
+													BELT_SPEED2 = 1;
+													BELT_SPEED3 = 1;
 													Channel.ch4.motor_state = 1;
 													Channel.ch4.motor_start_state = 1;
 											}else{Channel.ch4.state = WORKEND;}
@@ -824,6 +891,7 @@ static void CH4_Send_Medicine(void)
 //函数返回:无
 //注意    :无
 //=============================================================================
+#if CHANNEL_4 == 0
 static void CH5_Send_Medicine(void)
 {
 	static u8 temp;
@@ -842,7 +910,7 @@ static void CH5_Send_Medicine(void)
 									}
 								}
 								break;
-	case READY:	if((Channel.ch2.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&(Channel.ch1.motor_start_state != 1)){
+	case READY:	if((Channel.ch2.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&(Channel.ch1.motor_start_state != 1)&&(Channel.ch4.motor_start_state != 1)){
 									if((Channel.ch5.send_num >0)&&(Channel.ch5.motor_state == 0 )){									
 										if(READ_DEVICE5_SENSOR2 == READLOW){//发药机上有药，启动电机
 											delay_ms(1);
@@ -962,6 +1030,7 @@ static void CH5_Send_Medicine(void)
 								break;	
 	}	
 }
+#endif
 //=============================================================================
 //函数名称:CH_Send_Medicine
 //功能概要:所有通道发药控制
@@ -977,8 +1046,12 @@ void CH_Send_Medicine(void)
 		CH2_Send_Medicine();
 		CH3_Send_Medicine();
 		CH4_Send_Medicine();
+		#if CHANNEL_4 == 0
 		CH5_Send_Medicine();
+		if((Channel.ch1.state == END)&&(Channel.ch2.state == END)&&(Channel.ch3.state == END)&&(Channel.ch4.state == END)&&(Channel.ch5.state == END)){
+		#else
 		if((Channel.ch1.state == END)&&(Channel.ch2.state == END)&&(Channel.ch3.state == END)&&(Channel.ch4.state == END)){
+		#endif
 			while(Usart1_Control_Data.tx_count);//所有通道都没药这种特殊情况需等待串口发送完数据再回复PC
 			Usart1_Control_Data.tx_count = 0;
 			Send_Medicine_Finish_State = 1;					//所有通道发药完成状态，给皮带用，避免短暂堵转后发药继续而皮带停止时间已经到了。
@@ -1008,6 +1081,9 @@ void CH_Send_Medicine(void)
 			PC_Answer.answer_state = 1;
 			Usart1_Control_Data.tx_index = 0;	
 			USART_SendData(USART1,Usart1_Control_Data.txbuf[Usart1_Control_Data.tx_index++]);
+			BELT_SPEED1 = 0;
+			BELT_SPEED2 = 0;
+			BELT_SPEED3 = 0;
 		}
 	}else{//从机模式
 			if((READ_DEVICE1_KEY == READLOW)&&(READ_DEVICE1_SENSOR2 == READHIGH)){		//从机模式任何时候都可以复位
@@ -1043,6 +1119,7 @@ void CH_Send_Medicine(void)
             Channel.ch4.err_flag = 0;							
 					}
 			}		
+			#if CHANNEL_4==0
 			if((READ_DEVICE5_KEY == READLOW)&&(READ_DEVICE5_SENSOR2 == READHIGH)){		//从机模式任何时候都可以复位
 					delay_ms(1);
 					if((READ_DEVICE5_KEY == READLOW)&&(READ_DEVICE5_SENSOR2 == READHIGH)){
@@ -1051,6 +1128,7 @@ void CH_Send_Medicine(void)
             Channel.ch5.err_flag = 0;							
 					}
 			}			
+			#endif
   }  
 }
 //=============================================================================
@@ -1066,7 +1144,9 @@ void CH_Light_Control(void )
 	static u8 ch2_blink_temp=0;
 	static u8 ch3_blink_temp=0;
 	static u8 ch4_blink_temp=0;
+	#if CHANNEL_4==0
 	static u8 ch5_blink_temp=0;
+	#endif
 	if(Channel.ch1.err_flag == 0){
 		if(Channel.ch1.motor_state == 1 ){
 				DEVICE1_LIGHT_ON;
@@ -1139,6 +1219,7 @@ void CH_Light_Control(void )
 					Channel.ch4.err_flash_time = 100;
 			}
 	}
+	#if CHANNEL_4==0
 	if(Channel.ch5.err_flag == 0){
 		if(Channel.ch5.motor_state == 1 ){
 				DEVICE5_LIGHT_ON;
@@ -1157,6 +1238,7 @@ void CH_Light_Control(void )
 					Channel.ch5.err_flash_time = 100;
 			}
 	}
+	#endif
 }
 //=============================================================================
 //函数名称:Send_Medicine_Time_ISR

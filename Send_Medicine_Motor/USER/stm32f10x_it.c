@@ -149,7 +149,7 @@ void TIM2_IRQHandler(void)
 	{	
 		Led_Flash();
 		Send_Medicine_Time_ISR();
-		Belt_Control();
+// 		Belt_Control();
 //		Device_Send_Actual_IRQTimer();	//所以通道实际发药计数
 		TIM_ClearITPendingBit(TIM2 , TIM_FLAG_Update);  		 
 	}		 	

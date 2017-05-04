@@ -1,0 +1,13 @@
+Removed Pin From Net: NetName=+24V Pin=C9-1
+Removed Pin From Net: NetName=24V0 Pin=C9-2
+Removed Pin From Net: NetName=+3.3V Pin=D12-1
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=C9
+Removed Member From Class: ClassName=Send_Medicine_Motor Member=D12
+Change Component Comment : Designator=LED1 Old Comment= New Comment=redled
+Change Component Comment : Designator=LED2 Old Comment= New Comment=redled
+Change Component Comment : Designator=C12 Old Comment=C_2200uF New Comment=470uF
+Change Component Comment : Designator=C10 Old Comment=C_2200uF New Comment=2200uF
+Change Component Comment : Designator=D11 Old Comment=Ready New Comment=redled
+Change Component Comment : Designator=R90 Old Comment=Res2 New Comment=1K
+Change Component Designator: OldDesignator=D11 NewDesignator=LED3
+Change Net Name : Old Net Name=NetD11_2 New Net Name=NetLED3_2

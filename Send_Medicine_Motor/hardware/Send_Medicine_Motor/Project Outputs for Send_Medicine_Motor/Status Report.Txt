@@ -1,0 +1,11 @@
+Output: PADS ASCII Netlist
+Type  : PADSNetlist
+From  : Project [Send_Medicine_Motor.PrjPcb]
+   Generated File[Send_Medicine_Motor.NET]
+   Generated File[Send_Medicine_Motor.PRT]
+
+
+Files Generated   : 2
+Documents Printed : 0
+
+Finished Output Generation At 16:53:43 On 2017/4/28

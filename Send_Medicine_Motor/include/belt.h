@@ -4,6 +4,9 @@
 #include "stm32f10x.h"
 #include "delay.h"
 
+#define BELT_FOR_CHANNEL_4  0
+
+#if CHANNEL_4 == 1
 #define	BELT_SPEED1_IO				GPIO_Pin_5
 #define	BELT_SPEED1_PORT			GPIOB
 #define	BELT_SPEED2_IO				GPIO_Pin_12
@@ -14,7 +17,18 @@
 #define	BELT_DIR_PORT					GPIOC
 #define	BELT_ERR_IO						GPIO_Pin_10
 #define	BELT_ERR_PORT					GPIOC
-
+#else
+#define	BELT_SPEED1_IO				GPIO_Pin_5
+#define	BELT_SPEED1_PORT			GPIOB
+#define	BELT_SPEED2_IO				GPIO_Pin_5
+#define	BELT_SPEED2_PORT			GPIOB
+#define	BELT_SPEED3_IO				GPIO_Pin_5
+#define	BELT_SPEED3_PORT			GPIOB
+#define	BELT_DIR_IO						GPIO_Pin_8
+#define	BELT_DIR_PORT					GPIOB
+#define	BELT_ERR_IO						GPIO_Pin_9
+#define	BELT_ERR_PORT					GPIOB
+#endif
 #define BELT_SPEED1_SET  			GPIO_SetBits(BELT_SPEED1_PORT, BELT_SPEED1_IO)
 #define BELT_SPEED1_RESET 		GPIO_ResetBits(BELT_SPEED1_PORT, BELT_SPEED1_IO)
 #define BELT_SPEED2_SET  			GPIO_SetBits(BELT_SPEED2_PORT, BELT_SPEED2_IO)
@@ -25,11 +39,17 @@
 #define BELT_DIR_RESET 				GPIO_ResetBits(BELT_DIR_PORT, BELT_DIR_IO)
 
 #define READ_BELT_ERR    			GPIO_ReadInputDataBit(BELT_ERR_PORT,BELT_ERR_IO) 
-
+#if CHANNEL_4 == 1
 #define BELT_SPEED1				 		PBout(5)// PB5
 #define BELT_SPEED2 					PCout(12)// PB5
 #define BELT_SPEED3						PDout(2)// PB5
 #define BELT_DIR 							PCout(11)// PB5
+#else
+#define BELT_SPEED1				 		PBout(5)// PB5
+#define BELT_SPEED2 					PBout(5)// PB5
+#define BELT_SPEED3						PBout(5)// PB5
+#define BELT_DIR 							PBout(5)// PB5
+#endif
 // #define BELT_ERR 							PCout(10)// PB5
 
 #define Belt_Speed(x3,x2,x1)	do{	BELT_SPEED1 = x1;BELT_SPEED2 = x2;BELT_SPEED3 = x3;}while(0)

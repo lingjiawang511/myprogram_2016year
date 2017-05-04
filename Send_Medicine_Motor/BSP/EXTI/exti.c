@@ -124,7 +124,7 @@ static void  EXTIX9_5_Init(void )
 	
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO,ENABLE);	//使能复用功能时钟
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC,ENABLE);
-	
+#if  CHANNEL_4 == 1
 		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_8;			 
 		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 		 
 		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
@@ -137,7 +137,22 @@ static void  EXTIX9_5_Init(void )
   	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
   	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   	EXTI_Init(&EXTI_InitStructure);	 	//根据EXTI_InitStruct中指定的参数初始化外设EXTI寄存器
+#else
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_8|GPIO_Pin_9;			 
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 		 
+		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
+		GPIO_Init(GPIOC, &GPIO_InitStructure);
 	
+		GPIO_EXTILineConfig(GPIO_PortSourceGPIOC,GPIO_PinSource5); 
+ 	  GPIO_EXTILineConfig(GPIO_PortSourceGPIOC,GPIO_PinSource6);
+		GPIO_EXTILineConfig(GPIO_PortSourceGPIOC,GPIO_PinSource8); 
+ 	  GPIO_EXTILineConfig(GPIO_PortSourceGPIOC,GPIO_PinSource9);
+  	EXTI_InitStructure.EXTI_Line=EXTI_Line5|EXTI_Line6|EXTI_Line8|EXTI_Line9;
+  	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;	
+  	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
+  	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+  	EXTI_Init(&EXTI_InitStructure);	 	//根据EXTI_InitStruct中指定的参数初始化外设EXTI寄存器
+#endif
 	  NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;			//使能按键KEY2所在的外部中断通道
   	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01;	//抢占优先级2， 
   	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x00;					//子优先级2
@@ -322,6 +337,44 @@ static void 	Motor4_pulse_IRQTimer(void)
 		}
 }
 
+#if CHANNEL_4 == 0
+//=============================================================================
+//函数名称:Motor5_pulse_IRQTimer
+//功能概要:通道4电机脉冲软件消抖计数
+//参数名称:无
+//函数返回:无
+//注意    :无
+//=============================================================================
+static void 	Motor5_pulse_IRQTimer(void)
+{
+	static u16 filter_time = 0;
+		if(MCU_State == HOST){
+				if((Channel.ch5.state == WORKING)&&(Channel.ch5.motor_irqstate == 1)){//延时方法使用定时器延时，中断进来看状态，8MS后判断状态是否是真
+					Channel.ch5.motor_irqtime++;
+					if(IRQ_TIMEOUT <= Channel.ch5.motor_irqtime){
+						if(READ_DEVICE5_SENSOR1 == RESET){
+							if(filter_time == 0){
+								Channel.ch5.motor_pulse++;
+								filter_time = FILTER_TIME;
+							}
+						}
+						Channel.ch5.motor_irqstate = 0;
+						Channel.ch5.motor_irqtime = 0;
+					}
+					if((Channel.ch5.send_num <= Channel.ch5.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
+							DEVICE5_MOTOR_STOP;							
+							Channel.ch5.motor_state	= 0;					
+						}
+				}
+				if(filter_time >0){
+					filter_time--;
+				}
+		}else{
+			filter_time = 0;
+		}
+}
+
+#endif
 //=============================================================================
 //函数名称:Device1_Send_Actual_IRQTimer
 //功能概要:通道1实际发药数计数脉冲软件延时检测
@@ -414,6 +467,29 @@ static void 	Device4_Send_Actual_IRQTimer(void)
 					}
 		}
 }
+#if CHANNEL_4 == 0
+//=============================================================================
+//函数名称:Device5_Send_Actual_IRQTimer
+//功能概要:通道4实际发药数计数脉冲软件延时检测
+//参数名称:无
+//函数返回:无
+//注意    :无
+//=============================================================================
+static void 	Device5_Send_Actual_IRQTimer(void)
+{
+		if((Channel.ch5.state == WORKING)&&(Channel.ch5.send_actual_irqstate == 1)){//延时方法使用定时器延时，中断进来看状态，8MS后判断状态是否是真
+					Channel.ch5.send_actual_irqtime++;
+					if(IRQ_TIMEOUT1 <= Channel.ch5.send_actual_irqtime){
+						if(READ_DEVICE5_SENSOR3 == RESET){
+							Channel.ch5.send_actual++;
+						}
+						Channel.ch5.send_actual_irqstate = 0;
+						Channel.ch5.send_actual_irqtime = 0;
+					}
+		}
+}
+
+#endif
 //=============================================================================
 //函数名称:EXTIX_Init
 //功能概要:所有外部中断初始化
@@ -568,11 +644,50 @@ void EXTI9_5_IRQHandler(void)
 				}
 			}
 		EXTI_ClearITPendingBit(EXTI_Line8);
-	}else{
+	}
+	#if CHANNEL_4 ==1
+	else{
 		EXTI_ClearITPendingBit(EXTI_Line5);
 		EXTI_ClearITPendingBit(EXTI_Line7);
 		EXTI_ClearITPendingBit(EXTI_Line9);
 	}
+	#else
+	else if(EXTI_GetITStatus(EXTI_Line5) != RESET){
+		if(MCU_State == HOST){
+				if((Channel.ch5.motor_irqstate == 0)&&(Channel.ch5.state == WORKING)){//延时方法使用定时器延时，中断进来看状态，8MS后判断状态是否是真
+					if((Channel.ch5.send_num-1 <= Channel.ch5.motor_pulse)){
+						Channel.ch5.motor_pulse++;
+					}else{
+						Channel.ch5.motor_irqstate = 1;
+					}
+				}
+				if(Channel.ch5.state == WORKING){//延时方法使用定时器延时，中断进来看状态，8MS后判断状态是否是真，最后一次不用延时
+					if((Channel.ch5.send_num <= Channel.ch5.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
+							DEVICE5_MOTOR_STOP;	
+							Channel.ch5.motor_state	= 0;	
+							Channel.ch5.motor_irqstate = 0;						
+						}
+					}else if((Channel.ch5.state ==RESERVE)||(Channel.ch5.state == END)){
+						DEVICE5_MOTOR_STOP;	
+						Channel.ch5.motor_state	= 0;	
+				}
+			}else{
+				DEVICE5_MOTOR_STOP;	//从机模式只要转到原点就停止
+				Channel.ch5.motor_state	= 0;
+			}
+		EXTI_ClearITPendingBit(EXTI_Line5);
+		}else if(EXTI_GetITStatus(EXTI_Line9) != RESET){
+		if(MCU_State == HOST){
+				if((Channel.ch5.send_actual_irqstate == 0)&&(Channel.ch5.state == WORKING)){//延时方法使用定时器延时，中断进来看状态，8MS后判断状态是否是真					
+						Channel.ch5.send_actual_irqstate = 1;
+						Channel.ch5.send_actual_irqtime = 0;					
+				}
+			}
+		EXTI_ClearITPendingBit(EXTI_Line9);
+	}else{
+		EXTI_ClearITPendingBit(EXTI_Line7);
+		}
+	#endif
 
 }
 //=============================================================================
@@ -643,6 +758,10 @@ void 	Motor_pulse_IRQTimer(void)
 	Motor2_pulse_IRQTimer();
 	Motor3_pulse_IRQTimer();
 	Motor4_pulse_IRQTimer();
+#if CHANNEL_4 == 0
+	Motor5_pulse_IRQTimer();
+#endif	
+
 }
 //=============================================================================
 //函数名称:Device_Send_Actual_IRQTimer
@@ -657,6 +776,9 @@ void 	Device_Send_Actual_IRQTimer(void)
 	Device2_Send_Actual_IRQTimer();
 	Device3_Send_Actual_IRQTimer();
 	Device4_Send_Actual_IRQTimer();
+#if CHANNEL_4 ==0
+	Device5_Send_Actual_IRQTimer();
+#endif
 }
 
 

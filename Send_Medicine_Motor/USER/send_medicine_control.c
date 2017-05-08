@@ -321,6 +321,7 @@ static void CH1_Send_Medicine(void)
 													Channel.ch1.motor_pulse = 0;
 													Channel.ch1.send_actual = 0;
 													Channel.ch1.state = WORKING;
+												  Channel.ch1.send_jam_time = SEND_MEDICINE_JAMTIME ;
 													DEVICE1_MOTOR_RUN;
 												  BELT_SPEED1 = 1;
 													BELT_SPEED2 = 1;
@@ -362,7 +363,7 @@ static void CH1_Send_Medicine(void)
 										temp = 0;	
 									}
 							  }
-							if((Channel.ch1.send_num <= Channel.ch1.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch1.timeout)){ //电机转过了那么多圈，就应该发那么多药
+							if((Channel.ch1.send_num <= Channel.ch1.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch1.timeout)||(Channel.ch1.send_jam_time ==0)){ //电机转过了那么多圈，就应该发那么多药
 // 									Channel.ch1.state = WORKEND;
 									Channel.ch1.timeoutstart = 0;
 									Channel.ch1.timeout = 0;
@@ -471,6 +472,7 @@ static void CH2_Send_Medicine(void)
 													Channel.ch2.motor_pulse = 0;
 													Channel.ch2.send_actual = 0;
 													Channel.ch2.state = WORKING;
+												  Channel.ch2.send_jam_time = SEND_MEDICINE_JAMTIME ;
 													DEVICE2_MOTOR_RUN;
 													BELT_SPEED1 = 1;
 													BELT_SPEED2 = 1;
@@ -512,7 +514,7 @@ static void CH2_Send_Medicine(void)
 										temp = 0;	
 									}
 							  }
-							if((Channel.ch2.send_num <= Channel.ch2.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch2.timeout)){ //电机转过了那么多圈，就应该发那么多药
+							if((Channel.ch2.send_num <= Channel.ch2.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch2.timeout)||(Channel.ch2.send_jam_time ==0)){ //电机转过了那么多圈，就应该发那么多药
 // 									Channel.ch2.state = WORKEND;
 									Channel.ch2.timeoutstart = 0;
 									Channel.ch2.timeout = 0;
@@ -620,6 +622,7 @@ static void CH3_Send_Medicine(void)
 													Channel.ch3.motor_pulse = 0;
 													Channel.ch3.send_actual = 0;
 													Channel.ch3.state = WORKING;
+												  Channel.ch3.send_jam_time = SEND_MEDICINE_JAMTIME ;
 													DEVICE3_MOTOR_RUN;
 													BELT_SPEED1 = 1;
 													BELT_SPEED2 = 1;
@@ -661,7 +664,7 @@ static void CH3_Send_Medicine(void)
 										temp = 0;	
 									}
 							  }
-							if((Channel.ch3.send_num <= Channel.ch3.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch3.timeout)){ //电机转过了那么多圈，就应该发那么多药
+							if((Channel.ch3.send_num <= Channel.ch3.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch3.timeout)||(Channel.ch3.send_jam_time ==0)){ //电机转过了那么多圈，就应该发那么多药
 // 									Channel.ch3.state = WORKEND;
 									Channel.ch3.timeoutstart = 0;
 									Channel.ch3.timeout = 0;
@@ -769,6 +772,7 @@ static void CH4_Send_Medicine(void)
 													Channel.ch4.motor_pulse = 0;
 													Channel.ch4.send_actual = 0;
 													Channel.ch4.state = WORKING;
+												  Channel.ch4.send_jam_time = SEND_MEDICINE_JAMTIME ;
 													DEVICE4_MOTOR_RUN;
 													BELT_SPEED1 = 1;
 													BELT_SPEED2 = 1;
@@ -810,7 +814,7 @@ static void CH4_Send_Medicine(void)
 										temp = 0;	
 									}
 							  }
-							if((Channel.ch4.send_num <= Channel.ch4.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch4.timeout)){ //电机转过了那么多圈，就应该发那么多药
+							if((Channel.ch4.send_num <= Channel.ch4.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch4.timeout)||(Channel.ch4.send_jam_time ==0)){ //电机转过了那么多圈，就应该发那么多药
 // 									Channel.ch4.state = WORKEND;
 									Channel.ch4.timeoutstart = 0;
 									Channel.ch4.timeout = 0;
@@ -918,6 +922,7 @@ static void CH5_Send_Medicine(void)
 													Channel.ch5.motor_pulse = 0;
 													Channel.ch5.send_actual = 0;
 													Channel.ch5.state = WORKING;
+												  Channel.ch5.send_jam_time = SEND_MEDICINE_JAMTIME ;
 													DEVICE5_MOTOR_RUN;
 													Channel.ch5.motor_state = 1;
 													Channel.ch5.motor_start_state = 1;
@@ -956,7 +961,7 @@ static void CH5_Send_Medicine(void)
 										temp = 0;	
 									}
 							  }
-							if((Channel.ch5.send_num <= Channel.ch5.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch5.timeout)){ //电机转过了那么多圈，就应该发那么多药
+							if((Channel.ch5.send_num <= Channel.ch5.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch5.timeout)||(Channel.ch5.send_jam_time ==0)){ //电机转过了那么多圈，就应该发那么多药
 // 									Channel.ch4.state = WORKEND;
 									Channel.ch5.timeoutstart = 0;
 									Channel.ch5.timeout = 0;
@@ -1342,6 +1347,21 @@ void Send_Medicine_Time_ISR(void )
 	}
 	if(Channel.ch5.err_flash_time > 0){
 			Channel.ch5.err_flash_time--;
+	}
+	if(Channel.ch1.send_jam_time > 0){
+		Channel.ch1.send_jam_time--;
+	}
+		if(Channel.ch2.send_jam_time > 0){
+		Channel.ch2.send_jam_time--;
+	}
+		if(Channel.ch3.send_jam_time > 0){
+		Channel.ch3.send_jam_time--;
+	}
+		if(Channel.ch4.send_jam_time > 0){
+		Channel.ch4.send_jam_time--;
+	}
+		if(Channel.ch5.send_jam_time > 0){
+		Channel.ch5.send_jam_time--;
 	}
 }
 

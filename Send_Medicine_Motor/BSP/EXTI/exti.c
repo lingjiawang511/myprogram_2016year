@@ -214,6 +214,7 @@ static void 	Motor1_pulse_IRQTimer(void)
 							if(filter_time == 0){
 								Channel.ch1.motor_pulse++;
 								filter_time = FILTER_TIME;
+								 Channel.ch1.send_jam_time = SEND_MEDICINE_JAMTIME ;
 							}
 						}
 						Channel.ch1.motor_irqstate = 0;
@@ -249,6 +250,7 @@ static void 	Motor2_pulse_IRQTimer(void)
 							if(filter_time == 0){
 								Channel.ch2.motor_pulse++;
 								filter_time = FILTER_TIME;
+								 Channel.ch2.send_jam_time = SEND_MEDICINE_JAMTIME ;
 							}
 						}
 						Channel.ch2.motor_irqstate = 0;
@@ -284,6 +286,7 @@ static void 	Motor3_pulse_IRQTimer(void)
 							if(filter_time == 0){
 								Channel.ch3.motor_pulse++;
 								filter_time = FILTER_TIME;
+								 Channel.ch3.send_jam_time = SEND_MEDICINE_JAMTIME ;
 							}
 						}
 						Channel.ch3.motor_irqstate = 0;
@@ -319,6 +322,7 @@ static void 	Motor4_pulse_IRQTimer(void)
 							if(filter_time == 0){
 								Channel.ch4.motor_pulse++;
 								filter_time = FILTER_TIME;
+								Channel.ch4.send_jam_time = SEND_MEDICINE_JAMTIME ;
 							}
 						}
 						Channel.ch4.motor_irqstate = 0;
@@ -356,6 +360,7 @@ static void 	Motor5_pulse_IRQTimer(void)
 							if(filter_time == 0){
 								Channel.ch5.motor_pulse++;
 								filter_time = FILTER_TIME;
+								Channel.ch5.send_jam_time = SEND_MEDICINE_JAMTIME ;
 							}
 						}
 						Channel.ch5.motor_irqstate = 0;

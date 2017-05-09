@@ -314,7 +314,7 @@ static void CH1_Send_Medicine(void)
 								}
 								break;
 	case READY:	 if((Channel.ch2.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&(Channel.ch4.motor_start_state != 1)&&(Channel.ch5.motor_start_state != 1)){
-									if((Channel.ch1.send_num >0)&&(Channel.ch1.motor_state == 0 )){									
+									if((Channel.ch1.send_num >0)&&(Channel.ch1.motor_state == 0 )&&(Channel.ch1.err_flag == 0)){									
 										if(READ_DEVICE1_SENSOR2 == READLOW){//发药机上有药，启动电机
 											delay_ms(1);
 											if(READ_DEVICE1_SENSOR2 == READLOW){
@@ -465,7 +465,7 @@ static void CH2_Send_Medicine(void)
 								}
 								break;
 	case READY:	if((Channel.ch1.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&(Channel.ch4.motor_start_state != 1)&&(Channel.ch5.motor_start_state != 1)){
-									if((Channel.ch2.send_num >0)&&(Channel.ch2.motor_state == 0 )){									
+									if((Channel.ch2.send_num >0)&&(Channel.ch2.motor_state == 0 )&&(Channel.ch2.err_flag == 0)){									
 										if(READ_DEVICE2_SENSOR2 == READLOW){//发药机上有药，启动电机
 											delay_ms(1);
 											if(READ_DEVICE2_SENSOR2 == READLOW){
@@ -615,7 +615,7 @@ static void CH3_Send_Medicine(void)
 								}
 								break;
 	case READY:	if((Channel.ch2.motor_start_state != 1)&&(Channel.ch1.motor_start_state != 1)&&(Channel.ch4.motor_start_state != 1)&&(Channel.ch5.motor_start_state != 1)){
-									if((Channel.ch3.send_num >0)&&(Channel.ch3.motor_state == 0 )){									
+									if((Channel.ch3.send_num >0)&&(Channel.ch3.motor_state == 0 )&&(Channel.ch3.err_flag == 0)){									
 										if(READ_DEVICE3_SENSOR2 == READLOW){//发药机上有药，启动电机
 											delay_ms(1);
 											if(READ_DEVICE3_SENSOR2 == READLOW){
@@ -765,7 +765,7 @@ static void CH4_Send_Medicine(void)
 								}
 								break;
 	case READY:	if((Channel.ch2.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&(Channel.ch1.motor_start_state != 1)&&(Channel.ch5.motor_start_state != 1)){
-									if((Channel.ch4.send_num >0)&&(Channel.ch4.motor_state == 0 )){									
+									if((Channel.ch4.send_num >0)&&(Channel.ch4.motor_state == 0 )&&(Channel.ch4.err_flag == 0)){									
 										if(READ_DEVICE4_SENSOR2 == READLOW){//发药机上有药，启动电机
 											delay_ms(1);
 											if(READ_DEVICE4_SENSOR2 == READLOW){
@@ -915,7 +915,7 @@ static void CH5_Send_Medicine(void)
 								}
 								break;
 	case READY:	if((Channel.ch2.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&(Channel.ch1.motor_start_state != 1)&&(Channel.ch4.motor_start_state != 1)){
-									if((Channel.ch5.send_num >0)&&(Channel.ch5.motor_state == 0 )){									
+									if((Channel.ch5.send_num >0)&&(Channel.ch5.motor_state == 0 )&&(Channel.ch5.err_flag == 0)){									
 										if(READ_DEVICE5_SENSOR2 == READLOW){//发药机上有药，启动电机
 											delay_ms(1);
 											if(READ_DEVICE5_SENSOR2 == READLOW){
@@ -924,6 +924,9 @@ static void CH5_Send_Medicine(void)
 													Channel.ch5.state = WORKING;
 												  Channel.ch5.send_jam_time = SEND_MEDICINE_JAMTIME ;
 													DEVICE5_MOTOR_RUN;
+													BELT_SPEED1 = 1;
+													BELT_SPEED2 = 1;
+													BELT_SPEED3 = 1;
 													Channel.ch5.motor_state = 1;
 													Channel.ch5.motor_start_state = 1;
 											}else{Channel.ch5.state = WORKEND;}
@@ -1051,12 +1054,12 @@ void CH_Send_Medicine(void)
 		CH2_Send_Medicine();
 		CH3_Send_Medicine();
 		CH4_Send_Medicine();
-		#if CHANNEL_4 == 0
+#if CHANNEL_4 == 0
 		CH5_Send_Medicine();
 		if((Channel.ch1.state == END)&&(Channel.ch2.state == END)&&(Channel.ch3.state == END)&&(Channel.ch4.state == END)&&(Channel.ch5.state == END)){
-		#else
+#else
 		if((Channel.ch1.state == END)&&(Channel.ch2.state == END)&&(Channel.ch3.state == END)&&(Channel.ch4.state == END)){
-		#endif
+#endif
 			while(Usart1_Control_Data.tx_count);//所有通道都没药这种特殊情况需等待串口发送完数据再回复PC
 			Usart1_Control_Data.tx_count = 0;
 			Send_Medicine_Finish_State = 1;					//所有通道发药完成状态，给皮带用，避免短暂堵转后发药继续而皮带停止时间已经到了。

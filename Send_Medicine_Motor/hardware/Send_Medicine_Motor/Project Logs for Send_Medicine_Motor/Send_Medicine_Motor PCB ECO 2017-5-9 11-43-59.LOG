@@ -1,0 +1,9 @@
+Added Pin To Net: NetName=+24V Pin=R86-2
+Added Pin To Net: NetName=+24V Pin=R113-2
+Added Pin To Net: NetName=+24V Pin=U19-1
+Added Pin To Net: NetName=+24V Pin=U19-2
+Added Pin To Net: NetName=+24V Pin=U19-3
+Added Pin To Net: NetName=+24V Pin=U23-1
+Added Pin To Net: NetName=+24V Pin=U23-2
+Added Pin To Net: NetName=+24V Pin=U23-3
+Added Room: Name=Send_Medicine_Motor

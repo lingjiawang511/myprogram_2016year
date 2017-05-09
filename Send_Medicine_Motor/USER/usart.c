@@ -426,10 +426,10 @@ static u8  SLAVE_Rec_Comm(void)
 							Channel.ch5.send_num = 0;
 							Channel.ch5.state = READY;
 							break;
-		case 0x01:Channel.ch5.send_num = PC_Host_Rec.control.ch4_num;	
+		case 0x01:Channel.ch5.send_num = PC_Host_Rec.control.ch5_num;	
 							Channel.ch5.send_actual = 0;
 							Channel.ch5.state = READY ;
-							PC_Host_Rec.control.ch4_state = 0;
+							PC_Host_Rec.control.ch5_state = 0;
 							break;
 		default :	Channel.ch5.send_num = 0;
 							Channel.ch5.state = READY;

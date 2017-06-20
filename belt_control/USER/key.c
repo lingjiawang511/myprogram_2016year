@@ -1,6 +1,6 @@
 #include"HeadType.h"	
 
-#define	DEVICE1_KEY_IO					GPIO_Pin_11
+#define	DEVICE1_KEY_IO					GPIO_Pin_7
 #define	DEVICE1_KEY_PORT				GPIOB
 
 #define	SWITCH1_IO							GPIO_Pin_12

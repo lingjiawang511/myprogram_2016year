@@ -52,31 +52,43 @@ u8 Key_Scan(void)
 	 u8 key_num;
 	 static u8 key1_triggerstate;
 	 static u16 key1_timercount;
+	 static u8 longlongkey_flag = 0;
 	  key_num = 0;
 	 //key1
 		if(READ_DEVICE1_KEY == READLOW){
-			if(key1_triggerstate == 0){
-				key1_triggerstate = 1;
-			}else{
-				key1_timercount++;
+			if(longlongkey_flag == 0){
+				if(key1_triggerstate == 0){
+					key1_triggerstate = 1;
+				}else{
+					key1_timercount++;
+					if(key1_timercount >= KEY_LONG_TIME){
+						key_num |=0x11;
+						longlongkey_flag = 1;
+				  }
+				}
 			}
 		}else{
+			if(longlongkey_flag == 1){
+				longlongkey_flag = 0;
+				key1_timercount = 0;
+				key1_triggerstate =0;
+			}else{
 				if(key1_triggerstate == 1){
 					if(key1_timercount <KEY_SHORT_TIME){
 						key_num &=0xfe;
 					}else if((key1_timercount >=KEY_SHORT_TIME)&&(key1_timercount <KEY_LONG_TIME)){
 							key_num |=0x01;
 					}else{
-							key_num |=0x11;
+							key_num = 0;
 					}
 					key1_triggerstate =0;				
 				}
 				key1_timercount = 0;
+			}
 		}
 	
 	 return key_num;
 }
-
 u16 switch_init_time(void)
 {
 	u16 belt_delay_time = 0;

@@ -2,6 +2,7 @@
 #include "usart.h"
 #include "TIM.h"
 
+void test_mode_init_belt(void);
 void delay_ms1(u16 ms)
 {
 	u16  i;
@@ -30,6 +31,7 @@ int main(void)
       if(Key_ScanNum == 0x11){
         Belt11_Speed(1,1,0);
         Belt12_Speed(1,1,0);
+        test_mode_init_belt();
         Key_ScanNum = 0;
         testmode = 1;
       }else if(Key_ScanNum == 0x01){
@@ -47,6 +49,21 @@ int main(void)
 		}     
 }
 
-
+void test_mode_init_belt(void)
+{
+    belt11.speed_step = 0;
+    belt11.start_ok = 0;
+    belt11.start_signal = 0;	
+    belt11.stop_signal  = 0;
+    belt11.stop_ok = 0;
+    belt11.stop_delay_state = 0;
+  
+    belt12.speed_step = 0;
+    belt12.start_ok = 0;
+    belt12.start_signal = 0;	
+    belt12.stop_signal  = 0;
+    belt12.stop_ok = 0;
+    belt12.stop_delay_state = 0;
+}
 
 

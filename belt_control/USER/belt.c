@@ -302,7 +302,7 @@ void Belt11_Control(void)
 					belt11.start_ok = 0;
 					belt11.stop_ok = 0;
 					belt11.stop_delay_state = 0;
-					if(belt11.speed_step>0){
+					if(belt11.speed_step > 0){
 						belt11.speed_step--; 
 					}
 				}

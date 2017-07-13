@@ -423,7 +423,7 @@ void lcd_address(uchar page,uchar column)
 
 	transfer_command_lcd(0xb0 + column);   /*设置页地址*/
 	transfer_command_lcd(((page & 0xf0) >> 4) | 0x10);	/*设置列地址的高4位*/
-	transfer_command_lcd((page & 0x0f) | 0x00);	/*设置列地址的低4位*/	
+	transfer_command_lcd(((page + 2) & 0x0f) | 0x00);	/*设置列地址的低4位*/	
 }
 
 /*全屏清屏*/

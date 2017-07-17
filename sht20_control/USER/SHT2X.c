@@ -37,9 +37,9 @@ u8 SHT2x_ReadUserRegister(u8 *pRegisterValue)
     error |= I2C_WriteByte(USER_REG_R);
     I2C_Start();
     error |= I2C_WriteByte(I2C_ADR_R);
-    *pRegisterValue = I2C_ReadByte(NO_ACK);
-//     checksum =  I2C_ReadByte(NO_ACK);
-//     error = SHT2x_CheckCrc(pRegisterValue,1,checksum );
+    *pRegisterValue = I2C_ReadByte(ACK);
+    checksum =  I2C_ReadByte(NO_ACK);
+    error = SHT2x_CheckCrc(pRegisterValue,1,checksum );
     I2C_Stop();
     return error;
 }
@@ -92,8 +92,8 @@ u8 SHT2x_MeasureHM(etSHT2xMeasureType eSHT2xMeasureType,nt16 *pMeasurand)
     pMeasurand->s16.u8H = data[0] = I2C_ReadByte(ACK);
     pMeasurand->s16.u8L = data[1] = I2C_ReadByte(ACK);
     checksum =  I2C_ReadByte(NO_ACK);
-    error |= SHT2x_CheckCrc(data,2,checksum);
     I2C_Stop();
+    error |= SHT2x_CheckCrc(data,2,checksum);
     return error;    
 }
 

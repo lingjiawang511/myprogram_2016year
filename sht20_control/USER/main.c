@@ -46,7 +46,7 @@ int main(void)
 	delay_ms(100);
     while(1){
         error = 0;         
-        error |= SHT2x_MeasurePoll(HUMIDITY,&sRH);
+        error |= SHT2x_MeasureHM(HUMIDITY,&sRH);
         error |= SHT2x_MeasurePoll(TEMP,&sT);
         temperatureC = SHT2x_CalcTemperatureC(sT.u16);
         humidityRH = SHT2x_CalcRH(sRH.u16);

@@ -67,7 +67,7 @@ void I2C_SDA_IN(void)
 	
 	GPIO_InitStructure.GPIO_Pin=I2C_SDA;
     GPIO_InitStructure.GPIO_Speed=GPIO_Speed_2MHz;
-	GPIO_InitStructure.GPIO_Mode=GPIO_Mode_IN_FLOATING;
+	GPIO_InitStructure.GPIO_Mode=GPIO_Mode_IPU;
 	GPIO_Init(GPIO_I2C,&GPIO_InitStructure);
 }
 /*******************************************************************************
@@ -99,7 +99,7 @@ void I2C_SCL_IN(void)
 	
 	GPIO_InitStructure.GPIO_Pin=I2C_SCL;
     GPIO_InitStructure.GPIO_Speed=GPIO_Speed_2MHz;
-	GPIO_InitStructure.GPIO_Mode=GPIO_Mode_IN_FLOATING;
+	GPIO_InitStructure.GPIO_Mode=GPIO_Mode_IPU;
 	GPIO_Init(GPIO_I2C,&GPIO_InitStructure);
 }
 //产生起始信号

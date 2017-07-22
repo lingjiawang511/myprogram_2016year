@@ -30,11 +30,11 @@
 #define EE_TYPE  AT24C02
 
 typedef enum{
-    ACK         = 1,
-    NO_ACK      = 0,
-}etI2CACK;
+  ACK  = 0,
+  NACK = 1,
+}etI2cAck;
 
-
+void delay_nus(u32 nus);
 void delay_nms(u32 nms);
 /* 声明全局函数 */
 void I2C_INIT(void);
@@ -49,7 +49,8 @@ void I2C_NAck(void);
 u8   I2C_Wait_Ack(void);
 void I2C_Send_Byte(u8 txd);
 u8   I2C_Read_Byte(u8 ack);
-
+void  SDA_OPEN(void);
+void  SCL_OPEN(void);
 
 
 

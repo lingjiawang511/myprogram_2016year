@@ -102,6 +102,14 @@ void I2C_SCL_IN(void)
 	GPIO_InitStructure.GPIO_Mode=GPIO_Mode_IPU;
 	GPIO_Init(GPIO_I2C,&GPIO_InitStructure);
 }
+void  SDA_OPEN(void)
+{
+    I2C_SDA_OUT();
+}
+void  SCL_OPEN(void)
+{
+    I2C_SCL_OUT();
+}
 //产生起始信号
 void I2C_Start(void)
 {

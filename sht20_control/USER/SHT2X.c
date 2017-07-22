@@ -38,7 +38,7 @@ u8 SHT2x_ReadUserRegister(u8 *pRegisterValue)
     I2C_Start();
     error |= I2C_WriteByte(I2C_ADR_R);
     *pRegisterValue = I2C_ReadByte(ACK);
-    checksum =  I2C_ReadByte(NO_ACK);
+    checksum =  I2C_ReadByte(NACK);
     error = SHT2x_CheckCrc(pRegisterValue,1,checksum );
     I2C_Stop();
     return error;
@@ -91,7 +91,7 @@ u8 SHT2x_MeasureHM(etSHT2xMeasureType eSHT2xMeasureType,nt16 *pMeasurand)
     I2C_SCL_OUT();
     pMeasurand->s16.u8H = data[0] = I2C_ReadByte(ACK);
     pMeasurand->s16.u8L = data[1] = I2C_ReadByte(ACK);
-    checksum =  I2C_ReadByte(NO_ACK);
+    checksum =  I2C_ReadByte(NACK);
     I2C_Stop();
     error |= SHT2x_CheckCrc(data,2,checksum);
     return error;    
@@ -134,7 +134,7 @@ u8 SHT2x_MeasurePoll(etSHT2xMeasureType eSHT2xMeasureType,nt16 *pMeasurand)
 
     pMeasurand->s16.u8H = data[0] = I2C_ReadByte(ACK);
     pMeasurand->s16.u8L = data[1] = I2C_ReadByte(ACK);
-    checksum =  I2C_ReadByte(NO_ACK);
+    checksum =  I2C_ReadByte(NACK);
     I2C_Stop();
     error |= SHT2x_CheckCrc(data,2,checksum); 
     return error;    
@@ -188,7 +188,7 @@ u8 SHT2x_GetSeriaNumber(u8 u8SerialNumber[])
     u8SerialNumber[3] = I2C_ReadByte(ACK);
     I2C_ReadByte(ACK);
     u8SerialNumber[2] = I2C_ReadByte(ACK);
-    I2C_ReadByte(NO_ACK);
+    I2C_ReadByte(NACK);
     I2C_Stop();
     
     I2C_Start();
@@ -202,7 +202,7 @@ u8 SHT2x_GetSeriaNumber(u8 u8SerialNumber[])
     I2C_ReadByte(ACK);  
     u8SerialNumber[7] = I2C_ReadByte(ACK);  
     u8SerialNumber[6] = I2C_ReadByte(ACK);
-    I2C_ReadByte(NO_ACK);     
+    I2C_ReadByte(NACK);     
     I2C_Stop();   
     return error;
 }

@@ -447,9 +447,9 @@
               <FilePath>..\USER\24cxx.c</FilePath>
             </File>
             <File>
-              <FileName>SHT2X.c</FileName>
+              <FileName>sht3x.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\USER\SHT2X.c</FilePath>
+              <FilePath>..\USER\sht3x.c</FilePath>
             </File>
           </Files>
         </Group>

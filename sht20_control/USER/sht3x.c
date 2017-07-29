@@ -546,6 +546,7 @@ etError SHT3X_SetAlertLimits(ft humidityHighSet,   ft temperatureHighSet,
   {
     // write humidity & temperature alter limits, high clear
     error = SHT3X_StartWriteAccess();
+    delay_nus(50);
     if(error == NO_ERROR) error = SHT3X_WriteCommand(CMD_W_AL_LIM_HC);
     if(error == NO_ERROR) error = SHT3X_WriteAlertLimitData(humidityHighClear,
                                                             temperatureHighClear);

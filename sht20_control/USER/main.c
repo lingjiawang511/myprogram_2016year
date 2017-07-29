@@ -5,10 +5,10 @@
 #include "SHT3x.h"
 // nt16 sT;
 // float temperatureC;
-// char temperatureOutstr[21];
+char temperatureOutstr[21];
 // nt16 sRH;
 // float humidityRH;
-// char humidityOutstr[21];
+char humidityOutstr[21];
 // u8 error = 0;
 // u8 userRegister;
 // u8 endOfBattery;
@@ -110,6 +110,17 @@ int main(void)
       // read measurment buffer
       error = SHT3X_ReadMeasurementBuffer(&temperature, &humidity);
       if(error == NO_ERROR){
+        sprintf(humidityOutstr,"RH:%6.2f %%",humidity);
+        sprintf(temperatureOutstr," T:%6.2f %C",temperature);
+        LCD_P8x16Str(0,2,(u8 *)humidityOutstr);
+        LCD_P8x16Str(0,4,(u8 *)temperatureOutstr);
+        if(error != 0){
+            LCD_P8x16Str(0,0,"Error occurred");
+            LCD_P8x16Str(0,2,"RH: --.-- %%"); 
+            LCD_P8x16Str(0,4," T: --.-- %C");             
+        }else{
+            LCD_P8x16Str(0,0,"              ");
+        }
         // flash blue LED to signalise new temperature and humidity values
       }else if (error == ACK_ERROR)
       {
@@ -118,30 +129,7 @@ int main(void)
       }else break;
       // read heater status
       heater = status.bit.HeaterStatus ? TRUE : FALSE;
-      
-      // if the user button is not pressed ...
-      if(0)
-      { 
-         // ... and the heater is on
-         if(heater)
-         {
-           // switch off the sensor internal heater
-           error |= SHT3X_DisableHeater();
-           if(error != NO_ERROR) break;
-         }
-      }
-      else
-      // if the user button is pressed ...
-      {
-         // ... and the heater is off
-         if(!heater)
-         {
-           // switch on the sensor internal heater
-           error |= SHT3X_EnableHeater();
-           if(error != NO_ERROR) break;
-         }
-      }
-      
+
       // wait 100ms
       delay_ms(100);
     }

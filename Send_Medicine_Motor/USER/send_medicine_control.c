@@ -425,7 +425,9 @@ static void CH1_Send_Medicine(void)
 											MCU_Host_Send.control.ch1_state = 2;							//发送状态给PC
 											MCU_Host_Send.control.ch1_num =  0;
 									}
+                   #if VERSIONS == 0    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况
 										no_medicine_flag = 0;
+                  #endif
 										Channel.ch1.state = END;
 							}else{
                     #if VERSIONS    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况
@@ -586,7 +588,9 @@ static void CH2_Send_Medicine(void)
 											MCU_Host_Send.control.ch2_state = 2;							//发送状态给PC
 											MCU_Host_Send.control.ch2_num =  0;
 									}
-										no_medicine_flag = 0;
+                   #if VERSIONS == 0    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况
+                      no_medicine_flag = 0;
+                   #endif
 										Channel.ch2.state = END;
 							}else{
                     #if VERSIONS    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况
@@ -746,7 +750,9 @@ static void CH3_Send_Medicine(void)
 											MCU_Host_Send.control.ch3_state = 2;							//发送状态给PC
 											MCU_Host_Send.control.ch3_num =  0;
 									}
-									  no_medicine_flag = 0;
+                   #if VERSIONS == 0    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况
+                      no_medicine_flag = 0;
+                   #endif
 										Channel.ch3.state = END;
 							}else{
                     #if VERSIONS    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况
@@ -906,7 +912,9 @@ static void CH4_Send_Medicine(void)
 											MCU_Host_Send.control.ch4_state = 2;							//发送状态给PC
 											MCU_Host_Send.control.ch4_num =  0;
 									}
-									  no_medicine_flag = 0;
+                   #if VERSIONS == 0    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况
+                      no_medicine_flag = 0;
+                   #endif
 										Channel.ch4.state = END;
 							}else{
                     #if VERSIONS    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况
@@ -1066,7 +1074,9 @@ static void CH5_Send_Medicine(void)
 											MCU_Host_Send.control.ch5_state = 2;							//发送状态给PC
 											MCU_Host_Send.control.ch5_num =  0;
 									}
-									  no_medicine_flag = 0;
+                   #if VERSIONS == 0    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况
+                      no_medicine_flag = 0;
+                   #endif
 										Channel.ch5.state = END;
 							}else{
                     #if VERSIONS    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况

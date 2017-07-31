@@ -220,7 +220,8 @@ static void 	Motor1_pulse_IRQTimer(void)
 						Channel.ch1.motor_irqstate = 0;
 						Channel.ch1.motor_irqtime = 0;
 					}
-					if((Channel.ch1.send_num <= Channel.ch1.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
+					if((Channel.ch1.send_num <= Channel.ch1.motor_pulse)||\
+            (Channel.ch1.send_actual + 2 <= Channel.ch1.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
 							DEVICE1_MOTOR_STOP;							
 							Channel.ch1.motor_state	= 0;					
 						}
@@ -256,7 +257,8 @@ static void 	Motor2_pulse_IRQTimer(void)
 						Channel.ch2.motor_irqstate = 0;
 						Channel.ch2.motor_irqtime = 0;
 					}
-					if((Channel.ch2.send_num <= Channel.ch2.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
+					if((Channel.ch2.send_num <= Channel.ch2.motor_pulse)||\
+              (Channel.ch2.send_actual + 2 <= Channel.ch2.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
 							DEVICE2_MOTOR_STOP;							
 							Channel.ch2.motor_state	= 0;					
 						}
@@ -292,7 +294,8 @@ static void 	Motor3_pulse_IRQTimer(void)
 						Channel.ch3.motor_irqstate = 0;
 						Channel.ch3.motor_irqtime = 0;
 					}
-					if((Channel.ch3.send_num <= Channel.ch3.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
+					if((Channel.ch3.send_num <= Channel.ch3.motor_pulse)||\
+             (Channel.ch3.send_actual + 2 <= Channel.ch3.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
 							DEVICE3_MOTOR_STOP;							
 							Channel.ch3.motor_state	= 0;					
 						}
@@ -328,7 +331,8 @@ static void 	Motor4_pulse_IRQTimer(void)
 						Channel.ch4.motor_irqstate = 0;
 						Channel.ch4.motor_irqtime = 0;
 					}
-					if((Channel.ch4.send_num <= Channel.ch4.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
+					if((Channel.ch4.send_num <= Channel.ch4.motor_pulse)||\
+              (Channel.ch4.send_actual + 2 <= Channel.ch4.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
 							DEVICE4_MOTOR_STOP;							
 							Channel.ch4.motor_state	= 0;					
 						}
@@ -366,7 +370,8 @@ static void 	Motor5_pulse_IRQTimer(void)
 						Channel.ch5.motor_irqstate = 0;
 						Channel.ch5.motor_irqtime = 0;
 					}
-					if((Channel.ch5.send_num <= Channel.ch5.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
+					if((Channel.ch5.send_num <= Channel.ch5.motor_pulse)||\
+             (Channel.ch5.send_actual + 2 <= Channel.ch5.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
 							DEVICE5_MOTOR_STOP;							
 							Channel.ch5.motor_state	= 0;					
 						}

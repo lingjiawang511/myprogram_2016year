@@ -312,8 +312,7 @@ void Belt11_Control(void)
 				belt11.stop_delay_state = 1;
 				belt11.start_ok = 0;
 				belt11.start_signal = 0;
-			}
-			if(belt11.stop_ok == 1){
+			}else if(belt11.stop_ok == 1){
 				belt11.stop_signal = 1;
 				belt11.start_signal = 0;
 				belt11.stop_ok = 0;
@@ -349,8 +348,7 @@ void Belt12_Control(void)
 				belt12.stop_delay_state = 1;
 				belt12.start_ok = 0;
 				belt12.start_signal = 0;
-			}
-			if(belt12.stop_ok == 1){
+			}else if(belt12.stop_ok == 1){
 				belt12.stop_signal = 1;
 				belt12.start_signal = 0;
 				belt12.stop_ok = 0;
@@ -370,6 +368,7 @@ void belt11_time_control(void)
 
 	if(belt11.start_signal ==1){
 		belt11.speed_step = Start_Belt11(belt11.speed_step);
+		stop_delay_time = 0;
 	}
 	if(belt11.stop_signal == 1){
 		belt11.speed_step = Stop_Belt11(belt11.speed_step);
@@ -396,6 +395,7 @@ void belt12_time_control(void)
 
 	if(belt12.start_signal ==1){
 		belt12.speed_step = Start_Belt12(belt12.speed_step);
+		stop_delay_time = 0;
 	}
 	if(belt12.stop_signal == 1){
 		belt12.speed_step = Stop_Belt21(belt12.speed_step);

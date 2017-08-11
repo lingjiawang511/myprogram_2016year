@@ -527,7 +527,8 @@ void EXTI0_IRQHandler(void)
 {		
 //		static u8 test=0;
 		if(EXTI_GetITStatus(EXTI_Line0) != RESET){
-		if(MCU_State == HOST){
+     
+		if((MCU_State == HOST)&&(Channel.ch1.motor_pusle_delaytime == 0)){
 				if((Channel.ch1.motor_irqstate == 0)&&(Channel.ch1.state == WORKING)){//延时方法使用定时器延时，中断进来看状态，8MS后判断状态是否是真
 					if((Channel.ch1.send_num-1 <= Channel.ch1.motor_pulse)){
 						Channel.ch1.motor_pulse++;
@@ -546,14 +547,10 @@ void EXTI0_IRQHandler(void)
 						Channel.ch1.motor_state	= 0;	
 				}
 			}else{
-//				test++;
-//				if(test >= 5){
-//					test = 0;
-//					DEVICE1_MOTOR_STOP;	//从机模式只要转到原点就停止
-//					Channel.ch1.motor_state	= 0;
-//				}
-				DEVICE1_MOTOR_STOP;	//从机模式只要转到原点就停止
-				Channel.ch1.motor_state	= 0;
+        if(Channel.ch1.motor_pusle_delaytime == 0){
+          DEVICE1_MOTOR_STOP;	//从机模式只要转到原点就停止
+          Channel.ch1.motor_state	= 0;
+        }
 			}
 		EXTI_ClearITPendingBit(EXTI_Line0); //清除LINE0上的中断标志位  
 		}
@@ -569,7 +566,7 @@ void EXTI0_IRQHandler(void)
 void EXTI3_IRQHandler(void)
 {
 	if(EXTI_GetITStatus(EXTI_Line3) != RESET){
-		if(MCU_State == HOST){
+		if((MCU_State == HOST)&&(Channel.ch4.motor_pusle_delaytime == 0)){
 				if((Channel.ch4.motor_irqstate == 0)&&(Channel.ch4.state == WORKING)){//延时方法使用定时器延时，中断进来看状态，8MS后判断状态是否是真
 					if((Channel.ch4.send_num-1 <= Channel.ch4.motor_pulse)){
 						Channel.ch4.motor_pulse++;
@@ -588,8 +585,10 @@ void EXTI3_IRQHandler(void)
 						Channel.ch4.motor_state	= 0;	
 				}
 			}else{
-				DEVICE4_MOTOR_STOP;	//从机模式只要转到原点就停止
-				Channel.ch4.motor_state	= 0;
+        if(Channel.ch4.motor_pusle_delaytime == 0){
+          DEVICE4_MOTOR_STOP;	//从机模式只要转到原点就停止
+          Channel.ch4.motor_state	= 0;
+        }
 			}
 		EXTI_ClearITPendingBit(EXTI_Line3); //清除LINE0上的中断标志位  
 	} 
@@ -623,7 +622,7 @@ void EXTI4_IRQHandler(void)
 void EXTI9_5_IRQHandler(void)
 {
 	if(EXTI_GetITStatus(EXTI_Line6) != RESET){
-		if(MCU_State == HOST){
+		if((MCU_State == HOST)&&(Channel.ch3.motor_pusle_delaytime == 0)){
 				if((Channel.ch3.motor_irqstate == 0)&&(Channel.ch3.state == WORKING)){//延时方法使用定时器延时，中断进来看状态，8MS后判断状态是否是真
 					if((Channel.ch3.send_num-1 <= Channel.ch3.motor_pulse)){
 						Channel.ch3.motor_pulse++;
@@ -642,8 +641,10 @@ void EXTI9_5_IRQHandler(void)
 						Channel.ch3.motor_state	= 0;	
 				}
 			}else{
-				DEVICE3_MOTOR_STOP;	//从机模式只要转到原点就停止
-				Channel.ch3.motor_state	= 0;
+        if(Channel.ch3.motor_pusle_delaytime == 0){
+          DEVICE3_MOTOR_STOP;	//从机模式只要转到原点就停止
+          Channel.ch3.motor_state	= 0;
+        }
 			}
 		EXTI_ClearITPendingBit(EXTI_Line6);
 	}else if(EXTI_GetITStatus(EXTI_Line8) != RESET){
@@ -663,7 +664,7 @@ void EXTI9_5_IRQHandler(void)
 	}
 	#else
 	else if(EXTI_GetITStatus(EXTI_Line5) != RESET){
-		if(MCU_State == HOST){
+		if((MCU_State == HOST)&&(Channel.ch5.motor_pusle_delaytime == 0)){
 				if((Channel.ch5.motor_irqstate == 0)&&(Channel.ch5.state == WORKING)){//延时方法使用定时器延时，中断进来看状态，8MS后判断状态是否是真
 					if((Channel.ch5.send_num-1 <= Channel.ch5.motor_pulse)){
 						Channel.ch5.motor_pulse++;
@@ -682,8 +683,10 @@ void EXTI9_5_IRQHandler(void)
 						Channel.ch5.motor_state	= 0;	
 				}
 			}else{
-				DEVICE5_MOTOR_STOP;	//从机模式只要转到原点就停止
-				Channel.ch5.motor_state	= 0;
+        if(Channel.ch1.motor_pusle_delaytime == 0){
+          DEVICE5_MOTOR_STOP;	//从机模式只要转到原点就停止
+          Channel.ch5.motor_state	= 0;
+        }
 			}
 		EXTI_ClearITPendingBit(EXTI_Line5);
 		}else if(EXTI_GetITStatus(EXTI_Line9) != RESET){
@@ -718,7 +721,7 @@ void EXTI15_10_IRQHandler(void)
 			}
 		EXTI_ClearITPendingBit(EXTI_Line10);
 	}else if(EXTI_GetITStatus(EXTI_Line12) != RESET){
-		if(MCU_State == HOST){
+		if((MCU_State == HOST)&&(Channel.ch2.motor_pusle_delaytime == 0)){
 				if((Channel.ch2.motor_irqstate == 0)&&(Channel.ch2.state == WORKING)){//延时方法使用定时器延时，中断进来看状态，8MS后判断状态是否是真
 					if((Channel.ch2.send_num-1 <= Channel.ch2.motor_pulse)){
 						Channel.ch2.motor_pulse++;
@@ -737,8 +740,10 @@ void EXTI15_10_IRQHandler(void)
 						Channel.ch2.motor_state	= 0;	
 				}
 			}else{
-				DEVICE2_MOTOR_STOP;	//从机模式只要转到原点就停止
-				Channel.ch2.motor_state	= 0;
+        if(Channel.ch1.motor_pusle_delaytime == 0){
+          DEVICE2_MOTOR_STOP;	//从机模式只要转到原点就停止
+          Channel.ch2.motor_state	= 0;
+        }
 			}
 		EXTI_ClearITPendingBit(EXTI_Line12);
 	}else if(EXTI_GetITStatus(EXTI_Line14) != RESET){

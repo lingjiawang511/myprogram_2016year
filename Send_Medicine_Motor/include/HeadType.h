@@ -51,9 +51,9 @@ typedef uint32	ulong;		/**< 32-bit value */
 #define IRQ_TIMEOUT							3			//中断软件延时时间
 #define IRQ_TIMEOUT1						10			//中断软件延时时间
 #define	MOTOR_START_DELAYTIME		40		//每个电机启动延时间隔
-#define VERSIONS  0    //版本0是不带后检测传感器计数，使用电机来计数
+#define VERSIONS  1    //版本0是不带后检测传感器计数，使用电机来计数
 #define SEND_MEDICINE_JAMTIME   300    //电机堵塞时间
-
+#define MOTOR_PULSE_DELAYTIME   10    //电机堵塞时间
 
 /*************define type end*******************/
 
@@ -173,9 +173,10 @@ typedef struct{
 	u8 send_actual_irqtime;		//实时计数中断软件滤波时间
 	u8 motor_start_state;			//电机启动延时状态
 	u16 motor_start_time;			//电机延时启动时间
-	u8 err_flag;
-	u16 err_flash_time;
-	u16 send_jam_time;
+	u8 err_flag;              //通道错误标志
+	u16 err_flash_time;      //通道错误闪烁时间
+	u16 send_jam_time;       //发药过程中电机堵塞跳过时间
+  u16 motor_pusle_delaytime; //电机启动瞬间忽略电机中断检测时间
 }CH_Work_Type;
 
 typedef struct{

@@ -308,6 +308,7 @@ static void CH1_Send_Medicine(void)
 									delay_ms(2);
 									if((READ_DEVICE1_KEY == READLOW)&&(READ_DEVICE1_SENSOR2 == READHIGH)){
 										DEVICE1_MOTOR_RUN;
+                    Channel.ch1.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME; 
 										Channel.ch1.motor_state = 1;	
 										Channel.ch1.err_flag = 0;										
 									}
@@ -322,7 +323,8 @@ static void CH1_Send_Medicine(void)
 													Channel.ch1.motor_pulse = 0;
 													Channel.ch1.send_actual = 0;
 													Channel.ch1.state = WORKING;
-												  Channel.ch1.send_jam_time = SEND_MEDICINE_JAMTIME ;
+												  Channel.ch1.send_jam_time = SEND_MEDICINE_JAMTIME;
+                          Channel.ch1.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;                       
 													DEVICE1_MOTOR_RUN;
 												  BELT_SPEED1 = 1;
 													BELT_SPEED2 = 1;
@@ -442,7 +444,8 @@ static void CH1_Send_Medicine(void)
 	case END:	if((READ_DEVICE1_KEY == READLOW)&&(READ_DEVICE1_SENSOR2 == READHIGH)){		//发药完成或者空闲时可以复位
 										delay_ms(1);
 										if((READ_DEVICE1_KEY == READLOW)&&(READ_DEVICE1_SENSOR2 == READHIGH)){
-											DEVICE1_MOTOR_RUN;	
+											DEVICE1_MOTOR_RUN;
+                      Channel.ch1.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;                       
 											Channel.ch1.motor_state = 1;
 										}
 							}
@@ -473,6 +476,7 @@ static void CH2_Send_Medicine(void)
 									delay_ms(2);
 									if((READ_DEVICE2_KEY == READLOW)&&(READ_DEVICE2_SENSOR2 == READHIGH)){
 										DEVICE2_MOTOR_RUN;
+                    Channel.ch2.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME; 
 										Channel.ch2.motor_state = 1;
                     Channel.ch2.err_flag = 0;										
 									}
@@ -487,7 +491,8 @@ static void CH2_Send_Medicine(void)
 													Channel.ch2.motor_pulse = 0;
 													Channel.ch2.send_actual = 0;
 													Channel.ch2.state = WORKING;
-												  Channel.ch2.send_jam_time = SEND_MEDICINE_JAMTIME ;
+												  Channel.ch2.send_jam_time = SEND_MEDICINE_JAMTIME;
+                          Channel.ch2.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME; 
 													DEVICE2_MOTOR_RUN;
 													BELT_SPEED1 = 1;
 													BELT_SPEED2 = 1;
@@ -605,7 +610,8 @@ static void CH2_Send_Medicine(void)
 	case END: if((READ_DEVICE2_KEY == READLOW)&&(READ_DEVICE2_SENSOR2 == READHIGH)){		//发药完成或者空闲时可以复位
 										delay_ms(1);
 										if((READ_DEVICE2_KEY == READLOW)&&(READ_DEVICE2_SENSOR2 == READHIGH)){
-											DEVICE2_MOTOR_RUN;	
+											DEVICE2_MOTOR_RUN;
+                      Channel.ch2.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;                       
 											Channel.ch2.motor_state = 1;
 										}
 								}
@@ -635,6 +641,7 @@ static void CH3_Send_Medicine(void)
 									delay_ms(2);
 									if((READ_DEVICE3_KEY == READLOW)&&(READ_DEVICE3_SENSOR2 == READHIGH)){
 										DEVICE3_MOTOR_RUN;
+                    Channel.ch3.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME; 
 										Channel.ch3.motor_state = 1;
 										Channel.ch3.err_flag = 0;										
 									}
@@ -650,6 +657,7 @@ static void CH3_Send_Medicine(void)
 													Channel.ch3.send_actual = 0;
 													Channel.ch3.state = WORKING;
 												  Channel.ch3.send_jam_time = SEND_MEDICINE_JAMTIME ;
+                          Channel.ch3.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;
 													DEVICE3_MOTOR_RUN;
 													BELT_SPEED1 = 1;
 													BELT_SPEED2 = 1;
@@ -767,7 +775,8 @@ static void CH3_Send_Medicine(void)
 	case END:	if((READ_DEVICE3_KEY == READLOW)&&(READ_DEVICE3_SENSOR2 == READHIGH)){		//发药完成或者空闲时可以复位
 										delay_ms(1);
 										if((READ_DEVICE3_KEY == READLOW)&&(READ_DEVICE3_SENSOR2 == READHIGH)){
-											DEVICE3_MOTOR_RUN;	
+											DEVICE3_MOTOR_RUN;
+                      Channel.ch3.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;                      
 											Channel.ch3.motor_state = 1;
 										}
 								}
@@ -797,6 +806,7 @@ static void CH4_Send_Medicine(void)
 									delay_ms(2);
 									if((READ_DEVICE4_KEY == READLOW)&&(READ_DEVICE4_SENSOR2 == READHIGH)){
 										DEVICE4_MOTOR_RUN;
+                    Channel.ch4.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;
 										Channel.ch4.motor_state = 1;
 										Channel.ch4.err_flag = 0;
 									}
@@ -811,7 +821,8 @@ static void CH4_Send_Medicine(void)
 													Channel.ch4.motor_pulse = 0;
 													Channel.ch4.send_actual = 0;
 													Channel.ch4.state = WORKING;
-												  Channel.ch4.send_jam_time = SEND_MEDICINE_JAMTIME ;
+												  Channel.ch4.send_jam_time = SEND_MEDICINE_JAMTIME;
+                          Channel.ch4.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;
 													DEVICE4_MOTOR_RUN;
 													BELT_SPEED1 = 1;
 													BELT_SPEED2 = 1;
@@ -929,7 +940,8 @@ static void CH4_Send_Medicine(void)
 	case END:	if((READ_DEVICE4_KEY == READLOW)&&(READ_DEVICE4_SENSOR2 == READHIGH)){		//发药完成或者空闲时可以复位
 										delay_ms(1);
 										if((READ_DEVICE4_KEY == READLOW)&&(READ_DEVICE4_SENSOR2 == READHIGH)){
-											DEVICE4_MOTOR_RUN;	
+											DEVICE4_MOTOR_RUN;
+                      Channel.ch4.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;                      
 											Channel.ch4.motor_state = 1;
 										}
 								}
@@ -959,6 +971,7 @@ static void CH5_Send_Medicine(void)
 									delay_ms(2);
 									if((READ_DEVICE5_KEY == READLOW)&&(READ_DEVICE5_SENSOR2 == READHIGH)){
 										DEVICE5_MOTOR_RUN;
+                    Channel.ch5.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;
 										Channel.ch5.motor_state = 1;
 										Channel.ch5.err_flag = 0;
 									}
@@ -973,7 +986,8 @@ static void CH5_Send_Medicine(void)
 													Channel.ch5.motor_pulse = 0;
 													Channel.ch5.send_actual = 0;
 													Channel.ch5.state = WORKING;
-												  Channel.ch5.send_jam_time = SEND_MEDICINE_JAMTIME ;
+												  Channel.ch5.send_jam_time = SEND_MEDICINE_JAMTIME;
+                          Channel.ch5.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;
 													DEVICE5_MOTOR_RUN;
 													BELT_SPEED1 = 1;
 													BELT_SPEED2 = 1;
@@ -1091,7 +1105,8 @@ static void CH5_Send_Medicine(void)
 	case END:	if((READ_DEVICE5_KEY == READLOW)&&(READ_DEVICE5_SENSOR2 == READHIGH)){		//发药完成或者空闲时可以复位
 										delay_ms(1);
 										if((READ_DEVICE5_KEY == READLOW)&&(READ_DEVICE5_SENSOR2 == READHIGH)){
-											DEVICE5_MOTOR_RUN;	
+											DEVICE5_MOTOR_RUN;
+                      Channel.ch5.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;
 											Channel.ch5.motor_state = 1;
 										}
 								}
@@ -1161,6 +1176,7 @@ void CH_Send_Medicine(void)
 					delay_ms(1);
 					if((READ_DEVICE1_KEY == READLOW)&&(READ_DEVICE1_SENSOR2 == READHIGH)){
 						DEVICE1_MOTOR_RUN;
+            Channel.ch1.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;
 						Channel.ch1.motor_state = 1;	
 						Channel.ch1.err_flag = 0;							
 					}
@@ -1170,6 +1186,7 @@ void CH_Send_Medicine(void)
 					delay_ms(1);
 					if((READ_DEVICE2_KEY == READLOW)&&(READ_DEVICE2_SENSOR2 == READHIGH)){
 						DEVICE2_MOTOR_RUN;
+            Channel.ch2.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;
 						Channel.ch2.motor_state = 1;
 						Channel.ch2.err_flag = 0;							
 					}
@@ -1178,6 +1195,7 @@ void CH_Send_Medicine(void)
 					delay_ms(1);
 					if((READ_DEVICE3_KEY == READLOW)&&(READ_DEVICE3_SENSOR2 == READHIGH)){
 						DEVICE3_MOTOR_RUN;
+            Channel.ch3.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;
 						Channel.ch3.motor_state = 1;	
 						Channel.ch3.err_flag = 0;	
 					}
@@ -1186,6 +1204,7 @@ void CH_Send_Medicine(void)
 					delay_ms(1);
 					if((READ_DEVICE4_KEY == READLOW)&&(READ_DEVICE4_SENSOR2 == READHIGH)){
 						DEVICE4_MOTOR_RUN;
+            Channel.ch4.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;
 						Channel.ch4.motor_state = 1;
             Channel.ch4.err_flag = 0;							
 					}
@@ -1195,6 +1214,7 @@ void CH_Send_Medicine(void)
 					delay_ms(1);
 					if((READ_DEVICE5_KEY == READLOW)&&(READ_DEVICE5_SENSOR2 == READHIGH)){
 						DEVICE5_MOTOR_RUN;
+            Channel.ch5.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;
 						Channel.ch5.motor_state = 1;
             Channel.ch5.err_flag = 0;							
 					}
@@ -1429,6 +1449,21 @@ void Send_Medicine_Time_ISR(void )
 		if(Channel.ch5.send_jam_time > 0){
 		Channel.ch5.send_jam_time--;
 	}
+   if(Channel.ch1.motor_pusle_delaytime > 0){
+      Channel.ch1.motor_pusle_delaytime--;
+  }  
+   if(Channel.ch2.motor_pusle_delaytime > 0){
+      Channel.ch2.motor_pusle_delaytime--;
+  }
+   if(Channel.ch3.motor_pusle_delaytime > 0){
+      Channel.ch3.motor_pusle_delaytime--;
+  }
+   if(Channel.ch4.motor_pusle_delaytime > 0){
+      Channel.ch4.motor_pusle_delaytime--;
+  }
+   if(Channel.ch5.motor_pusle_delaytime > 0){
+      Channel.ch5.motor_pusle_delaytime--;
+  }
 }
 
 

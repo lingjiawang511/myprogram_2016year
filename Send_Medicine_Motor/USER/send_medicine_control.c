@@ -297,7 +297,7 @@ void Send_Medicine_Config(void)
 //=============================================================================
 static void CH1_Send_Medicine(void)
 {
-	static u8 temp;
+	static u8 temp = 0,temp1 = 0;
 	#if (VERSIONS==0)
 	static u8 no_medicine_flag = 0;
 	#endif
@@ -331,9 +331,14 @@ static void CH1_Send_Medicine(void)
 													BELT_SPEED3 = 1;
 													Channel.ch1.motor_state = 1;
 													Channel.ch1.motor_start_state = 1;//启动瞬间只允许一个电机启动，启动后通道可以同时工作
-											}else{Channel.ch1.state = WORKEND;}
+                          temp1 = 0;
+											}
 										}else{	//发药机上没有药，结束
-											Channel.ch1.state = WORKEND;
+                      delay_us(100);
+                      temp1++;
+                      if(temp1 >= 200){
+                        Channel.ch1.state = WORKEND;
+                      }
 										}									
 								}else{
 									Channel.ch1.state = WORKEND; 
@@ -465,7 +470,7 @@ static void CH1_Send_Medicine(void)
 //=============================================================================
 static void CH2_Send_Medicine(void)
 {
-	static u8 temp;
+	static u8 temp = 0,temp1 = 0;
 	#if (VERSIONS==0)
 	static u8 no_medicine_flag = 0;
 	#endif
@@ -498,10 +503,15 @@ static void CH2_Send_Medicine(void)
 													BELT_SPEED2 = 1;
 													BELT_SPEED3 = 1;
 													Channel.ch2.motor_state = 1;
-													Channel.ch2.motor_start_state = 1;												
-											}else{Channel.ch2.state = WORKEND;}
+													Channel.ch2.motor_start_state = 1;	
+                          temp1 = 0;
+											}
 										}else{	//发药机上没有药，结束
-											Channel.ch2.state = WORKEND;
+                      delay_us(100);
+                      temp1++;
+                      if(temp1 >= 200){
+                        Channel.ch2.state = WORKEND;
+                      }
 										}									
 								}else{
 									Channel.ch2.state = WORKEND; 
@@ -630,7 +640,7 @@ static void CH2_Send_Medicine(void)
 //=============================================================================
 static void CH3_Send_Medicine(void)
 {
-	static u8 temp;
+	static u8 temp = 0,temp1 = 0;
 	#if (VERSIONS==0)
 	static u8 no_medicine_flag = 0;
 	#endif
@@ -664,10 +674,15 @@ static void CH3_Send_Medicine(void)
 													BELT_SPEED3 = 1;
 													Channel.ch3.motor_state = 1;
 													Channel.ch3.motor_start_state = 1;
-											}else{Channel.ch3.state = WORKEND;}
+                          temp1 = 0;
+											}
 										}else{	//发药机上没有药，结束
-											Channel.ch3.state = WORKEND;
-										}									
+                      delay_us(100);
+                      temp1++;
+                      if(temp1 >= 200){
+                        Channel.ch3.state = WORKEND;
+                      }
+										}								
 								}else{
 									Channel.ch3.state = WORKEND; 
 								}
@@ -795,7 +810,7 @@ static void CH3_Send_Medicine(void)
 //=============================================================================
 static void CH4_Send_Medicine(void)
 {
-	static u8 temp;
+	static u8 temp = 0,temp1 = 0;
 	#if (VERSIONS==0)
 	static u8 no_medicine_flag = 0;
 	#endif
@@ -829,9 +844,14 @@ static void CH4_Send_Medicine(void)
 													BELT_SPEED3 = 1;
 													Channel.ch4.motor_state = 1;
 													Channel.ch4.motor_start_state = 1;
-											}else{Channel.ch4.state = WORKEND;}
+                          temp1 = 0;
+											}
 										}else{	//发药机上没有药，结束
-											Channel.ch4.state = WORKEND;
+                      delay_us(100);
+                      temp1++;
+                      if(temp1 >= 200){
+                        Channel.ch4.state = WORKEND;
+                      }
 										}									
 								}else{
 									Channel.ch4.state = WORKEND; 
@@ -960,7 +980,7 @@ static void CH4_Send_Medicine(void)
 #if CHANNEL_4 == 0
 static void CH5_Send_Medicine(void)
 {
-	static u8 temp;
+	static u8 temp = 0,temp1 = 0;
 	#if (VERSIONS==0)
 	static u8 no_medicine_flag = 0;
 	#endif
@@ -994,10 +1014,15 @@ static void CH5_Send_Medicine(void)
 													BELT_SPEED3 = 1;
 													Channel.ch5.motor_state = 1;
 													Channel.ch5.motor_start_state = 1;
-											}else{Channel.ch5.state = WORKEND;}
+                          temp1 = 0;
+											}
 										}else{	//发药机上没有药，结束
-											Channel.ch5.state = WORKEND;
-										}									
+                      delay_us(100);
+                      temp1++;
+                      if(temp1 >= 200){
+                        Channel.ch5.state = WORKEND;
+                      }
+										}								
 								}else{
 									Channel.ch5.state = WORKEND; 
 								}

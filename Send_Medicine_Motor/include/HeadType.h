@@ -53,7 +53,7 @@ typedef uint32	ulong;		/**< 32-bit value */
 #define	MOTOR_START_DELAYTIME		40		//每个电机启动延时间隔
 #define VERSIONS  1    //版本0是不带后检测传感器计数，使用电机来计数
 #define SEND_MEDICINE_JAMTIME   300    //电机堵塞时间
-#define MOTOR_PULSE_DELAYTIME   10    //电机堵塞时间
+#define MOTOR_PULSE_DELAYTIME   40    //电机启动忽略检测电机脉冲时间
 
 /*************define type end*******************/
 

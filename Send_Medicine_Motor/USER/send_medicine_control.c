@@ -297,7 +297,7 @@ void Send_Medicine_Config(void)
 //=============================================================================
 static void CH1_Send_Medicine(void)
 {
-	static u8 temp = 0,temp1 = 0;
+	static u16 temp = 0,temp1 = 0;
 	#if (VERSIONS==0)
 	static u8 no_medicine_flag = 0;
 	#endif
@@ -336,12 +336,14 @@ static void CH1_Send_Medicine(void)
 										}else{	//发药机上没有药，结束
                       delay_us(100);
                       temp1++;
-                      if(temp1 >= 200){
+                      if(temp1 >= 5000){
                         Channel.ch1.state = WORKEND;
+												temp1 = 0;
                       }
 										}									
 								}else{
 									Channel.ch1.state = WORKEND; 
+									temp1 = 0;
 								}
 						  	}
 								break ;	
@@ -470,7 +472,7 @@ static void CH1_Send_Medicine(void)
 //=============================================================================
 static void CH2_Send_Medicine(void)
 {
-	static u8 temp = 0,temp1 = 0;
+	static u16 temp = 0,temp1 = 0;
 	#if (VERSIONS==0)
 	static u8 no_medicine_flag = 0;
 	#endif
@@ -509,12 +511,14 @@ static void CH2_Send_Medicine(void)
 										}else{	//发药机上没有药，结束
                       delay_us(100);
                       temp1++;
-                      if(temp1 >= 200){
+                      if(temp1 >= 5000){
                         Channel.ch2.state = WORKEND;
+												temp1 = 0;
                       }
 										}									
 								}else{
 									Channel.ch2.state = WORKEND; 
+									temp1 = 0;
 								}
 							}
 								break ;	
@@ -640,7 +644,7 @@ static void CH2_Send_Medicine(void)
 //=============================================================================
 static void CH3_Send_Medicine(void)
 {
-	static u8 temp = 0,temp1 = 0;
+	static u16 temp = 0,temp1 = 0;
 	#if (VERSIONS==0)
 	static u8 no_medicine_flag = 0;
 	#endif
@@ -679,12 +683,14 @@ static void CH3_Send_Medicine(void)
 										}else{	//发药机上没有药，结束
                       delay_us(100);
                       temp1++;
-                      if(temp1 >= 200){
+                      if(temp1 >= 5000){
                         Channel.ch3.state = WORKEND;
+												temp1 = 0;
                       }
 										}								
 								}else{
 									Channel.ch3.state = WORKEND; 
+									temp1 = 0;
 								}
 							}
 								break ;	
@@ -810,7 +816,7 @@ static void CH3_Send_Medicine(void)
 //=============================================================================
 static void CH4_Send_Medicine(void)
 {
-	static u8 temp = 0,temp1 = 0;
+	static u16 temp = 0,temp1 = 0;
 	#if (VERSIONS==0)
 	static u8 no_medicine_flag = 0;
 	#endif
@@ -849,12 +855,14 @@ static void CH4_Send_Medicine(void)
 										}else{	//发药机上没有药，结束
                       delay_us(100);
                       temp1++;
-                      if(temp1 >= 200){
+                      if(temp1 >= 5000){
                         Channel.ch4.state = WORKEND;
+												temp1 = 0;
                       }
 										}									
 								}else{
 									Channel.ch4.state = WORKEND; 
+									temp1 = 0;
 								}
 							}
 								break ;	
@@ -980,7 +988,7 @@ static void CH4_Send_Medicine(void)
 #if CHANNEL_4 == 0
 static void CH5_Send_Medicine(void)
 {
-	static u8 temp = 0,temp1 = 0;
+	static u16 temp = 0,temp1 = 0;
 	#if (VERSIONS==0)
 	static u8 no_medicine_flag = 0;
 	#endif
@@ -1019,12 +1027,14 @@ static void CH5_Send_Medicine(void)
 										}else{	//发药机上没有药，结束
                       delay_us(100);
                       temp1++;
-                      if(temp1 >= 200){
+                      if(temp1 >= 5000){
                         Channel.ch5.state = WORKEND;
+												temp1 = 0;
                       }
 										}								
 								}else{
 									Channel.ch5.state = WORKEND; 
+									temp1 = 0;
 								}
 							}
 								break ;	

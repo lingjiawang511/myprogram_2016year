@@ -442,6 +442,9 @@ static void CH1_Send_Medicine(void)
                     #if VERSIONS    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况
                     if(SEND_MEDICINE_TIMEOUT*2 <= Channel.ch1.timeout){
                       DEVICE1_MOTOR_STOP;
+											Channel.ch1.motor_state = 0;
+											Channel.ch1.state = END;
+											Channel.ch1.err_flag = 1;
                       Channel.ch1.timeoutstart = 0; //重复利用timeout
                       Channel.ch1.timeout = 0;
                     }
@@ -615,6 +618,9 @@ static void CH2_Send_Medicine(void)
                     #if VERSIONS    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况
                     if(SEND_MEDICINE_TIMEOUT*2 <= Channel.ch2.timeout){
                       DEVICE2_MOTOR_STOP;
+											Channel.ch2.motor_state = 0;
+											Channel.ch2.state = END;
+											Channel.ch2.err_flag = 1;
                       Channel.ch2.timeoutstart = 0; //重复利用timeout
                       Channel.ch2.timeout = 0;
                     }
@@ -787,6 +793,9 @@ static void CH3_Send_Medicine(void)
                     #if VERSIONS    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况
                     if(SEND_MEDICINE_TIMEOUT*2 <= Channel.ch3.timeout){
                       DEVICE3_MOTOR_STOP;
+											Channel.ch3.motor_state = 0;
+											Channel.ch3.state = END;
+											Channel.ch3.err_flag = 1;
                       Channel.ch3.timeoutstart = 0; //重复利用timeout
                       Channel.ch3.timeout = 0;
                     }
@@ -959,6 +968,9 @@ static void CH4_Send_Medicine(void)
                     #if VERSIONS    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况
                     if(SEND_MEDICINE_TIMEOUT*2 <= Channel.ch4.timeout){
                       DEVICE4_MOTOR_STOP;
+											Channel.ch4.motor_state = 0;
+											Channel.ch4.state = END;
+											Channel.ch4.err_flag = 1;
                       Channel.ch4.timeoutstart = 0; //重复利用timeout
                       Channel.ch4.timeout = 0;
                     }
@@ -1131,6 +1143,9 @@ static void CH5_Send_Medicine(void)
                     #if VERSIONS    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况
                     if(SEND_MEDICINE_TIMEOUT*2 <= Channel.ch5.timeout){
                       DEVICE5_MOTOR_STOP;
+											Channel.ch5.motor_state = 0;
+											Channel.ch5.state = END;
+											Channel.ch5.err_flag = 1;
                       Channel.ch5.timeoutstart = 0; //重复利用timeout
                       Channel.ch5.timeout = 0;
                     }

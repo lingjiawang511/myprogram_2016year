@@ -342,7 +342,11 @@ static void CH1_Send_Medicine(void)
                       }
 										}									
 								}else{
-									Channel.ch1.state = WORKEND; 
+									if(Channel.ch1.motor_state == 1){
+										Channel.ch1.motor_state= 0;
+									}else{
+										Channel.ch1.state = WORKEND; 
+									}
 									temp1 = 0;
 								}
 						  	}
@@ -520,7 +524,11 @@ static void CH2_Send_Medicine(void)
                       }
 										}									
 								}else{
-									Channel.ch2.state = WORKEND; 
+									if(Channel.ch2.motor_state == 1){
+										Channel.ch2.motor_state= 0;
+									}else{
+										Channel.ch2.state = WORKEND; 
+									}
 									temp1 = 0;
 								}
 							}
@@ -695,7 +703,11 @@ static void CH3_Send_Medicine(void)
                       }
 										}								
 								}else{
-									Channel.ch3.state = WORKEND; 
+									if(Channel.ch3.motor_state == 1){
+										Channel.ch3.motor_state= 0;
+									}else{
+										Channel.ch3.state = WORKEND; 
+									}
 									temp1 = 0;
 								}
 							}
@@ -870,7 +882,11 @@ static void CH4_Send_Medicine(void)
                       }
 										}									
 								}else{
-									Channel.ch4.state = WORKEND; 
+									if(Channel.ch4.motor_state == 1){
+										Channel.ch4.motor_state= 0;
+									}else{
+										Channel.ch4.state = WORKEND; 
+									}
 									temp1 = 0;
 								}
 							}
@@ -1045,7 +1061,11 @@ static void CH5_Send_Medicine(void)
                       }
 										}								
 								}else{
-									Channel.ch5.state = WORKEND; 
+									if(Channel.ch5.motor_state == 1){
+										Channel.ch5.motor_state= 0;
+									}else{
+										Channel.ch5.state = WORKEND; 
+									}
 									temp1 = 0;
 								}
 							}

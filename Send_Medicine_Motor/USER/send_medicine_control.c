@@ -388,6 +388,15 @@ static void CH1_Send_Medicine(void)
                     Channel.ch1.timeoutstart = 1; //重复利用timeout
 										Channel.ch1.timeout = 0;
 										Channel.ch1.state = WORKEND;
+									}else{
+											if(Channel.ch1.send_jam_time ==0){
+													DEVICE1_MOTOR_STOP;
+													Channel.ch1.motor_state = 0;
+													Channel.ch1.state = END;
+													MCU_Host_Send.control.ch1_state = 0XFF;
+													MCU_Host_Send.control.ch1_num = Channel.ch1.motor_pulse;
+												  Channel.ch1.err_flag = 1;//电机堵转，直接跳到结束并报故障
+											}
 									}
 								#else
 										DEVICE1_MOTOR_STOP;						//停止等电机转回原点停
@@ -567,7 +576,18 @@ static void CH2_Send_Medicine(void)
 								#if VERSIONS
 								  if(Channel.ch2.motor_state == 0){
 								//	DEVICE2_MOTOR_STOP;						//停止等电机转回原点停
+                    Channel.ch2.timeoutstart = 1; //重复利用timeout
+										Channel.ch2.timeout = 0;
 										Channel.ch2.state = WORKEND;
+									}else{
+											if(Channel.ch2.send_jam_time ==0){
+													DEVICE2_MOTOR_STOP;
+													Channel.ch2.motor_state = 0;
+													Channel.ch2.state = END;
+													MCU_Host_Send.control.ch2_state = 0XFF;
+													MCU_Host_Send.control.ch2_num = Channel.ch2.motor_pulse;
+												  Channel.ch2.err_flag = 1;//电机堵转，直接跳到结束并报故障
+											}
 									}
 								#else
 										DEVICE2_MOTOR_STOP;						//停止等电机转回原点停
@@ -745,8 +765,19 @@ static void CH3_Send_Medicine(void)
 									Channel.ch3.timeout = 0;
 								#if VERSIONS
 								  if(Channel.ch3.motor_state == 0){
-								//	DEVICE3_MOTOR_STOP;						//停止等电机转回原点停
+								//	DEVICE1_MOTOR_STOP;						//停止等电机转回原点停
+                    Channel.ch3.timeoutstart = 1; //重复利用timeout
+										Channel.ch3.timeout = 0;
 										Channel.ch3.state = WORKEND;
+									}else{
+											if(Channel.ch3.send_jam_time ==0){
+													DEVICE3_MOTOR_STOP;
+													Channel.ch3.motor_state = 0;
+													Channel.ch3.state = END;
+													MCU_Host_Send.control.ch3_state = 0XFF;
+													MCU_Host_Send.control.ch3_num = Channel.ch3.motor_pulse;
+												  Channel.ch3.err_flag = 1;//电机堵转，直接跳到结束并报故障
+											}
 									}
 								#else
 										DEVICE3_MOTOR_STOP;						//停止等电机转回原点停
@@ -924,8 +955,19 @@ static void CH4_Send_Medicine(void)
 									Channel.ch4.timeout = 0;
 								#if VERSIONS
 								  if(Channel.ch4.motor_state == 0){
-								//	DEVICE4_MOTOR_STOP;						//停止等电机转回原点停
+								//	DEVICE1_MOTOR_STOP;						//停止等电机转回原点停
+                    Channel.ch4.timeoutstart = 1; //重复利用timeout
+										Channel.ch4.timeout = 0;
 										Channel.ch4.state = WORKEND;
+									}else{
+											if(Channel.ch4.send_jam_time ==0){
+													DEVICE4_MOTOR_STOP;
+													Channel.ch4.motor_state = 0;
+													Channel.ch4.state = END;
+													MCU_Host_Send.control.ch4_state = 0XFF;
+													MCU_Host_Send.control.ch4_num = Channel.ch4.motor_pulse;
+												  Channel.ch4.err_flag = 1;//电机堵转，直接跳到结束并报故障
+											}
 									}
 								#else
 										DEVICE4_MOTOR_STOP;						//停止等电机转回原点停
@@ -1103,8 +1145,19 @@ static void CH5_Send_Medicine(void)
 									Channel.ch5.timeout = 0;
 								#if VERSIONS
 								  if(Channel.ch5.motor_state == 0){
-								//	DEVICE4_MOTOR_STOP;						//停止等电机转回原点停
+								//	DEVICE1_MOTOR_STOP;						//停止等电机转回原点停
+                    Channel.ch5.timeoutstart = 1; //重复利用timeout
+										Channel.ch5.timeout = 0;
 										Channel.ch5.state = WORKEND;
+									}else{
+											if(Channel.ch5.send_jam_time ==0){
+													DEVICE5_MOTOR_STOP;
+													Channel.ch5.motor_state = 0;
+													Channel.ch5.state = END;
+													MCU_Host_Send.control.ch5_state = 0XFF;
+													MCU_Host_Send.control.ch5_num = Channel.ch5.motor_pulse;
+												  Channel.ch5.err_flag = 1;//电机堵转，直接跳到结束并报故障
+											}
 									}
 								#else
 										DEVICE5_MOTOR_STOP;						//停止等电机转回原点停

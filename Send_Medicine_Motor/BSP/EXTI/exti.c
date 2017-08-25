@@ -683,7 +683,7 @@ void EXTI9_5_IRQHandler(void)
 						Channel.ch5.motor_state	= 0;	
 				}
 			}else{
-        if(Channel.ch1.motor_pusle_delaytime == 0){
+        if(Channel.ch5.motor_pusle_delaytime == 0){
           DEVICE5_MOTOR_STOP;	//从机模式只要转到原点就停止
           Channel.ch5.motor_state	= 0;
         }

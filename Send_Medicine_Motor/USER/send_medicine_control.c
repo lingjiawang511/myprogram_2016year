@@ -336,7 +336,7 @@ static void CH1_Send_Medicine(void)
 										}else{	//发药机上没有药，结束
                       delay_us(100);
                       temp1++;
-                      if(temp1 >= 5000){
+                      if(temp1 >= 500){
 //                         Channel.ch1.state = WORKEND;
 													Channel.ch1.motor_pulse = 0;
 													Channel.ch1.send_actual = 0;
@@ -404,7 +404,7 @@ static void CH1_Send_Medicine(void)
 													Channel.ch1.motor_state = 0;
 													Channel.ch1.state = END;
 													MCU_Host_Send.control.ch1_state = 0XFF;
-													MCU_Host_Send.control.ch1_num = Channel.ch1.motor_pulse;
+													MCU_Host_Send.control.ch1_num = Channel.ch1.send_actual;
 												  Channel.ch1.err_flag = 1;//电机堵转，直接跳到结束并报故障
 											}
 									}
@@ -537,7 +537,7 @@ static void CH2_Send_Medicine(void)
 										}else{	//发药机上没有药，结束
                       delay_us(100);
                       temp1++;
-                      if(temp1 >= 5000){
+                      if(temp1 >= 500){
 //                         Channel.ch2.state = WORKEND;
 													Channel.ch2.motor_pulse = 0;
 													Channel.ch2.send_actual = 0;
@@ -605,7 +605,7 @@ static void CH2_Send_Medicine(void)
 													Channel.ch2.motor_state = 0;
 													Channel.ch2.state = END;
 													MCU_Host_Send.control.ch2_state = 0XFF;
-													MCU_Host_Send.control.ch2_num = Channel.ch2.motor_pulse;
+													MCU_Host_Send.control.ch2_num = Channel.ch2.send_actual;
 												  Channel.ch2.err_flag = 1;//电机堵转，直接跳到结束并报故障
 											}
 									}
@@ -737,7 +737,7 @@ static void CH3_Send_Medicine(void)
 										}else{	//发药机上没有药，结束
                       delay_us(100);
                       temp1++;
-                      if(temp1 >= 5000){
+                      if(temp1 >= 500){
 //                         Channel.ch3.state = WORKEND;
 													Channel.ch3.motor_pulse = 0;
 													Channel.ch3.send_actual = 0;
@@ -805,7 +805,7 @@ static void CH3_Send_Medicine(void)
 													Channel.ch3.motor_state = 0;
 													Channel.ch3.state = END;
 													MCU_Host_Send.control.ch3_state = 0XFF;
-													MCU_Host_Send.control.ch3_num = Channel.ch3.motor_pulse;
+													MCU_Host_Send.control.ch3_num = Channel.ch3.send_actual;
 												  Channel.ch3.err_flag = 1;//电机堵转，直接跳到结束并报故障
 											}
 									}
@@ -937,7 +937,7 @@ static void CH4_Send_Medicine(void)
 										}else{	//发药机上没有药，结束
                       delay_us(100);
                       temp1++;
-                      if(temp1 >= 5000){
+                      if(temp1 >= 500){
 //                         Channel.ch4.state = WORKEND;
 													Channel.ch4.motor_pulse = 0;
 													Channel.ch4.send_actual = 0;
@@ -1005,7 +1005,7 @@ static void CH4_Send_Medicine(void)
 													Channel.ch4.motor_state = 0;
 													Channel.ch4.state = END;
 													MCU_Host_Send.control.ch4_state = 0XFF;
-													MCU_Host_Send.control.ch4_num = Channel.ch4.motor_pulse;
+													MCU_Host_Send.control.ch4_num = Channel.ch4.send_actual;
 												  Channel.ch4.err_flag = 1;//电机堵转，直接跳到结束并报故障
 											}
 									}
@@ -1137,7 +1137,7 @@ static void CH5_Send_Medicine(void)
 										}else{	//发药机上没有药，结束
                       delay_us(100);
                       temp1++;
-                      if(temp1 >= 5000){
+                      if(temp1 >= 500){
 //                         Channel.ch5.state = WORKEND;
 													Channel.ch5.motor_pulse = 0;
 													Channel.ch5.send_actual = 0;
@@ -1205,7 +1205,7 @@ static void CH5_Send_Medicine(void)
 													Channel.ch5.motor_state = 0;
 													Channel.ch5.state = END;
 													MCU_Host_Send.control.ch5_state = 0XFF;
-													MCU_Host_Send.control.ch5_num = Channel.ch5.motor_pulse;
+													MCU_Host_Send.control.ch5_num = Channel.ch5.send_actual;
 												  Channel.ch5.err_flag = 1;//电机堵转，直接跳到结束并报故障
 											}
 									}

@@ -1,0 +1,66 @@
+From 73c8f7ab2d9d23098fe5cfdcfb2696a01c100e87 Mon Sep 17 00:00:00 2001
+From: lingjiawang511 <398677675@qq.com>
+Date: Mon, 31 Jul 2017 14:31:31 +0800
+Subject: [PATCH] send_medicine software: add the actual count and stop motor
+
+---
+ Send_Medicine_Motor/BSP/EXTI/exti.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
+
+diff --git a/Send_Medicine_Motor/BSP/EXTI/exti.c b/Send_Medicine_Motor/BSP/EXTI/exti.c
+index 112c7a5..f057712 100644
+--- a/Send_Medicine_Motor/BSP/EXTI/exti.c
++++ b/Send_Medicine_Motor/BSP/EXTI/exti.c
+@@ -220,7 +220,8 @@ static void 	Motor1_pulse_IRQTimer(void)
+ 						Channel.ch1.motor_irqstate = 0;
+ 						Channel.ch1.motor_irqtime = 0;
+ 					}
+-					if((Channel.ch1.send_num <= Channel.ch1.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
++					if((Channel.ch1.send_num <= Channel.ch1.motor_pulse)||\
++            (Channel.ch1.send_actual + 2 <= Channel.ch1.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
+ 							DEVICE1_MOTOR_STOP;							
+ 							Channel.ch1.motor_state	= 0;					
+ 						}
+@@ -256,7 +257,8 @@ static void 	Motor2_pulse_IRQTimer(void)
+ 						Channel.ch2.motor_irqstate = 0;
+ 						Channel.ch2.motor_irqtime = 0;
+ 					}
+-					if((Channel.ch2.send_num <= Channel.ch2.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
++					if((Channel.ch2.send_num <= Channel.ch2.motor_pulse)||\
++              (Channel.ch2.send_actual + 2 <= Channel.ch2.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
+ 							DEVICE2_MOTOR_STOP;							
+ 							Channel.ch2.motor_state	= 0;					
+ 						}
+@@ -292,7 +294,8 @@ static void 	Motor3_pulse_IRQTimer(void)
+ 						Channel.ch3.motor_irqstate = 0;
+ 						Channel.ch3.motor_irqtime = 0;
+ 					}
+-					if((Channel.ch3.send_num <= Channel.ch3.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
++					if((Channel.ch3.send_num <= Channel.ch3.motor_pulse)||\
++             (Channel.ch3.send_actual + 2 <= Channel.ch3.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
+ 							DEVICE3_MOTOR_STOP;							
+ 							Channel.ch3.motor_state	= 0;					
+ 						}
+@@ -328,7 +331,8 @@ static void 	Motor4_pulse_IRQTimer(void)
+ 						Channel.ch4.motor_irqstate = 0;
+ 						Channel.ch4.motor_irqtime = 0;
+ 					}
+-					if((Channel.ch4.send_num <= Channel.ch4.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
++					if((Channel.ch4.send_num <= Channel.ch4.motor_pulse)||\
++              (Channel.ch4.send_actual + 2 <= Channel.ch4.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
+ 							DEVICE4_MOTOR_STOP;							
+ 							Channel.ch4.motor_state	= 0;					
+ 						}
+@@ -366,7 +370,8 @@ static void 	Motor5_pulse_IRQTimer(void)
+ 						Channel.ch5.motor_irqstate = 0;
+ 						Channel.ch5.motor_irqtime = 0;
+ 					}
+-					if((Channel.ch5.send_num <= Channel.ch5.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
++					if((Channel.ch5.send_num <= Channel.ch5.motor_pulse)||\
++             (Channel.ch5.send_actual + 2 <= Channel.ch5.motor_pulse)){ //电机转过了那么多圈，就应该发那么多药
+ 							DEVICE5_MOTOR_STOP;							
+ 							Channel.ch5.motor_state	= 0;					
+ 						}
+-- 
+2.5.3.windows.1
+

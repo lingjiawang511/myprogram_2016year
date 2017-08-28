@@ -337,8 +337,19 @@ static void CH1_Send_Medicine(void)
                       delay_us(100);
                       temp1++;
                       if(temp1 >= 5000){
-                        Channel.ch1.state = WORKEND;
-												temp1 = 0;
+//                         Channel.ch1.state = WORKEND;
+													Channel.ch1.motor_pulse = 0;
+													Channel.ch1.send_actual = 0;
+													Channel.ch1.state = WORKING;
+												  Channel.ch1.send_jam_time = SEND_MEDICINE_JAMTIME;
+                          Channel.ch1.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;                       
+													DEVICE1_MOTOR_RUN;
+												  BELT_SPEED1 = 1;
+													BELT_SPEED2 = 1;
+													BELT_SPEED3 = 1;
+													Channel.ch1.motor_state = 1;
+													Channel.ch1.motor_start_state = 1;//启动瞬间只允许一个电机启动，启动后通道可以同时工作                        
+                          temp1 = 0;
                       }
 										}									
 								}else{
@@ -527,8 +538,19 @@ static void CH2_Send_Medicine(void)
                       delay_us(100);
                       temp1++;
                       if(temp1 >= 5000){
-                        Channel.ch2.state = WORKEND;
-												temp1 = 0;
+//                         Channel.ch2.state = WORKEND;
+													Channel.ch2.motor_pulse = 0;
+													Channel.ch2.send_actual = 0;
+													Channel.ch2.state = WORKING;
+												  Channel.ch2.send_jam_time = SEND_MEDICINE_JAMTIME;
+                          Channel.ch2.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME; 
+													DEVICE2_MOTOR_RUN;
+													BELT_SPEED1 = 1;
+													BELT_SPEED2 = 1;
+													BELT_SPEED3 = 1;
+													Channel.ch2.motor_state = 1;
+													Channel.ch2.motor_start_state = 1;	                        
+                          temp1 = 0;
                       }
 										}									
 								}else{
@@ -716,8 +738,19 @@ static void CH3_Send_Medicine(void)
                       delay_us(100);
                       temp1++;
                       if(temp1 >= 5000){
-                        Channel.ch3.state = WORKEND;
-												temp1 = 0;
+//                         Channel.ch3.state = WORKEND;
+													Channel.ch3.motor_pulse = 0;
+													Channel.ch3.send_actual = 0;
+													Channel.ch3.state = WORKING;
+												  Channel.ch3.send_jam_time = SEND_MEDICINE_JAMTIME ;
+                          Channel.ch3.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;
+													DEVICE3_MOTOR_RUN;
+													BELT_SPEED1 = 1;
+													BELT_SPEED2 = 1;
+													BELT_SPEED3 = 1;
+													Channel.ch3.motor_state = 1;
+													Channel.ch3.motor_start_state = 1;                        
+                          temp1 = 0;
                       }
 										}								
 								}else{
@@ -905,8 +938,19 @@ static void CH4_Send_Medicine(void)
                       delay_us(100);
                       temp1++;
                       if(temp1 >= 5000){
-                        Channel.ch4.state = WORKEND;
-												temp1 = 0;
+//                         Channel.ch4.state = WORKEND;
+													Channel.ch4.motor_pulse = 0;
+													Channel.ch4.send_actual = 0;
+													Channel.ch4.state = WORKING;
+												  Channel.ch4.send_jam_time = SEND_MEDICINE_JAMTIME;
+                          Channel.ch4.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;
+													DEVICE4_MOTOR_RUN;
+													BELT_SPEED1 = 1;
+													BELT_SPEED2 = 1;
+													BELT_SPEED3 = 1;
+													Channel.ch4.motor_state = 1;
+													Channel.ch4.motor_start_state = 1;                        
+                          temp1 = 0;
                       }
 										}									
 								}else{
@@ -1094,8 +1138,19 @@ static void CH5_Send_Medicine(void)
                       delay_us(100);
                       temp1++;
                       if(temp1 >= 5000){
-                        Channel.ch5.state = WORKEND;
-												temp1 = 0;
+//                         Channel.ch5.state = WORKEND;
+													Channel.ch5.motor_pulse = 0;
+													Channel.ch5.send_actual = 0;
+													Channel.ch5.state = WORKING;
+												  Channel.ch5.send_jam_time = SEND_MEDICINE_JAMTIME;
+                          Channel.ch5.motor_pusle_delaytime = MOTOR_PULSE_DELAYTIME;
+													DEVICE5_MOTOR_RUN;
+													BELT_SPEED1 = 1;
+													BELT_SPEED2 = 1;
+													BELT_SPEED3 = 1;
+													Channel.ch5.motor_state = 1;
+													Channel.ch5.motor_start_state = 1;                        
+                          temp1 = 0;
                       }
 										}								
 								}else{

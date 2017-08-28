@@ -1,0 +1,220 @@
+From 2b19e3563fe5d19cebabd15031804050fe04bda4 Mon Sep 17 00:00:00 2001
+From: lingjiawang511 <398677675@qq.com>
+Date: Mon, 31 Jul 2017 13:44:20 +0800
+Subject: [PATCH] send_medicine software: fix the version 1 with the stop motor
+ when the sensor err
+
+---
+ Send_Medicine_Motor/USER/send_medicine_control.c | 85 +++++++++++++++++++-----
+ 1 file changed, 69 insertions(+), 16 deletions(-)
+
+diff --git a/Send_Medicine_Motor/USER/send_medicine_control.c b/Send_Medicine_Motor/USER/send_medicine_control.c
+index 5d6711b..f94e858 100644
+--- a/Send_Medicine_Motor/USER/send_medicine_control.c
++++ b/Send_Medicine_Motor/USER/send_medicine_control.c
+@@ -313,7 +313,8 @@ static void CH1_Send_Medicine(void)
+ 									}
+ 								}
+ 								break;
+-	case READY:	 if((Channel.ch2.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&(Channel.ch4.motor_start_state != 1)&&(Channel.ch5.motor_start_state != 1)){
++	case READY:	 if((Channel.ch2.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&\
++                  (Channel.ch4.motor_start_state != 1)&&(Channel.ch5.motor_start_state != 1)){
+ 									if((Channel.ch1.send_num >0)&&(Channel.ch1.motor_state == 0 )&&(Channel.ch1.err_flag == 0)){									
+ 										if(READ_DEVICE1_SENSOR2 == READLOW){//发药机上有药，启动电机
+ 											delay_ms(1);
+@@ -363,13 +364,16 @@ static void CH1_Send_Medicine(void)
+ 										temp = 0;	
+ 									}
+ 							  }
+-							if((Channel.ch1.send_num <= Channel.ch1.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch1.timeout)||(Channel.ch1.send_jam_time ==0)){ //电机转过了那么多圈，就应该发那么多药
++							if((Channel.ch1.send_num <= Channel.ch1.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch1.timeout)\
++                ||(Channel.ch1.send_jam_time ==0)){ //电机转过了那么多圈，就应该发那么多药
+ // 									Channel.ch1.state = WORKEND;
+ 									Channel.ch1.timeoutstart = 0;
+ 									Channel.ch1.timeout = 0;
+ 								#if VERSIONS
+ 								  if(Channel.ch1.motor_state == 0){
+ 								//	DEVICE1_MOTOR_STOP;						//停止等电机转回原点停
++                    Channel.ch1.timeoutstart = 1; //重复利用timeout
++										Channel.ch1.timeout = 0;
+ 										Channel.ch1.state = WORKEND;
+ 									}
+ 								#else
+@@ -423,7 +427,15 @@ static void CH1_Send_Medicine(void)
+ 									}
+ 										no_medicine_flag = 0;
+ 										Channel.ch1.state = END;
+-							}
++							}else{
++                    #if VERSIONS    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况
++                    if(SEND_MEDICINE_TIMEOUT*2 <= Channel.ch1.timeout){
++                      DEVICE1_MOTOR_STOP;
++                      Channel.ch1.timeoutstart = 0; //重复利用timeout
++                      Channel.ch1.timeout = 0;
++                    }
++                    #endif
++              }
+ 								break ;	
+ 	case END:	if((READ_DEVICE1_KEY == READLOW)&&(READ_DEVICE1_SENSOR2 == READHIGH)){		//发药完成或者空闲时可以复位
+ 										delay_ms(1);
+@@ -464,7 +476,8 @@ static void CH2_Send_Medicine(void)
+ 									}
+ 								}
+ 								break;
+-	case READY:	if((Channel.ch1.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&(Channel.ch4.motor_start_state != 1)&&(Channel.ch5.motor_start_state != 1)){
++	case READY:	if((Channel.ch1.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&\
++                  (Channel.ch4.motor_start_state != 1)&&(Channel.ch5.motor_start_state != 1)){
+ 									if((Channel.ch2.send_num >0)&&(Channel.ch2.motor_state == 0 )&&(Channel.ch2.err_flag == 0)){									
+ 										if(READ_DEVICE2_SENSOR2 == READLOW){//发药机上有药，启动电机
+ 											delay_ms(1);
+@@ -514,7 +527,8 @@ static void CH2_Send_Medicine(void)
+ 										temp = 0;	
+ 									}
+ 							  }
+-							if((Channel.ch2.send_num <= Channel.ch2.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch2.timeout)||(Channel.ch2.send_jam_time ==0)){ //电机转过了那么多圈，就应该发那么多药
++							if((Channel.ch2.send_num <= Channel.ch2.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch2.timeout)||\
++                (Channel.ch2.send_jam_time ==0)){ //电机转过了那么多圈，就应该发那么多药
+ // 									Channel.ch2.state = WORKEND;
+ 									Channel.ch2.timeoutstart = 0;
+ 									Channel.ch2.timeout = 0;
+@@ -574,7 +588,15 @@ static void CH2_Send_Medicine(void)
+ 									}
+ 										no_medicine_flag = 0;
+ 										Channel.ch2.state = END;
+-								}
++							}else{
++                    #if VERSIONS    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况
++                    if(SEND_MEDICINE_TIMEOUT*2 <= Channel.ch2.timeout){
++                      DEVICE2_MOTOR_STOP;
++                      Channel.ch2.timeoutstart = 0; //重复利用timeout
++                      Channel.ch2.timeout = 0;
++                    }
++                    #endif
++              }
+ 								break ;	
+ 	case END: if((READ_DEVICE2_KEY == READLOW)&&(READ_DEVICE2_SENSOR2 == READHIGH)){		//发药完成或者空闲时可以复位
+ 										delay_ms(1);
+@@ -614,7 +636,8 @@ static void CH3_Send_Medicine(void)
+ 									}
+ 								}
+ 								break;
+-	case READY:	if((Channel.ch2.motor_start_state != 1)&&(Channel.ch1.motor_start_state != 1)&&(Channel.ch4.motor_start_state != 1)&&(Channel.ch5.motor_start_state != 1)){
++	case READY:	if((Channel.ch2.motor_start_state != 1)&&(Channel.ch1.motor_start_state != 1)&&\
++                  (Channel.ch4.motor_start_state != 1)&&(Channel.ch5.motor_start_state != 1)){
+ 									if((Channel.ch3.send_num >0)&&(Channel.ch3.motor_state == 0 )&&(Channel.ch3.err_flag == 0)){									
+ 										if(READ_DEVICE3_SENSOR2 == READLOW){//发药机上有药，启动电机
+ 											delay_ms(1);
+@@ -664,7 +687,8 @@ static void CH3_Send_Medicine(void)
+ 										temp = 0;	
+ 									}
+ 							  }
+-							if((Channel.ch3.send_num <= Channel.ch3.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch3.timeout)||(Channel.ch3.send_jam_time ==0)){ //电机转过了那么多圈，就应该发那么多药
++							if((Channel.ch3.send_num <= Channel.ch3.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch3.timeout)||\
++                (Channel.ch3.send_jam_time ==0)){ //电机转过了那么多圈，就应该发那么多药
+ // 									Channel.ch3.state = WORKEND;
+ 									Channel.ch3.timeoutstart = 0;
+ 									Channel.ch3.timeout = 0;
+@@ -724,7 +748,15 @@ static void CH3_Send_Medicine(void)
+ 									}
+ 									  no_medicine_flag = 0;
+ 										Channel.ch3.state = END;
+-								}
++							}else{
++                    #if VERSIONS    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况
++                    if(SEND_MEDICINE_TIMEOUT*2 <= Channel.ch3.timeout){
++                      DEVICE3_MOTOR_STOP;
++                      Channel.ch3.timeoutstart = 0; //重复利用timeout
++                      Channel.ch3.timeout = 0;
++                    }
++                    #endif
++              }
+ 								break ;	
+ 	case END:	if((READ_DEVICE3_KEY == READLOW)&&(READ_DEVICE3_SENSOR2 == READHIGH)){		//发药完成或者空闲时可以复位
+ 										delay_ms(1);
+@@ -764,7 +796,8 @@ static void CH4_Send_Medicine(void)
+ 									}
+ 								}
+ 								break;
+-	case READY:	if((Channel.ch2.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&(Channel.ch1.motor_start_state != 1)&&(Channel.ch5.motor_start_state != 1)){
++	case READY:	if((Channel.ch2.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&\
++                  (Channel.ch1.motor_start_state != 1)&&(Channel.ch5.motor_start_state != 1)){
+ 									if((Channel.ch4.send_num >0)&&(Channel.ch4.motor_state == 0 )&&(Channel.ch4.err_flag == 0)){									
+ 										if(READ_DEVICE4_SENSOR2 == READLOW){//发药机上有药，启动电机
+ 											delay_ms(1);
+@@ -814,7 +847,8 @@ static void CH4_Send_Medicine(void)
+ 										temp = 0;	
+ 									}
+ 							  }
+-							if((Channel.ch4.send_num <= Channel.ch4.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch4.timeout)||(Channel.ch4.send_jam_time ==0)){ //电机转过了那么多圈，就应该发那么多药
++							if((Channel.ch4.send_num <= Channel.ch4.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch4.timeout)||\
++                  (Channel.ch4.send_jam_time ==0)){ //电机转过了那么多圈，就应该发那么多药
+ // 									Channel.ch4.state = WORKEND;
+ 									Channel.ch4.timeoutstart = 0;
+ 									Channel.ch4.timeout = 0;
+@@ -874,7 +908,15 @@ static void CH4_Send_Medicine(void)
+ 									}
+ 									  no_medicine_flag = 0;
+ 										Channel.ch4.state = END;
+-								}
++							}else{
++                    #if VERSIONS    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况
++                    if(SEND_MEDICINE_TIMEOUT*2 <= Channel.ch4.timeout){
++                      DEVICE4_MOTOR_STOP;
++                      Channel.ch4.timeoutstart = 0; //重复利用timeout
++                      Channel.ch4.timeout = 0;
++                    }
++                    #endif
++              }
+ 								break ;
+ 	case END:	if((READ_DEVICE4_KEY == READLOW)&&(READ_DEVICE4_SENSOR2 == READHIGH)){		//发药完成或者空闲时可以复位
+ 										delay_ms(1);
+@@ -914,7 +956,8 @@ static void CH5_Send_Medicine(void)
+ 									}
+ 								}
+ 								break;
+-	case READY:	if((Channel.ch2.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&(Channel.ch1.motor_start_state != 1)&&(Channel.ch4.motor_start_state != 1)){
++	case READY:	if((Channel.ch2.motor_start_state != 1)&&(Channel.ch3.motor_start_state != 1)&&\
++                  (Channel.ch1.motor_start_state != 1)&&(Channel.ch4.motor_start_state != 1)){
+ 									if((Channel.ch5.send_num >0)&&(Channel.ch5.motor_state == 0 )&&(Channel.ch5.err_flag == 0)){									
+ 										if(READ_DEVICE5_SENSOR2 == READLOW){//发药机上有药，启动电机
+ 											delay_ms(1);
+@@ -964,7 +1007,8 @@ static void CH5_Send_Medicine(void)
+ 										temp = 0;	
+ 									}
+ 							  }
+-							if((Channel.ch5.send_num <= Channel.ch5.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch5.timeout)||(Channel.ch5.send_jam_time ==0)){ //电机转过了那么多圈，就应该发那么多药
++							if((Channel.ch5.send_num <= Channel.ch5.motor_pulse)||(SEND_MEDICINE_TIMEOUT <= Channel.ch5.timeout)||\
++                  (Channel.ch5.send_jam_time ==0)){ //电机转过了那么多圈，就应该发那么多药
+ // 									Channel.ch4.state = WORKEND;
+ 									Channel.ch5.timeoutstart = 0;
+ 									Channel.ch5.timeout = 0;
+@@ -1024,7 +1068,15 @@ static void CH5_Send_Medicine(void)
+ 									}
+ 									  no_medicine_flag = 0;
+ 										Channel.ch5.state = END;
+-								}
++							}else{
++                    #if VERSIONS    //有计数检测开关时，这里做避免电机检测开关坏一直发药的情况
++                    if(SEND_MEDICINE_TIMEOUT*2 <= Channel.ch5.timeout){
++                      DEVICE5_MOTOR_STOP;
++                      Channel.ch5.timeoutstart = 0; //重复利用timeout
++                      Channel.ch5.timeout = 0;
++                    }
++                    #endif
++              }
+ 								break ;
+ 	case END:	if((READ_DEVICE5_KEY == READLOW)&&(READ_DEVICE5_SENSOR2 == READHIGH)){		//发药完成或者空闲时可以复位
+ 										delay_ms(1);
+@@ -1056,7 +1108,8 @@ void CH_Send_Medicine(void)
+ 		CH4_Send_Medicine();
+ #if CHANNEL_4 == 0
+ 		CH5_Send_Medicine();
+-		if((Channel.ch1.state == END)&&(Channel.ch2.state == END)&&(Channel.ch3.state == END)&&(Channel.ch4.state == END)&&(Channel.ch5.state == END)){
++		if((Channel.ch1.state == END)&&(Channel.ch2.state == END)&&(Channel.ch3.state == END)&&\
++      (Channel.ch4.state == END)&&(Channel.ch5.state == END)){
+ #else
+ 		if((Channel.ch1.state == END)&&(Channel.ch2.state == END)&&(Channel.ch3.state == END)&&(Channel.ch4.state == END)){
+ #endif
+-- 
+2.5.3.windows.1
+

@@ -212,6 +212,9 @@ void USART1_IRQHandler(void)
     if (USART_GetFlagStatus(USART1, USART_FLAG_ORE)) {
         USART_ClearFlag(USART1, USART_FLAG_ORE);
     }
+		if (USART_GetFlagStatus(USART1, USART_FLAG_TXE)) {
+        USART_ClearFlag(USART1, USART_FLAG_TXE);
+    }
 }
 void USART2_IRQHandler(void)
 {
@@ -228,6 +231,9 @@ void USART2_IRQHandler(void)
     }
     if (USART_GetFlagStatus(USART2, USART_FLAG_ORE)) {
         USART_ClearFlag(USART2, USART_FLAG_ORE);
+    }
+		if (USART_GetFlagStatus(USART2, USART_FLAG_TXE)) {
+        USART_ClearFlag(USART2, USART_FLAG_TXE);
     }
 }
 /******************************************************************************/

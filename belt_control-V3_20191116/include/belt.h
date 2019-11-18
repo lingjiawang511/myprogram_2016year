@@ -53,7 +53,9 @@
 //#define BELT11_SPEED2 					PCout(12)// PB5
 //#define BELT11_SPEED3						PDout(2)// PB5
 //#define BELT11_DIR 							PCout(11)// PB5
-
+#define BELT_LEFT     0
+#define BELT_FIGRT    !BELT_LEFT
+#define Belt11_SetDir(dir)      do{BELT11_DIR = (dir ? 0:1);}while(0);
 #define Belt11_Speed(x3,x2,x1)	do{	BELT11_SPEED1 = x1;BELT11_SPEED2 = x2;BELT11_SPEED3 = x3;}while(0)
 //#define Belt11_Speed(x3,x2,x1)	do{BELT11_SPEED1 =(x1? 0:1);\
 //	BELT11_SPEED2 = (x2? 0:1);BELT11_SPEED3 = (x3? 0:1);}while(0);
@@ -94,6 +96,7 @@
 #define BELT12_DIR								PDout(11)// PB5
 // #define BELT_ERR 							PDout(7)// PB5
 
+#define Belt12_SetDir(dir)      do{BELT12_DIR = (dir ? 0:1);}while(0);
 #define Belt12_Speed(x3,x2,x1)	do{	BELT12_SPEED1 = x1;BELT12_SPEED2 = x2;BELT12_SPEED3 = x3;}while(0);
 /**********************∆§¥¯2 IO≈‰÷√****************************/
 

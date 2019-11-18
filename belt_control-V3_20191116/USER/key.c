@@ -19,7 +19,7 @@
 #define READ_SWITCH4                    GPIO_ReadInputDataBit(SWITCH4_PORT,SWITCH4_IO) //返回的是一个字节，读的是一个位
 
 
-#define KEY_SHORT_TIME      20
+#define KEY_SHORT_TIME          10
 #define KEY_LONG_TIME           300
 u8 Key_ScanNum;
 
@@ -35,7 +35,7 @@ void KEY_GPIO_Config(void)
     //定义一个GPIO_InitTypeDef 类型的结构体，名字叫GPIO_InitStructure
     GPIO_InitTypeDef  GPIO_InitStructure;
     //使能GPIOC的外设时钟
-	  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
     //选择要用的GPIO引脚
@@ -50,7 +50,7 @@ void KEY_GPIO_Config(void)
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//100M
     GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;//上拉
     GPIO_Init(DEVICE1_KEY_PORT, &GPIO_InitStructure);//初始化GPIOE2,3,4
-	
+
 }
 
 u8 Key_Scan(void)

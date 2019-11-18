@@ -28,7 +28,7 @@ static void Init_USART1(void)
     Usart1_Control_Data.rx_count = 0;
     Usart1_Control_Data.rx_start = 0;
     Usart1_Control_Data.rx_aframe = 0;
-	  Usart1_Control_Data.huart = USART1;
+    Usart1_Control_Data.huart = USART1;
 }
 static void Init_USART2(void)
 {
@@ -38,7 +38,7 @@ static void Init_USART2(void)
     Usart2_Control_Data.rx_count = 0;
     Usart2_Control_Data.rx_start = 0;
     Usart2_Control_Data.rx_aframe = 0;
-	  Usart2_Control_Data.huart = USART2;
+    Usart2_Control_Data.huart = USART2;
 }
 //=============================================================================
 //函数名称:USART1_Interrupts_Config
@@ -428,6 +428,7 @@ void Host_CTR_Write_CMD(Usart_Type *usart, COMM_RecControl_Union_Type *recdata)
                 belt11.comm_ctr_run_time = recdata->control.recbuf[3] * 200;
                 if (belt11.comm_ctr_run_time == 0) {
                     belt11.comm_ctr_run_time = belt11.actual_time;
+										belt11.comm_run_always_flag = 1;
                 }
                 if (belt11.comm_ctr_run_dir != recdata->control.recbuf[1]) {
                     if (belt11.belt_actual_state == 1) {
@@ -440,18 +441,19 @@ void Host_CTR_Write_CMD(Usart_Type *usart, COMM_RecControl_Union_Type *recdata)
                     }
                 }
                 belt11.comm_ctr_run_dir = recdata->control.recbuf[1];
-								if(belt11.comm_ctr_run_dir == 0x01){
-									BELT11_DIR = 0;
-								}else if(belt11.comm_ctr_run_dir == 0x02){
-									BELT11_DIR = 1;
-								}
-									
+                if (belt11.comm_ctr_run_dir == 0x01) {
+                    Belt11_SetDir(BELT_LEFT);
+                } else if (belt11.comm_ctr_run_dir == 0x02) {
+                    Belt11_SetDir(BELT_FIGRT);
+                }
+
             } else if (recdata->control.recbuf[0] == 0x14) {
                 belt12.comm_ctr_start = 1;
                 belt12.comm_ctr_run_speed = recdata->control.recbuf[2] * 10;
                 belt12.comm_ctr_run_time = recdata->control.recbuf[3] * 200;
                 if (belt12.comm_ctr_run_time == 0) {
                     belt12.comm_ctr_run_time = belt12.actual_time;
+										belt12.comm_run_always_flag = 1;
                 }
                 if (belt12.comm_ctr_run_dir != recdata->control.recbuf[1]) {
                     if (belt12.belt_actual_state == 1) {
@@ -464,11 +466,11 @@ void Host_CTR_Write_CMD(Usart_Type *usart, COMM_RecControl_Union_Type *recdata)
                     }
                 }
                 belt12.comm_ctr_run_dir = recdata->control.recbuf[1];
-								if(belt12.comm_ctr_run_dir == 0x01){
-									BELT12_DIR = 0;
-								}else if(belt12.comm_ctr_run_dir == 0x02){
-									BELT12_DIR = 1;
-								}
+                if (belt12.comm_ctr_run_dir == 0x01) {
+                    Belt12_SetDir(BELT_LEFT);
+                } else if (belt12.comm_ctr_run_dir == 0x02) {
+                   Belt12_SetDir(BELT_FIGRT);
+                }
             }
             break;
         case 0x92:
@@ -477,11 +479,13 @@ void Host_CTR_Write_CMD(Usart_Type *usart, COMM_RecControl_Union_Type *recdata)
                 belt11.start_signal = 0;
                 belt11.start_ok = 0;
                 belt11.comm_ctr_start = 0;
+								belt11.comm_run_always_flag = 0;
             } else if (recdata->control.recbuf[0] == 0x14) {
                 belt12.stop_signal = 1;
                 belt12.start_signal = 0;
                 belt12.start_ok = 0;
                 belt12.comm_ctr_start = 0;
+								belt12.comm_run_always_flag = 0;
             }
             break;
         default:
@@ -512,7 +516,7 @@ void Host_CTR_Write_CMD(Usart_Type *usart, COMM_RecControl_Union_Type *recdata)
     usart->txbuf[usart->tx_count++] = 0XDD;
     usart->txbuf[usart->tx_count++] = 0XEE;
     usart->tx_index = 0;
-		USART_SendData(usart->huart, usart->txbuf[usart->tx_index]);
+    USART_SendData(usart->huart, usart->txbuf[usart->tx_index]);
     usart->rx_aframe = 0;   //清空和主机的通讯，避免通讯错误
     usart->rx_count = 0;
 }
@@ -529,9 +533,9 @@ void Host_CTR_Read_CMD(Usart_Type *usart, COMM_RecControl_Union_Type *recdata)
     switch (recdata->control.funcodeL) {
         case 0x91:
             if (recdata->control.recbuf[0] == 0x13) {
-                databuf[i++] = belt11.belt_actual_state;
+                databuf[i++] = belt11.comm_actual_state;
             } else if (recdata->control.recbuf[0] == 0x14) {
-                databuf[i++] = belt12.belt_actual_state;
+                databuf[i++] = belt12.comm_actual_state;
             }
             break;
 //          case 0x92:
@@ -539,20 +543,20 @@ void Host_CTR_Read_CMD(Usart_Type *usart, COMM_RecControl_Union_Type *recdata)
         case 0xA4:
 //              databuf[i++] = recdata->control.recbuf[0];
             databuf[i++] = (SOFTWARE_VERSIONS_H >> 8) & 0XFF;
-            databuf[i++] = SOFTWARE_VERSIONS_H;
+            databuf[i++] = SOFTWARE_VERSIONS_H & 0xFF;
             databuf[i++] = (SOFTWARE_VERSIONS_M >> 8) & 0XFF;
-            databuf[i++] = SOFTWARE_VERSIONS_M;
+            databuf[i++] = SOFTWARE_VERSIONS_M & 0xFF;;
             databuf[i++] = (SOFTWARE_VERSIONS_L >> 8) & 0XFF;
-            databuf[i++] = SOFTWARE_VERSIONS_L;
+            databuf[i++] = SOFTWARE_VERSIONS_L & 0xFF;;
             break;
         case 0xA5:
 //              databuf[i++] = recdata->control.recbuf[0];
             databuf[i++] = (HARDWARE_VERSIONS_H >> 8) & 0XFF;
-            databuf[i++] = HARDWARE_VERSIONS_H;
+            databuf[i++] = HARDWARE_VERSIONS_H & 0xFF;;
             databuf[i++] = (HARDWARE_VERSIONS_M >> 8) & 0XFF;
-            databuf[i++] = HARDWARE_VERSIONS_M;
+            databuf[i++] = HARDWARE_VERSIONS_M & 0xFF;;
             databuf[i++] = (HARDWARE_VERSIONS_L >> 8) & 0XFF;
-            databuf[i++] = HARDWARE_VERSIONS_L;
+            databuf[i++] = HARDWARE_VERSIONS_L & 0xFF;;
             break;
         default:
             err_code = 0x01;
@@ -585,7 +589,7 @@ void Host_CTR_Read_CMD(Usart_Type *usart, COMM_RecControl_Union_Type *recdata)
     usart->txbuf[usart->tx_count++] = 0XDD;
     usart->txbuf[usart->tx_count++] = 0XEE;
     usart->tx_index = 0;
-		USART_SendData(usart->huart, usart->txbuf[usart->tx_index]);
+    USART_SendData(usart->huart, usart->txbuf[usart->tx_index]);
     usart->rx_aframe = 0;   //清空和主机的通讯，避免通讯错误
     usart->rx_count = 0;
 }

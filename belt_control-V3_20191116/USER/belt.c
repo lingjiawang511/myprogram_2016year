@@ -18,7 +18,7 @@ void Belt11_Config(void)
 {
     //定义一个GPIO_InitTypeDef 类型的结构体，名字叫GPIO_InitStructure
     GPIO_InitTypeDef  GPIO_InitStructure;
-	  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
 //  RCC_APB2PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE);
@@ -57,7 +57,9 @@ void Belt11_Config(void)
     BELT11_SPEED1 = 0;
     BELT11_SPEED2 = 0;
     BELT11_SPEED3 = 0;
-    BELT11_DIR = 0;
+    Belt11_SetDir(BELT_LEFT);
+    belt11.comm_actual_state = 0x02;
+		belt11.comm_run_always_flag = 0;
 }
 
 //=============================================================================
@@ -73,8 +75,8 @@ void Belt12_Config(void)
     GPIO_InitTypeDef  GPIO_InitStructure;
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
-		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC,ENABLE);
-		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD,ENABLE);
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
     //皮带速度控制IO口1
     GPIO_InitStructure.GPIO_Pin = BELT12_SPEED1_IO;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;//普通输出模式
@@ -109,7 +111,9 @@ void Belt12_Config(void)
     BELT12_SPEED1 = 0;
     BELT12_SPEED2 = 0;
     BELT12_SPEED3 = 0;
-    BELT12_DIR = 0;
+    Belt12_SetDir(BELT_LEFT);
+    belt12.comm_actual_state = 0x02;
+		belt12.comm_run_always_flag = 0;
 }
 
 //=============================================================================
@@ -127,18 +131,18 @@ static void Belt11_Speed_Control(u8 speed)
         Belt11_Speed(0, 0, 1);
     } else if (speed == 2) {
         Belt11_Speed(0, 1, 0);
-			Belt11_Speed(1, 1, 1);
+        Belt11_Speed(1, 1, 1);
     } else if (speed == 3) {
         Belt11_Speed(0, 1, 1);
     } else if (speed == 4) {
         Belt11_Speed(1, 0, 0);
-			Belt11_Speed(1, 1, 1);
+        Belt11_Speed(1, 1, 1);
     } else if (speed == 5) {
         Belt11_Speed(1, 0, 1);
-			Belt11_Speed(1, 1, 1);
+        Belt11_Speed(1, 1, 1);
     } else if (speed == 6) {
         Belt11_Speed(1, 1, 0);
-			Belt11_Speed(1, 1, 1);
+        Belt11_Speed(1, 1, 1);
     } else if (speed == 7) {
         Belt11_Speed(1, 1, 1);
     }
@@ -530,6 +534,16 @@ void Belt11_Control(void)
             belt11.stop_ok = 0;
         }
     }
+
+    if (belt11.belt_actual_state == 0) {
+        belt11.comm_actual_state = 0x05;
+    } else if (belt11.belt_actual_state == 1) {
+        if (belt11.comm_ctr_run_dir == 0x01) {
+            belt11.comm_actual_state = 0x06;
+        } else if (belt11.comm_ctr_run_dir == 0x02) {
+            belt11.comm_actual_state = 0x07;
+        }
+    }
 }
 
 //=============================================================================
@@ -567,6 +581,16 @@ void Belt12_Control(void)
             belt12.stop_ok = 0;
         }
     }
+
+    if (belt12.belt_actual_state == 0) {
+        belt12.comm_actual_state = 0x05;
+    } else if (belt12.belt_actual_state == 1) {
+        if (belt12.comm_ctr_run_dir == 0x01) {
+            belt12.comm_actual_state = 0x06;
+        } else if (belt12.comm_ctr_run_dir == 0x02) {
+            belt12.comm_actual_state = 0x07;
+        }
+    }
 }
 //=============================================================================
 //函数名称:belt11_time_control
@@ -586,7 +610,7 @@ void belt11_time_control(void)
     if (belt11.stop_signal == 1) {
         belt11.speed_step = Stop_Belt11(belt11.speed_step);
     }
-    if (belt11.stop_delay_state == 1) {
+    if ((belt11.stop_delay_state == 1)&&(belt11.comm_run_always_flag == 0)) {
         stop_delay_time++;
         if (belt11.comm_ctr_run_time < belt11.actual_time) {
             belt11.comm_ctr_run_time = belt11.actual_time;
@@ -616,7 +640,7 @@ void belt12_time_control(void)
     if (belt12.stop_signal == 1) {
         belt12.speed_step = Stop_Belt21(belt12.speed_step);
     }
-    if (belt12.stop_delay_state == 1) {
+    if ((belt12.stop_delay_state == 1)&&(belt12.comm_run_always_flag == 0)) {
         stop_delay_time++;
         if (belt12.comm_ctr_run_time < belt12.actual_time) {
             belt12.comm_ctr_run_time = belt12.actual_time;

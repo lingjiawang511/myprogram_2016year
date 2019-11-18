@@ -182,6 +182,8 @@ typedef struct{
   u8   comm_ctr_start;
 	u8   comm_ctr_stop;
 	u8 	 comm_ctr_run_dir;
+	u8   comm_actual_state;
+  u8   comm_run_always_flag;
 	u16  comm_ctr_run_speed;
 	u16  comm_ctr_run_time;
 }Belt_Work_Type;

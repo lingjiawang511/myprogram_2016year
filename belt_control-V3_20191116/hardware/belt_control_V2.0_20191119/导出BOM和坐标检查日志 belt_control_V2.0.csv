@@ -1,0 +1,6 @@
+以下信息为嘉立创的脚本检查出来,不是AD自带的功能,出现提示的这些元件,建议仔细检查
+嘉立创的脚本下载地址:http://club.szlcsc.com/article/details_10024_1.html
+未导出BOM和坐标,引脚数量少于2个.   Designator:Pad4   引脚数为:1    Comment:Pad    Ref X:39.141mm  Ref Y:105.613mm
+未导出BOM和坐标,引脚数量少于2个.   Designator:Pad3   引脚数为:1    Comment:Pad    Ref X:143.159mm  Ref Y:105.613mm
+未导出BOM和坐标,引脚数量少于2个.   Designator:Pad2   引脚数为:1    Comment:Pad    Ref X:143.159mm  Ref Y:41.589mm
+未导出BOM和坐标,引脚数量少于2个.   Designator:Pad1   引脚数为:1    Comment:Pad    Ref X:39.141mm  Ref Y:41.589mm

@@ -1,0 +1,36 @@
+Field=Footprint~String~Footprint~100|Field=Comment~String~Comment~100|Field=Designator~String~Designator~100|Field=Layer~String~Layer~100|Field=Quantity~Integer~Quantity~100|ReportField=Currency~<none>|ReportField=ProductionQuantity~1|ReportField=ProjectFileName~belt_control_V2.0.PrjPCB|ReportField=ProjectFullPath~G:\work\原理图\2019年\belt_control_V2.0\belt_control_V2.0.PrjPCB|ReportField=Title~Bill of Materials For PCB Document [belt_control_V2.0.PcbDoc]|ReportField=TotalQuantity~118|ReportField=ReportTime~15:01:47|ReportField=ReportDate~2019/11/19|ReportField=ReportDateTime~2019/11/19 15:01:47|ReportField=OutputName~Bill of Materials|ReportField=OutputType~BOM_PartType|ReportField=GeneratorName~BOM|ReportField=GeneratorDescription~Bill of Materials|ReportField=VariantName~None|ReportField=DataSourceFileName~belt_control_V2.0.PcbDoc|ReportField=DataSourceFullPath~G:\work\原理图\2019年\belt_control_V2.0\belt_control_V2.0.PcbDoc
+CASE-A_3216|10uF/16V|C0, C14, C16, C37|Top|4
+0805_CAP|22pF|C1, C2|Top|2
+0805_CAP|0.1uF|C3, C4, C5, C6, C7, C8, C9, C13, C15, C18, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C41, C42, C43, C44|Top|30
+CE/10MM|470uF/35V|C10, C11|Top|2
+TC6032_C|10uF/35V|C12|Top|1
+TC6032_C|100uF/16V|C17|Top|1
+0805_CAP|10uF|C19, C20|Top|2
+LL-34(玻璃二极管)|1N4148|D1|Top|1
+X30UF600|X30_UF600|F1|Top|1
+PH1.5_4P|1.50mm|J1|Top|1
+VH3.96_4P|3.96mm|J3|Top|1
+VH3.96_6P|3.96mm|J4, J6|Top|2
+VH3.96_2P|HEADER1X2|J5, J7|Top|2
+VH3.96_3P|HEADER1X3|J9, J10, J11, J12|Top|4
+XH2,.54-3P|XH2.54|J13, J14|Top|2
+SIP2|JUMPER|JP1, JP2, JP3|Top|3
+USR-K3|USR_K3|K3|Top|1
+SW_PB_SMD_6X6|SPEED|KEY1|Top|1
+0805-LED-R|LED|LED1, LED2|Top|2
+0805-LED-G|LED|LED3, LED4|Top|2
+pad35|Pad|Pad1, Pad2, Pad3, Pad4|Top|4
+SOT-23|8050|Q1|Top|1
+0805_RES|10k|R1, R2, R4, R8, R12, R14, R16, R18, R20, R22, R24, R26, R30, R32, R34, R36, R47|Top|17
+0805_RES|1M|R3|Top|1
+0805_RES|2.2K|R5, R6, R7, R29, R31, R33, R35|Top|7
+0805_RES|330R|R11, R13, R15, R17, R19, R21, R23, R25, R41|Top|9
+0805_RES|4.7K|R42, R43, R44, R45|Top|4
+0805_RES|120R|R46|Top|1
+SOP8_switch|SW DIP-4|S1|Top|1
+LQFP100_14x14|STM32F407VET6|U1|Top|1
+B2405XT-2WR2|B2405XT-2WR2|U2|Top|1
+SOT223_3|AMS1117-3.3|U3|Top|1
+SO16|TLP290-4|U5, U7, U8|Top|3
+SOIC-8_150mil|MAX3485|U6|Top|1
+XTAL_US1|8MHz|Y1|Top|1

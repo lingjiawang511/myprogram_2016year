@@ -555,9 +555,9 @@ void Belt11_Control(void)
 //=============================================================================
 void Belt12_Control(void)
 {
-    if ((READ_BELT12_SENSOR1 != 0) || (READ_BELT12_SENSOR2 == 0) || (belt12.comm_ctr_start == 1)) {
+    if ((READ_BELT12_SENSOR1 == 1) || (READ_BELT12_SENSOR2 == 1) || (belt12.comm_ctr_start == 1)) {
         delay_ms(10);
-        if ((READ_BELT12_SENSOR1 != 0) || (READ_BELT12_SENSOR2 == 0) || (belt12.comm_ctr_start == 1)) {
+        if ((READ_BELT12_SENSOR1 == 1) || (READ_BELT12_SENSOR2 == 1) || (belt12.comm_ctr_start == 1)) {
             if (belt12.start_signal == 0) {
                 belt12.start_signal = 1;
                 belt12.stop_signal  = 0;

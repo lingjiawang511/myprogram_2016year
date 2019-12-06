@@ -1,5 +1,5 @@
 #include"HeadType.h"
-
+#include "flash_if.h"
 
 /*串口1管脚重映射*/
 #define USART1REMAP 0
@@ -413,6 +413,72 @@ void wait_tx_count_reset(unsigned short tx_count)
         timeout_count--;
     } while ((tx_count != 0) && (timeout_count != 0));
 }
+void Host_CTR_Special_CMD(Usart_Type *usart, COMM_RecControl_Union_Type *recdata)
+{
+	  u8 add_checksum;
+    u8 err_code = 0;
+    u8 not_ctr_servo_flag = 0;
+    u16 datalenth = 0;
+    UL save_cmd_to_flash;
+	  u8 reset_mcu_flag;
+	
+    datalenth = 9;
+		reset_mcu_flag = 0;
+        switch (recdata->control.funcodeL) {
+            case 0xFF:
+                not_ctr_servo_flag = 1;
+						    if((recdata->control.recbuf[1] == 'D')&&(recdata->control.recbuf[2] == 'L')){
+									save_cmd_to_flash.c[3] = 'D';
+									save_cmd_to_flash.c[2] = 'L';
+									save_cmd_to_flash.c[1] = 'D';
+									save_cmd_to_flash.c[0] = 'L';
+									if(0 == STMFLASH_Write(FLASH_START_ADDR, FLASH_SAVE_SIZE, sizeof(long), (uint8_t *)&save_cmd_to_flash)){
+										reset_mcu_flag = 1;
+									}else{
+										if(0 == STMFLASH_Write(FLASH_START_ADDR, FLASH_SAVE_SIZE, sizeof(long), (uint8_t *)&save_cmd_to_flash)){
+											reset_mcu_flag = 1;
+										}
+									}
+								}
+                break;
+            default:
+                not_ctr_servo_flag = 1;
+                err_code = 0x01;
+                break;
+        }
+    if (err_code == 0) {
+            not_ctr_servo_flag = not_ctr_servo_flag;
+    } else {
+        recdata->control.funcodeH = 0x80 | recdata->control.funcodeH;
+        datalenth++;
+    }
+    wait_tx_count_reset(usart->tx_count);
+    usart->tx_count = 0;
+    usart->txbuf[usart->tx_count++] = 0xAA;
+    usart->txbuf[usart->tx_count++] = 0xCC;
+    usart->txbuf[usart->tx_count++] = (datalenth >> 8) & 0xFF;
+    usart->txbuf[usart->tx_count++] = datalenth & 0XFF;
+    usart->txbuf[usart->tx_count++] = recdata->control.funcodeH;
+    usart->txbuf[usart->tx_count++] = recdata->control.funcodeL;
+    usart->txbuf[usart->tx_count++] = recdata->control.comm_num;
+    usart->txbuf[usart->tx_count++] = recdata->control.recbuf[0];
+    if (err_code != 0) {
+        usart->txbuf[usart->tx_count++] = err_code;
+    }
+    add_checksum = Get_Add_Check(&usart->txbuf[2], usart->tx_count - 2);
+    usart->txbuf[usart->tx_count++] = add_checksum;
+    usart->txbuf[usart->tx_count++] = 0XDD;
+    usart->txbuf[usart->tx_count++] = 0XEE;
+    usart->tx_index = 0;
+		USART_SendData(usart->huart, usart->txbuf[usart->tx_index++]);
+    usart->rx_aframe = 0;   //清空和主机的通讯，避免通讯错误
+    usart->rx_count = 0;
+		if(reset_mcu_flag == 1){
+			reset_mcu_flag = 0;
+			delay_ms(100);
+			NVIC_SystemReset();
+		}
+}
 void Host_CTR_Write_CMD(Usart_Type *usart, COMM_RecControl_Union_Type *recdata)
 {
     u8 add_checksum;
@@ -516,7 +582,7 @@ void Host_CTR_Write_CMD(Usart_Type *usart, COMM_RecControl_Union_Type *recdata)
     usart->txbuf[usart->tx_count++] = 0XDD;
     usart->txbuf[usart->tx_count++] = 0XEE;
     usart->tx_index = 0;
-    USART_SendData(usart->huart, usart->txbuf[usart->tx_index]);
+    USART_SendData(usart->huart, usart->txbuf[usart->tx_index++]);
     usart->rx_aframe = 0;   //清空和主机的通讯，避免通讯错误
     usart->rx_count = 0;
 }
@@ -589,7 +655,7 @@ void Host_CTR_Read_CMD(Usart_Type *usart, COMM_RecControl_Union_Type *recdata)
     usart->txbuf[usart->tx_count++] = 0XDD;
     usart->txbuf[usart->tx_count++] = 0XEE;
     usart->tx_index = 0;
-    USART_SendData(usart->huart, usart->txbuf[usart->tx_index]);
+    USART_SendData(usart->huart, usart->txbuf[usart->tx_index++]);
     usart->rx_aframe = 0;   //清空和主机的通讯，避免通讯错误
     usart->rx_count = 0;
 }
@@ -610,6 +676,9 @@ u8  Execute_Host_Comm(Usart_Type *usart, COMM_RecControl_Union_Type *recdata)
         case 0x03:
             Host_CTR_Read_CMD(usart, recdata);
             break;
+				 case 0x10:
+					  Host_CTR_Special_CMD(usart, recdata);
+            break;	
         default:
             break;
     }

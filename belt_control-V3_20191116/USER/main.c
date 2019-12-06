@@ -1,6 +1,7 @@
 #include"HeadType.h"
 #include "usart.h"
 #include "TIM.h"
+#include "flash_if.h"
 
 void test_mode_init_belt(void);
 void delay_ms1(u16 ms)

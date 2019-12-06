@@ -260,7 +260,7 @@
   */
 
 #include "stm32f4xx.h"
-
+#include "flash_if.h"
 /**
   * @}
   */
@@ -451,7 +451,11 @@ void SystemInit(void)
 #ifdef VECT_TAB_SRAM
     SCB->VTOR = SRAM_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM */
 #else
+#if  APP_USE_IAP
+    SCB->VTOR = FLASH_BASE | APP_OFFSET; /* Vector Table Relocation in Internal FLASH */
+#else
     SCB->VTOR = FLASH_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH */
+#endif
 #endif
 }
 

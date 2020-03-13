@@ -31,3 +31,8 @@
 # Debug files
 *.dSYM/
 *.su
+
+belt_contlink.bin
+belt_control.bin
+belt_control_app.bin
+belt_control_link.bin

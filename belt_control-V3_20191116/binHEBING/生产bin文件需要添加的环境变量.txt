@@ -1,0 +1,4 @@
+变量名：FROMELF
+变量值：E:\Keil_v5\ARM\ARMCC\bin
+备注：变量值需要根据MDK5安装目录改变
+需要安装python3
